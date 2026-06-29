@@ -303,7 +303,7 @@ class TritSearchApp:
         self.typing_job   = None
         self._last_results = []
 
-        self.root.title("012 — Trit Search")
+        self.root.title("OBSERVE")
         self.root.geometry("1000x720")
         self.root.minsize(800, 600)
         self.root.configure(bg=self.t["bg"])
@@ -312,7 +312,8 @@ class TritSearchApp:
         self._apply_theme()
         self._start_rain()
         self._load_config()
-        self._init_engine()
+        self._set_status("⟳ Loading model... (first launch takes 10-30s)")
+        self.root.after(100, self._init_engine)
 
     def _find_model(self):
         # Look for fine-tuned model next to script, then fallback to base
@@ -335,7 +336,7 @@ class TritSearchApp:
         self.topbar.pack(fill="x", padx=0, pady=0)
         self.topbar.pack_propagate(False)
 
-        self.title_lbl = tk.Label(self.topbar, text="◈ 012 TRIT SEARCH",
+        self.title_lbl = tk.Label(self.topbar, text="◈ OBSERVE",
                                    font=t["font_title"], bg=t["bg"], fg=t["accent"])
         self.title_lbl.pack(side="left", padx=20, pady=8)
 
