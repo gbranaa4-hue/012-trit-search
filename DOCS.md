@@ -383,6 +383,8 @@ python trit_symmetry_cavity_test.py
 
 **Overall finding across all five tests:** resonance/temporal-integration and tunable mode-mixing help specifically and only when the underlying signal **genuinely changes over time** (the scheduler case). They do not help — and sometimes actively hurt — when the signal is static or already clean (cache recency, repeated noisy reads of one fixed fact, the fixed triadic mixing formula on rotation robustness), where the established simple baseline (LRU, unweighted averaging, the original `s1*(1-s0)+s2*s0` formula) is already close to optimal. This is a precise, falsifiable, five-test-deep characterization, not a hand-wave — and it cuts against the original framing that added flexibility/resonance is a generally beneficial addition.
 
+**Cross-substrate follow-up:** [paper/cross_substrate_symmetry_findings.md](paper/cross_substrate_symmetry_findings.md) lines this project's `trit_symmetry_cavity_test.py` result up against an independent acoustic-MEMS-plate reservoir-computing study (separate project, separate codebase) that found a much cleaner symmetry-breaking win — and proposes a third substrate (a Spikeling software resonator bank) to test whether the effect generalizes across coupled-oscillator systems or is specific to each substrate's own mechanism.
+
 ---
 
 ### Research & Experiments
