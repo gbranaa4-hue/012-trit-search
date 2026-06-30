@@ -83,3 +83,13 @@ hold, with the added nuance that the *size* of voting's advantage under
 miscalibration depends on whether the miscalibration is acute/outlier-like
 (catastrophic for weighting) or gradual/drift-like (just erodes
 weighting's edge to parity).
+
+**Fourth check, weaker still:** `ensemble_ml_findings.md` tested this
+against real scikit-learn classifiers under covariate shift and got an
+even softer (borderline inconclusive) result than this one — the gap
+didn't collapse at all there. Read together, TMR's drift (partial
+reordering) and the ensemble test's shift (apparently little reordering)
+bracket population coding's acute outlier corruption (severe reordering)
+on a single underlying axis: **it's the degree of relative-reliability
+reordering, not the mere presence of miscalibration, that determines how
+much voting's robustness advantage shows up.**

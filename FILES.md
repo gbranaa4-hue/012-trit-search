@@ -242,6 +242,12 @@ Third external check of the consensus-gate scoping rule, against classical Tripl
 python trit_tmr_test.py
 ```
 
+**`trit_ensemble_test.py`**
+Fourth check of the consensus-gate scoping rule, against real scikit-learn classifiers (LogisticRegression/DecisionTree/KNN/GaussianNB/RandomForest) under covariate shift rather than another synthetic simulation. Result: weak/inconclusive — weighted voting wins regime A only marginally (+0.72pp, t=2.14), gap doesn't collapse under shift as predicted (+0.55pp, t=1.73). See [paper/ensemble_ml_findings.md](paper/ensemble_ml_findings.md) for the honest writeup and the refinement it suggests (rank-reordering of reliability matters more than magnitude of miscalibration).
+```
+python trit_ensemble_test.py
+```
+
 **`trit_mcp_server.py`**
 Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Two tools exposed: `search_code(query, k)` and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
 ```

@@ -366,6 +366,11 @@ python trit_order_acceptance_test.py
 python trit_tmr_test.py
 ```
 
+**`trit_ensemble_test.py`** — Fourth check, against real scikit-learn classifiers (LogisticRegression/DecisionTree/KNN/GaussianNB/RandomForest) under covariate shift, not another synthetic simulation. Result: **weak/inconclusive** — weighted voting wins regime A only marginally (+0.72pp, t=2.14) and the gap does *not* collapse under shift (+0.55pp, t=1.73) as predicted. See [paper/ensemble_ml_findings.md](paper/ensemble_ml_findings.md) — reported as run, no retuning to chase a cleaner result. Sharpens the rule: degradation likely depends on whether miscalibration *reorders relative reliability ranking*, not just whether absolute accuracy drops — this shift may have lowered everyone's accuracy together without reordering who's most trustworthy.
+```
+python trit_ensemble_test.py
+```
+
 **`trit_resonant_memory.py`** — Tests resonance on noisy-glimpse memory retrieval (real `TernaryHopfield`, synthetic random trit patterns standing in for facts, skipping the 500-epoch neural encoder for speed)
 | Noise | Single-shot | Instant-vote | Resonant (pre-filter) |
 |---|---|---|---|
