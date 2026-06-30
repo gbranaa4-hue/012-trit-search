@@ -351,6 +351,11 @@ Result: **Hypothesis disproven for this task.** Resonance made things *worse*, n
 
 Result: **Hypothesis confirmed — resonance genuinely wins here.** Sparse, intermittent urgency signals need integration over time to be actionable; direct reaction barely registers, resonant accumulation builds a strong, stable, correctly-decaying bias. (Note: an earlier version of this test had a bug — anti-starvation voting thresholds coincidentally matched the natural round-robin period for 4 processes, forcing identical round-robin output for all three schedulers regardless of urgency. Fixed by raising the starvation threshold so it only fires for genuine neglect, not routine rotation.)
 
+**`trit_npc_consensus_test.py`** — Independent follow-up application: does the bare consensus-gate primitive (no neural net, no compression) improve on a *real game's* existing decision logic? Tested against `tribe/npc.gd`'s actual fight-or-flee code (a 2-signal OR-gate override chain) by adding one new signal and combining via majority vote instead. Result: **clean win**, +1.81pp accuracy (0.7385 vs 0.7204), t=71.69, 30/30 seeds. See [paper/npc_consensus_findings.md](paper/npc_consensus_findings.md) for the full test design and honest caveats (some of the gain is from the extra signal, not the voting rule alone; not yet wired into the live game).
+```
+python trit_npc_consensus_test.py
+```
+
 **`trit_resonant_memory.py`** — Tests resonance on noisy-glimpse memory retrieval (real `TernaryHopfield`, synthetic random trit patterns standing in for facts, skipping the 500-epoch neural encoder for speed)
 | Noise | Single-shot | Instant-vote | Resonant (pre-filter) |
 |---|---|---|---|

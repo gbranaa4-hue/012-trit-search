@@ -224,6 +224,12 @@ Retests memory retrieval with a corrected mechanism: resonance interleaved *insi
 python trit_resonant_hopfield.py
 ```
 
+**`trit_npc_consensus_test.py`**
+Independent application test: does the consensus-gate primitive (no neural net, no ternary compression — just `sign(s0+s1+s2)` majority vote) improve a *real game's* existing decision logic? Tested against `tribe/npc.gd`'s actual fight-or-flee code (lines 363-409, currently a 2-signal OR-gate override chain) by adding one new signal (a noisy relative-strength estimate) and combining all three via majority vote instead. Result: clean, statistically robust win — +1.81pp accuracy (0.7385 vs 0.7204), t=71.69 across 30 seeds, 30/30 seeds favored the consensus-gate policy. See [paper/npc_consensus_findings.md](paper/npc_consensus_findings.md) for full design and caveats (synthetic ground-truth model; some gain is from the added signal, not the voting rule alone; not yet wired into the live game).
+```
+python trit_npc_consensus_test.py
+```
+
 **`trit_mcp_server.py`**
 Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Two tools exposed: `search_code(query, k)` and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
 ```
