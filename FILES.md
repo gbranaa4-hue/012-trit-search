@@ -230,6 +230,12 @@ Independent application test: does the consensus-gate primitive (no neural net, 
 python trit_npc_consensus_test.py
 ```
 
+**`trit_order_acceptance_test.py`**
+Round 2 of the consensus-gate application test, on a structurally different real decision: `tribe/tribemember.gd`'s `give_order()` (lines 866-891), which is already a weighted-sum linear threshold (`70 + loyalty + courage >= risk`, real `RANK_LOYALTY`/`PERSONALITIES` courage/`ORDER_RISK` constants) rather than an OR-gate. Predicted before running that voting would lose here (discretizing continuous evidence into booleans throws away the margin information a threshold already uses) — confirmed: clean loss, -4.62pp accuracy (0.8270 vs 0.8732), t=-107.31, 30/30 seeds favor the existing linear threshold. See [paper/order_acceptance_findings.md](paper/order_acceptance_findings.md) — together with the fight/flee win, this precisely scopes when the consensus-gate helps vs hurts.
+```
+python trit_order_acceptance_test.py
+```
+
 **`trit_mcp_server.py`**
 Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Two tools exposed: `search_code(query, k)` and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
 ```

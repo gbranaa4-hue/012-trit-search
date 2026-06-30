@@ -89,3 +89,11 @@ that would mean implementing `weak_estimate` as an actual NPC sensing
 routine in `npc.gd` and replacing `take_hit()`'s override chain with a
 3-vote count, which is a real (if small) code change, not done as part of
 this test.
+
+**Round 2, different decision shape:** see
+[order_acceptance_findings.md](order_acceptance_findings.md) — the same
+primitive tested against `tribemember.gd`'s order-acceptance logic, where
+it loses just as decisively (-4.62pp) because that decision is already a
+weighted-sum threshold rather than an information-poor OR-gate. The two
+results together scope exactly when this primitive helps vs hurts, rather
+than leaving "consensus voting is good" as an unscoped claim.

@@ -356,6 +356,11 @@ Result: **Hypothesis confirmed — resonance genuinely wins here.** Sparse, inte
 python trit_npc_consensus_test.py
 ```
 
+**`trit_order_acceptance_test.py`** — Round 2 of the same question, on a structurally different decision: `tribe/tribemember.gd`'s order-acceptance logic (`give_order()`), which is already a weighted-sum linear threshold (loyalty + courage vs risk) rather than an OR-gate. Predicted *before running* that consensus voting would lose here (discretizing continuous evidence into booleans throws away the margin information a threshold already uses) — confirmed: **clean loss**, -4.62pp accuracy (0.8270 vs 0.8732), t=-107.31, 30/30 seeds favor the existing linear threshold. See [paper/order_acceptance_findings.md](paper/order_acceptance_findings.md). Together with the fight/flee win, this scopes the consensus-gate precisely: helps when combining genuinely separate signals (especially when adding new information), hurts when replacing a rule that already has the continuous combination in hand.
+```
+python trit_order_acceptance_test.py
+```
+
 **`trit_resonant_memory.py`** — Tests resonance on noisy-glimpse memory retrieval (real `TernaryHopfield`, synthetic random trit patterns standing in for facts, skipping the 500-epoch neural encoder for speed)
 | Noise | Single-shot | Instant-vote | Resonant (pre-filter) |
 |---|---|---|---|
