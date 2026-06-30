@@ -91,3 +91,10 @@ one clean loss against real game logic — exactly the kind of scoped,
 falsifiable picture (not "consensus voting is good," but "consensus
 voting helps under this specific condition, hurts under that one") this
 project's whole resonance/symmetry series has consistently aimed for.
+
+**External validation:** this same scoping rule (weighted combination
+wins under calibrated evidence, voting wins under uncalibrated/
+contaminated evidence) was then checked against two independent,
+externally-published fields — population-coding theory and robust
+statistics — using a simulated LIF neuron population. Both predictions
+held. See `Spikeling-Project/research/POPULATION_CODING_FINDINGS.md`.
