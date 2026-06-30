@@ -1,10 +1,11 @@
-# Does symmetry-breaking help computation? Three substrates, three answers
+# Does symmetry-breaking help computation? Four substrates, four answers
 
-A synthesis across three independent, already-completed investigations —
-acoustic MEMS plates, ternary triadic consensus logic, and (proposed) a
-software spiking-resonator bank — that all probed structurally the same
-question: **does breaking the symmetry of a coupled nonlinear system unlock
-extra computational power, or just cost you something for nothing?**
+A synthesis across four independent investigations — acoustic MEMS
+plates, ternary triadic consensus logic, ternary temporal/resonance
+logic, and a software spiking-resonator bank — that all probed
+structurally the same question: **does breaking the symmetry of a coupled
+nonlinear system unlock extra computational power, or just cost you
+something for nothing?**
 
 These were not designed as one study. Each was run independently, in a
 different project, for a different reason, with no shared codebase. The
@@ -120,32 +121,56 @@ shape of answer as substrate 2 — a real effect, but only in a specific
 regime (here: genuinely time-varying signals), and actively harmful
 outside that regime.**
 
-## Substrate 3 — Spikeling Resonator bank (proposed, not yet run)
+## Substrate 3 — Spikeling Resonator bank (run — negative result)
 
-Source: `Spikeling-Project/resonator-prototype/` — a damped-harmonic-
-oscillator neuron bank (`x'' = -ω²x - 2·damping·ω·v + coupling·drive`),
-explicitly built on the same physics class as the acoustic plate's
-nonlinear oscillator network, but in fully controllable software instead
-of an FEM-simulated MEMS plate.
+Source: `Spikeling-Project/resonator-prototype/symmetry_selection_test.py`
+and `SYMMETRY_TEST_FINDINGS.md` — a bank of 24 damped-harmonic-oscillator
+units (`x'' = -ω²x - 2·damping·ω·v + coupling·drive`), the same physics
+class as the acoustic plate's nonlinear oscillator network but in fully
+controllable software, each given a per-unit quadratic self-nonlinearity
+(`c2·x²`) with a controlled "dead fraction" matching the acoustic plate's
+measured numbers exactly (88% dead = symmetric/periodic-mirroring config,
+38% dead = broken-symmetry/quasicrystal-mirroring config). 20 seeds per
+config, ridge-regression readout, same even-vs-odd task battery as the
+acoustic plate's rung 6.
 
-This is the natural fourth data point: build a small reservoir from a
-bank of Resonator neurons with an engineered, controllable coupling
-topology (symmetric vs. deliberately broken, mirroring the D4-vs-broken
-setup), and re-run the acoustic plate's *own* shallow even-order memory
-task (`y[n] = u[n-1]·u[n-2]`, depth ≤ 3) on it.
+**Measured result — does not replicate:**
 
-This is a genuine generality test, not a rerun: if the same even/odd
-selection-rule dichotomy appears in a structurally different (software,
-spiking, not FEM-acoustic) substrate built from the same oscillator
-primitive, that promotes the acoustic finding from "one substrate's
-quirk" to "a property of coupled nonlinear oscillators in general." If it
-*doesn't* replicate, that's equally informative — it would mean the
-effect depends on something acoustic-plate-specific (the literal
-∫φ³ spatial-overlap integral over a 2D plate geometry), not just the
-abstract oscillator equation.
+| Task | Order | Symmetric R² | Broken R² | Gap |
+|---|---|---|---|---|
+| u[n-1]·u[n-2] | even | -0.013 ± 0.010 | -0.007 ± 0.006 | +0.006 |
+| u[n-1]·u[n-3] | even | -0.017 ± 0.009 | -0.010 ± 0.006 | +0.007 |
+| u[n-1]² | even | -0.014 ± 0.012 | -0.007 ± 0.007 | +0.007 |
+| u[n-1] | odd | 0.303 ± 0.036 | 0.182 ± 0.059 | **-0.121** |
+| u[n-1]³ | odd | 0.249 ± 0.031 | 0.147 ± 0.048 | **-0.102** |
+| u[n-1]-0.5·u[n-2] | odd | 0.075 ± 0.017 | 0.030 ± 0.013 | -0.045 |
 
-**Status: not yet run. This is the proposed next experiment, not a
-result.**
+Mean gap: even = **+0.0066** (acoustic plate: +0.150), odd = **-0.0895**
+(acoustic plate: -0.002).
+
+This is a genuine generality test, not a rerun, and it came back negative
+on both counts: even-order tasks are at floor (R²≈0) for *both* configs —
+this minimal reservoir cannot do the product task at all regardless of
+symmetry, so there is no capability for symmetry-breaking to unlock — and
+the broken-symmetry config measurably *hurts* the odd-order memory the
+reservoir does have, the opposite of the acoustic plate's clean "odd
+ties" result. No parameter-tuning was done after seeing this result.
+
+**Why, honestly:** the acoustic plate's reservoir had spatial richness
+this one lacks — multiple physical drive locations exciting a real
+elastic mode-coupling network — and its own rung-1 baseline (generic
+oscillators, no selection-rule mechanism) already solved the same task at
+R²=0.71 on that richer structure. This resonator bank has a single shared
+scalar input line and no inter-unit coupling at all, so it never clears
+the bar of "capable enough at the task for symmetry-breaking to matter,"
+the precondition the acoustic plate's own findings (rung 1) identified.
+**Conclusion: this result does not refute the acoustic finding — it shows
+the bare oscillator equation plus a per-unit quadratic term, without the
+plate's spatial/coupling richness, is not sufficient on its own to
+reproduce the effect.** A fairer follow-up (multiple input channels or
+genuine inter-unit coupling, confirmed capable of the even task at
+baseline before testing symmetry-breaking on top) is identified in
+`SYMMETRY_TEST_FINDINGS.md` but not run here.
 
 ---
 
@@ -156,22 +181,30 @@ result.**
 | Acoustic plate | Point-group (D4 → low-sym/quasicrystal) | **Clean win**, narrow regime (weak coupling, shallow even-order) |
 | 012 triadic mixing | Mixing-formula symmetry | **Tradeoff** (stability up, accuracy down); more flexibility (adaptive) made it worse |
 | 012 resonance series | Temporal (instant vs. integrated) | **Win only if signal is genuinely time-varying**; harmful otherwise |
-| Spikeling resonator bank | Coupling topology | *Proposed — open* |
+| Spikeling resonator bank | Per-unit quadratic self-term (dead-fraction matched) | **Negative** — no even-order capability to unlock at all; broken-symmetry config actively hurt odd-order memory |
 
 The honest synthesis, consistent with every substrate measured so far:
-**symmetry-breaking is not a general computational free lunch.** It
-unlocks a *specific* capability the symmetric default structurally
-cannot have (a product/even-order term; a stability mode; a temporal
-response) — but only when the task actually needs that specific
-capability, and at a real cost (coupling strength, accuracy, or
-performance on the unrelated default case) everywhere else. The acoustic
-plate's result is the cleanest because the mechanism is an *exact*
-selection rule (∫φ³=0 by symmetry, not a statistical tendency); the
-012-ternary results are messier because the mixing formula's "symmetry"
-is a much softer, less mechanistically pinned-down property than a true
-point-group symmetry — which may itself be worth investigating: does a
-sharper, more mechanism-grounded notion of symmetry in the 012 triadic
-gate produce a cleaner win, the way it did acoustically?
+**symmetry-breaking is not a general computational free lunch, and it is
+not even a reliably *available* lunch.** Where it wins (acoustic plate),
+it unlocks a specific capability the symmetric default structurally
+cannot have, but needs a reservoir already rich enough (spatial drive
+diversity, a real coupling network) for that capability to matter. Strip
+that richness away — as the bare resonator-bank test did — and the same
+mechanism (a per-unit quadratic term, dead-fraction-matched to the exact
+acoustic numbers) produces no benefit and even a measurable cost on the
+one thing the reservoir could already do. The acoustic plate's result is
+the cleanest of the four because the mechanism is an *exact* selection
+rule (∫φ³=0 by symmetry) sitting on top of a reservoir already proven
+capable (rung 1, R²=0.71 baseline); the 012-ternary and Spikeling results
+are messier or null because each lacks one of those two ingredients —
+012's triadic "symmetry" is a soft formula property, not a true
+point-group symmetry, and Spikeling's reservoir was never shown capable
+of the task before symmetry was varied. **The real lesson across all
+four: symmetry-breaking is a second-order lever — it only pays off on
+top of a substrate that already clears a basic capability bar, and
+testing it without first confirming that bar is met (as the acoustic
+study's own rung-1 control did, and this Spikeling follow-up did not)
+risks measuring noise instead of the effect.**
 
 ## Honesty notes
 
