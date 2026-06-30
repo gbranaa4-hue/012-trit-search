@@ -56,6 +56,43 @@ G:\trit312\Scripts\python -m PyInstaller --onedir --noconsole --name OBSERVE tri
 
 ---
 
+### MCP Server (Claude Code / Claude Desktop integration)
+**`trit_mcp_server.py`**
+Exposes OBSERVE's search as an MCP (Model Context Protocol) tool, so Claude Code, Claude Desktop, or any MCP-compatible client can call it directly from a conversation — no copy-pasting search results. Runs headless over stdio; wraps the exact same `SearchEngine` used by `trit_app.py` (same model, same compressed index, same search logic). Does not build an index itself — build one first with `trit_app.py` (INDEX CODEBASE) or `trit_search.py --index`.
+
+**Install:**
+```
+pip install mcp
+```
+
+**Configure** (e.g. in Claude Code's MCP config, typically `.mcp.json` or via `claude mcp add`):
+```json
+{
+  "mcpServers": {
+    "observe": {
+      "command": "python",
+      "args": ["C:/path/to/012-ternary/trit_mcp_server.py"]
+    }
+  }
+}
+```
+Verify it's connected with `claude mcp list`.
+
+**Tools exposed:**
+- `search_code(query, k=10, project_dir="")` — semantic search by meaning, not exact keywords. `project_dir` (optional, absolute path) scopes results to one indexed project's base directory — important if your index spans multiple codebases, otherwise results from unrelated projects can crowd out the one you actually want.
+- `index_status()` — reports chunk count and active model, useful to check before searching whether the index is ready.
+
+**Known issues / recent fixes (2026-06-30):**
+- The model/index loads lazily on first tool call via a background thread, with the synchronous tool call blocking (polling) until ready. Originally this could hang indefinitely with no useful feedback if the load thread stalled (e.g. after a session restart raced a partially-dead server process). Fixed: a 60s stall watchdog now detects no-progress loads, returns the last real status message instead of blocking silently, and resets so the *next* call retries with a fresh load rather than rejoining a dead wait.
+- If the underlying Python process itself dies (not just a stalled thread — e.g. killed externally), the MCP client's connection is unrecoverable until the whole Claude Code session is restarted; no in-process fix can resurrect a dead process.
+- Originally, `search_code` had no way to scope to one project — with multiple codebases indexed, results would mix in matches from unrelated projects (e.g. searching `take_damage` in one game project would surface near-identical code from a completely different game in `Downloads/`). Fixed via the `project_dir` parameter, which filters candidates by `base_dir` *before* top-k selection (filtering after would still let an unrelated, larger codebase crowd out the target project).
+
+```
+python trit_mcp_server.py    Standalone test (run headless, stdio transport)
+```
+
+---
+
 ### Semantic Search Engine
 **`trit_search.py`**
 Core search engine (CLI/HTTP API). Encodes files as 384-dim sentence-transformer vectors, stores in FAISS, searches by cosine similarity.

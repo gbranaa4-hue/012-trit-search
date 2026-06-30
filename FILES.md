@@ -51,6 +51,17 @@ Post-training ternary quantization for any HuggingFace model — converts existi
 
 ---
 
+### MCP Server (Claude Code / Claude Desktop integration)
+
+**`trit_mcp_server.py`**
+Exposes OBSERVE's search as an MCP tool over stdio, so Claude Code/Desktop can call `search_code` and `index_status` directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same index, no separate build step (index it first via `trit_app.py` or `trit_search.py --index`). `search_code` takes an optional `project_dir` to scope results to one indexed codebase when multiple are indexed together. See DOCS.md for setup, config JSON, and known issues/fixes.
+```
+pip install mcp
+python trit_mcp_server.py   # standalone test
+```
+
+---
+
 ### Search Engine ("OBSERVE")
 
 **`trit_search.py`**
