@@ -11,6 +11,7 @@ Usage:
 """
 
 import argparse, time, random
+from pathlib import Path
 import numpy as np
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -282,7 +283,7 @@ if __name__ == "__main__":
     parser.add_argument("--verbose", action="store_true", help="Show per-query results")
     args = parser.parse_args()
 
-    FINE_TUNED = r"C:\Users\gbran\OneDrive\Documents\012-ternary\models\code-minilm"
+    FINE_TUNED = str(Path(__file__).resolve().parent / "models" / "code-minilm")
     BASELINE   = "all-MiniLM-L6-v2"
 
     pairs = BENCHMARK[:20] if args.quick else BENCHMARK

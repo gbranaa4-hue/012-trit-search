@@ -84,10 +84,11 @@ CODE_LANGUAGES_2026 = [
     "Java", "PHP", "Ruby", "Scala", "Dart",
 ]
 
-SCAN_DIRS = [
-    r"C:\Users\gbran\OneDrive\Documents\horde-beta-version-1",
-    r"C:\Users\gbran\OneDrive\Documents\012-ternary",
-    r"C:\Users\gbran\OneDrive\Documents",
+# Edit this list (or set TRIT_SCAN_DIRS env var, os.pathsep-separated) to
+# point at your own codebase to fine-tune on.
+_PROJECT_ROOT = str(Path(__file__).resolve().parent)
+SCAN_DIRS = os.environ.get("TRIT_SCAN_DIRS", "").split(os.pathsep) if os.environ.get("TRIT_SCAN_DIRS") else [
+    _PROJECT_ROOT,
 ]
 SCAN_EXTS = {
     ".py", ".gd", ".js", ".ts", ".cs", ".md", ".txt",
@@ -183,7 +184,7 @@ def collect_local_data():
                 except:
                     continue
 
-                rel = os.path.relpath(fpath, r"C:\Users\gbran\OneDrive\Documents")
+                rel = os.path.relpath(fpath, SCAN_DIRS[0] if SCAN_DIRS else _PROJECT_ROOT)
 
                 # Format 1: explain this file
                 examples.append({

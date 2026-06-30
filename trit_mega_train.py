@@ -206,11 +206,9 @@ def stream_local_files(dirs=None):
     Scans for .py, .gd, .js, .cs, .txt, .md files.
     """
     if dirs is None:
-        dirs = [
-            r"C:\Users\gbran\OneDrive\Documents",
-            r"C:\Users\gbran\OneDrive\Documents\horde-beta-version-1",
-            r"C:\Users\gbran\OneDrive\Documents\012-ternary",
-        ]
+        # Edit this default (or pass dirs= explicitly) to point at your own
+        # codebase for local streaming.
+        dirs = [str(Path(__file__).resolve().parent)]
 
     EXTS = {".py", ".gd", ".js", ".ts", ".cs", ".txt", ".md",
             ".json", ".cfg", ".toml", ".rs", ".go", ".java"}

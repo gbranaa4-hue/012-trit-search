@@ -1,0 +1,33 @@
+# 012 Ternary — full project dependencies.
+#
+# For just the OBSERVE desktop search app, see requirements_app.txt
+# (a smaller subset, faster to install).
+#
+# GPU note: install torch/torchvision matching your CUDA version FIRST,
+# from https://pytorch.org/get-started/locally/ — e.g.:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+# then install the rest of this file.
+
+# Core ML / tensors
+torch
+torchvision
+numpy
+
+# Embeddings, search, fine-tuning
+sentence-transformers
+faiss-cpu
+datasets
+transformers
+peft
+bitsandbytes
+
+# OBSERVE app + HTTP API + MCP server
+flask
+tqdm
+mcp
+
+# Packaging (only needed if building the .exe/.app yourself)
+pyinstaller
+
+# Optional — GGUF export for trit_merge.py (Ollama/llama.cpp integration)
+# llama-cpp-python

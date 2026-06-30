@@ -41,10 +41,10 @@ EPOCHS          = 3
 WARMUP_STEPS    = 100
 LR              = 2e-5
 
-LOCAL_DIRS = [
-    r"C:\Users\gbran\OneDrive\Documents\horde-beta-version-1",
-    r"C:\Users\gbran\OneDrive\Documents\tribe",
-    r"C:\Users\gbran\OneDrive\Documents\012-ternary",
+# Edit this list (or set TRIT_SCAN_DIRS env var, os.pathsep-separated) to
+# point at your own codebase(s) for local fine-tuning (--train --local).
+LOCAL_DIRS = os.environ.get("TRIT_SCAN_DIRS", "").split(os.pathsep) if os.environ.get("TRIT_SCAN_DIRS") else [
+    str(Path(__file__).resolve().parent),
 ]
 
 # ══════════════════════════════════════════════════════════════════════════════

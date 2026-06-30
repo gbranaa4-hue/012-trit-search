@@ -53,29 +53,31 @@ SCAN_EXTS = {
     ".sh", ".ps1", ".bat",
 }
 
-# Directories to index
-SCAN_DIRS = [
-    r"C:\Users\gbran\OneDrive\Documents",
+# Directories to index — defaults to this project itself. Edit this list
+# (or set the TRIT_SCAN_DIRS env var, colon/semicolon-separated) to point
+# at your own codebase.
+_PROJECT_ROOT = str(Path(__file__).resolve().parent)
+SCAN_DIRS = os.environ.get("TRIT_SCAN_DIRS", "").split(os.pathsep) if os.environ.get("TRIT_SCAN_DIRS") else [
+    _PROJECT_ROOT,
 ]
 
-# Directories to skip
+# Directories to skip — universal defaults, safe for any user/machine.
 SKIP_DIRS = {
     ".git", "__pycache__", "node_modules", ".venv", "venv",
     ".cache", "dist", "build", ".ollama", "search_index",
     "lora", "models", "index", "results", "data",
-    "Xfer", "Image-Line", "FL Studio", "Serum",
+    "ai_files", "addons",
     "AppData", "Temp", "Windows", "Program Files",
-    "StarCraft", "StarCraft II", "GameLogs", "Blizzard",
-    "ai_files", "Spikeling-Project",
+    "Program Files (x86)", "ProgramData",
+    "$Recycle.Bin", "System Volume Information",
+    "msys64", "mingw64", "mingw32", "Anaconda3", "miniconda3",
+    "site-packages", ".cargo", ".rustup", ".nuget", ".gradle", ".m2",
+    "Ableton", "Steam", "steamapps", "Epic Games", "Adobe", "Spotify",
 }
 
-# Only index files inside these specific project dirs
-# Leave empty to scan all of SCAN_DIRS
-INCLUDE_ONLY_DIRS = [
-    r"C:\Users\gbran\OneDrive\Documents\horde-beta-version-1",
-    r"C:\Users\gbran\OneDrive\Documents\012-ternary",
-    r"C:\Users\gbran\OneDrive\Documents\tribe",
-]
+# Only index files inside these specific project dirs.
+# Leave empty to scan all of SCAN_DIRS (the default, recommended setting).
+INCLUDE_ONLY_DIRS = []
 
 # Skip directory name patterns (substring match)
 SKIP_DIR_PATTERNS = ["_files", "_assets", "node_modules", ".git"]
@@ -102,8 +104,10 @@ def get_or_create_encoder(force_retrain=False):
     except ImportError:
         print("Install: pip install sentence-transformers")
         raise
-    print("Loading semantic encoder (all-MiniLM-L6-v2, ~80MB)...")
-    _encoder_model = SentenceTransformer(r"C:\Users\gbran\OneDrive\Documents\012-ternary\models\code-minilm")
+    fine_tuned_path = Path(__file__).resolve().parent / "models" / "code-minilm"
+    model_path = str(fine_tuned_path) if fine_tuned_path.exists() else "all-MiniLM-L6-v2"
+    print(f"Loading semantic encoder ({model_path})...")
+    _encoder_model = SentenceTransformer(model_path)
     print("  Encoder ready.\n")
     return _encoder_model
 
@@ -271,8 +275,7 @@ class TritSearchIndex:
             self.metadata = [m for m in self.metadata if m["path"] != fpath]
 
             chunks = chunk_text(text)
-            rel    = os.path.relpath(fpath,
-                     r"C:\Users\gbran\OneDrive\Documents")
+            rel    = os.path.relpath(fpath, SCAN_DIRS[0] if SCAN_DIRS else _PROJECT_ROOT)
             ext    = Path(fpath).suffix.lower()
 
             for i, chunk in enumerate(chunks):

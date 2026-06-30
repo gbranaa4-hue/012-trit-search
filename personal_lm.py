@@ -32,11 +32,10 @@ print(f"Device: {device}")
 # ══════════════════════════════════════════════════════════════════════════════
 
 DATA_DIRS = [
-    r"C:\Users\gbran\OneDrive\Documents",          # your documents
-    r"C:\Users\gbran\OneDrive\Documents\012-ternary",  # your code
-    # Add more folders here:
-    # r"C:\Users\gbran\Desktop\notes",
-    # r"C:\path\to\emails",
+    str(Path(__file__).resolve().parent),  # this project's own text by default
+    # Add more folders here, e.g.:
+    # r"C:\Users\you\Documents",
+    # r"C:\Users\you\Desktop\notes",
 ]
 
 # File types to ingest
