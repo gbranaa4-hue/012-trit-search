@@ -135,6 +135,62 @@ def search_code(query: str, k: int = 10, project_dir: str = "") -> str:
     return "\n".join(lines)
 
 @mcp.tool()
+def query_codebase(query: str, k: int = 8, project_dir: str = "") -> str:
+    """
+    Token-tight variant of search_code: same semantic search, but
+    deduplicated (one result per file, best-scoring chunk only),
+    relevance-filtered (drops low-scoring results below a fraction of the
+    top score instead of always returning a fixed k), and formatted as
+    one compact line per result instead of search_code's two-line,
+    blank-line-separated format.
+
+    Use this instead of search_code when you want the smallest reasonable
+    token footprint and don't need every low-relevance result — e.g. when
+    scanning many queries in one session, or working in a tight context
+    budget. Use search_code instead when you want the full, uncollapsed
+    result set (e.g. multiple chunks from the same file matter, or you
+    want to see low-scoring results too).
+
+    Args:
+        query: A natural-language description of what to find.
+        k: Maximum number of results to return after dedup/filtering (default 8).
+        project_dir: Optional absolute path to scope results to one indexed project.
+
+    Returns:
+        One compact line per result: "path  score  preview".
+    """
+    _ensure_loaded()
+    if _loaded["error"]:
+        return f"Error: {_loaded['error']}. Build an index first with trit_app.py or trit_search.py --index."
+
+    # over-fetch so dedup/filtering still has enough of a pool to choose from
+    raw = engine.search(query, k=max(k * 4, 20), base_dir_filter=project_dir or None)
+    if not raw:
+        if project_dir:
+            return f"No results under {project_dir}."
+        return "No results."
+
+    # dedup: keep only the best-scoring chunk per file
+    best_per_path = {}
+    for r in raw:
+        if r["path"] not in best_per_path or r["score"] > best_per_path[r["path"]]["score"]:
+            best_per_path[r["path"]] = r
+    deduped = sorted(best_per_path.values(), key=lambda r: -r["score"])
+
+    # relevance cutoff: drop results far below the top score instead of
+    # padding out to a fixed k with noise (always keep at least 1)
+    top_score = deduped[0]["score"]
+    threshold = top_score * 0.7
+    filtered = [r for r in deduped if r["score"] >= threshold] or deduped[:1]
+    final = filtered[:k]
+
+    lines = []
+    for r in final:
+        preview = " ".join(r["preview"].split())[:90]   # collapse whitespace, tight preview
+        lines.append(f"{r['path']}  {r['score']:.2f}  {preview}")
+    return "\n".join(lines)
+
+@mcp.tool()
 def index_status() -> str:
     """
     Report the current OBSERVE index status — how many chunks/files are

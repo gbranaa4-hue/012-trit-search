@@ -249,10 +249,17 @@ python trit_ensemble_test.py
 ```
 
 **`trit_mcp_server.py`**
-Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Two tools exposed: `search_code(query, k)` and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
+Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Three tools exposed: `search_code(query, k)`, `query_codebase(query, k)` (token-tight variant — dedup + relevance cutoff + compact format, measured 66.3% fewer tokens than `search_code` on the same queries, see [paper/token_reduction_findings.md](paper/token_reduction_findings.md)), and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
 ```
 pip install mcp
 python trit_mcp_server.py
+```
+
+**`trit_token_benchmark.py`**
+Measures real token counts (via `tiktoken`'s `cl100k_base` encoding, not estimated) comparing `query_codebase` vs `search_code` vs the naive no-search-tool baseline (reading the top-3 matching files in full), on 5 real queries against this repo's own index. See [paper/token_reduction_findings.md](paper/token_reduction_findings.md) for the full writeup, including the honest recall/completeness tradeoff `query_codebase` makes.
+```
+pip install tiktoken
+python trit_token_benchmark.py
 ```
 Add to an MCP client config (e.g. Claude Code) with:
 ```json

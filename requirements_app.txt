@@ -2,3 +2,5 @@ sentence-transformers
 faiss-cpu
 flask
 torch
+mcp
+tiktoken
