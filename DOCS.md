@@ -361,6 +361,11 @@ python trit_npc_consensus_test.py
 python trit_order_acceptance_test.py
 ```
 
+**`trit_tmr_test.py`** — Third external check of the same scoping rule, against classical Triple/N-Modular Redundancy (von Neumann's `R_TMR = 3R²-2R³` reliability theory) and weighted-majority/Bayesian sensor fusion. 5 independent binary units, calibrated once, tested stable vs. drifted (silently shifted reliability, unknown to the decoder). Result: **confirmed** — weighted log-odds fusion wins under stable calibration (+2.76pp, t=7.04), and the advantage collapses to statistical noise under drift (t=-0.31), the predicted "wins or closes the gap" pattern. See [paper/tmr_findings.md](paper/tmr_findings.md) — softer than the population-coding test's catastrophic-collapse result, because TMR's drift here is gradual rather than an acute outlier, a real and useful refinement of the rule.
+```
+python trit_tmr_test.py
+```
+
 **`trit_resonant_memory.py`** — Tests resonance on noisy-glimpse memory retrieval (real `TernaryHopfield`, synthetic random trit patterns standing in for facts, skipping the 500-epoch neural encoder for speed)
 | Noise | Single-shot | Instant-vote | Resonant (pre-filter) |
 |---|---|---|---|

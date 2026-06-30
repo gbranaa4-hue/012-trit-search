@@ -236,6 +236,12 @@ Round 2 of the consensus-gate application test, on a structurally different real
 python trit_order_acceptance_test.py
 ```
 
+**`trit_tmr_test.py`**
+Third external check of the consensus-gate scoping rule, against classical Triple/N-Modular Redundancy (von Neumann's `R_TMR=3R²-2R³` reliability theory, and weighted-majority/Bayesian sensor fusion for known-reliability independent units). 5 binary units, calibrated once, tested stable vs. drifted reliability. Result: confirmed — weighted log-odds fusion wins stable calibration (+2.76pp, t=7.04), gap collapses to noise under drift (t=-0.31). See [paper/tmr_findings.md](paper/tmr_findings.md).
+```
+python trit_tmr_test.py
+```
+
 **`trit_mcp_server.py`**
 Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Two tools exposed: `search_code(query, k)` and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
 ```
