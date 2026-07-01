@@ -97,7 +97,24 @@ filename — found both tools are far weaker than file-level recall suggests:
 29% (search_code) vs 14% (query_codebase) chunk-level recall. Most of that
 gap is a shared chunking limitation, not something query_codebase's
 compression specifically caused — but it means neither tool's file-level
-"pass" reliably means an LLM would get the actual answer.
+"pass" reliably means an LLM would get the actual answer. A follow-up test
+(re-chunking on function boundaries instead of blind character windows)
+recovered chunk-level recall from 29% to 86%, at zero query-time token cost.
+
+## Follow-up: how does this compare to the tools an assistant already has?
+
+See [grep_vs_semantic_findings.md](grep_vs_semantic_findings.md) — the
+comparison this document was missing from the start: Grep. Split into
+exact-identifier-known vs concept-only queries, the result is a clean
+decision rule rather than a universal winner. On 5 exact-keyword queries,
+Grep found the correct file 5/5 times at ~3,250 tokens; query_codebase used
+77% fewer tokens but missed 2/5 — including two cases where the query WAS
+the literal function name. On 5 concept-only queries (no known identifier),
+both tools matched at 3/5 recall, but Grep needed 2.4 sequential exploratory
+guesses per query on average, costing 91% more tokens than query_codebase's
+single natural-language call. The rule: prefer Grep when the exact
+identifier is known; prefer query_codebase when only a description is
+available.
 
 ## Verdict
 

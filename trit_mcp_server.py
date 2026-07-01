@@ -105,6 +105,17 @@ def search_code(query: str, k: int = 10, project_dir: str = "") -> str:
     finds conceptually relevant code even if it doesn't share words with
     the query.
 
+    IMPORTANT — prefer Grep when you already know the exact identifier
+    (function/variable/class name, error string, etc). Measured directly
+    (see paper/grep_vs_semantic_findings.md): on 5 exact-keyword queries,
+    Grep found the correct file 5/5 times; this tool's dedup+relevance-cutoff
+    missed 2/5 even when the query WAS the literal function name. This tool's
+    real advantage is on natural-language/conceptual queries where the exact
+    identifier is unknown — there it matched Grep's recall using a single
+    call instead of several sequential exploratory Grep guesses, at ~90%
+    fewer tokens. Use Grep first if you can name the thing you're looking
+    for; use semantic search when you can only describe it.
+
     Args:
         query: A natural-language description of what to find.
         k: Number of results to return (default 10).
@@ -150,6 +161,13 @@ def query_codebase(query: str, k: int = 8, project_dir: str = "") -> str:
     budget. Use search_code instead when you want the full, uncollapsed
     result set (e.g. multiple chunks from the same file matter, or you
     want to see low-scoring results too).
+
+    IMPORTANT — prefer Grep when you already know the exact identifier.
+    This tool's dedup+relevance-cutoff is more aggressive than search_code's
+    and measured worse on exact-keyword queries as a result (3/5 recall vs
+    Grep's 5/5, see paper/grep_vs_semantic_findings.md) — it can drop a file
+    even when the query is a dead-exact keyword match. Its real advantage is
+    natural-language/conceptual queries where no exact identifier is known.
 
     Args:
         query: A natural-language description of what to find.
