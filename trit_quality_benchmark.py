@@ -38,18 +38,22 @@ GROUND_TRUTH = [
     (
         "player health and damage handling",
         ["HealthComponent.gd", "player.gd"],
+        ["take_damage"],
     ),
     (
         "weapon firing and projectile logic",
         ["basegun.gd", "gun.gd", "flamethrower.gd", "weapon.gd"],
+        ["shoot"],
     ),
     (
         "shop UI and upgrade purchasing",
         ["shopui.gd", "game_manager.gd"],
+        ["upgrade", "purchase"],
     ),
     (
         "enemy AI state machine",
         ["zombie.gd"],
+        ["ai_mode", "AIMode"],
     ),
     (
         "save and load game state",
@@ -59,6 +63,7 @@ GROUND_TRUTH = [
         # control — a good tool should return LOW-CONFIDENCE or unrelated
         # results here, not confidently point at the wrong thing.
         ["__NO_TRUE_POSITIVE__"],
+        [],
     ),
 ]
 
@@ -71,6 +76,7 @@ SECONDARY_MATCH = [
     (
         "heal and restore player health",
         "HealthComponent.gd",
+        ["heal"],
         "heal() is a secondary function in this file — take_damage() is more "
         "prominent/higher-scoring for most health-related queries. If dedup "
         "only keeps the best chunk, it may return the take_damage chunk "
@@ -79,6 +85,7 @@ SECONDARY_MATCH = [
     (
         "spend gold currency",
         "game_manager.gd",
+        ["spend_gold"],
         "spend_gold() is a lower-level helper; purchase_upgrade() in the same "
         "file is the more prominent entry point most searches would surface "
         "for shop-related queries. Tests whether spend_gold specifically "
@@ -87,6 +94,7 @@ SECONDARY_MATCH = [
     (
         "apply purchased upgrade stat to player",
         "player.gd",
+        ["apply_upgrade"],
         "apply_upgrade() lives in the same file as take_damage(), which is "
         "far more prominent in this codebase (damage is a hot path). Tests "
         "whether an upgrade-topic query still finds player.gd when the file "
@@ -95,109 +103,152 @@ SECONDARY_MATCH = [
 ]
 
 
-def find_paths_search_code(output: str) -> list:
-    """Parse 'N. [score] path' lines from search_code's format."""
+def find_hits_search_code(output: str) -> list:
+    """Parse search_code's 'N. [score] path\\n   preview' format.
+    Returns list of (path, preview_text) tuples — one per result, preview
+    is the code snippet line(s) that follow the path line."""
     import re
-    paths = []
-    for line in output.splitlines():
-        m = re.match(r"^\d+\.\s+\[[\d.]+\]\s+(.+)$", line.strip())
+    hits = []
+    lines = output.splitlines()
+    i = 0
+    while i < len(lines):
+        m = re.match(r"^\d+\.\s+\[[\d.]+\]\s+(.+)$", lines[i].strip())
         if m:
-            paths.append(m.group(1).strip())
-    return paths
+            path = m.group(1).strip()
+            preview = lines[i+1].strip() if i+1 < len(lines) else ""
+            hits.append((path, preview))
+        i += 1
+    return hits
 
 
-def find_paths_query_codebase(output: str) -> list:
-    """Parse 'path  score  preview' lines from query_codebase's format."""
-    paths = []
+def find_hits_query_codebase(output: str) -> list:
+    """Parse 'path  score  preview' lines from query_codebase's format.
+    Returns list of (path, preview_text) tuples."""
+    hits = []
     for line in output.splitlines():
         line = line.strip()
         if not line:
             continue
-        parts = line.split(None, 1)
-        if parts:
-            paths.append(parts[0].strip())
-    return paths
+        parts = line.split(None, 2)
+        if len(parts) >= 3:
+            hits.append((parts[0].strip(), parts[2]))
+        elif len(parts) >= 1:
+            hits.append((parts[0].strip(), ""))
+    return hits
 
 
 def contains_any(paths: list, substrings: list) -> bool:
     return any(any(s in p for p in paths) for s in substrings)
 
 
+def file_and_chunk_match(hits: list, file_substrings: list, content_substrings: list) -> tuple:
+    """
+    Returns (file_found, chunk_found).
+    file_found: True if any hit's path contains one of file_substrings.
+    chunk_found: True if a hit whose path matches ALSO has preview text
+        containing one of content_substrings (e.g. the actual function name) —
+        i.e. the file was found AND the specific relevant chunk was returned,
+        not just some unrelated chunk from the same file.
+    """
+    file_found = False
+    chunk_found = False
+    for path, preview in hits:
+        if any(s in path for s in file_substrings):
+            file_found = True
+            if content_substrings and any(c.lower() in preview.lower() for c in content_substrings):
+                chunk_found = True
+    return file_found, chunk_found
+
+
 def run_ground_truth():
     print("=" * 90)
-    print("  GROUND-TRUTH RECALL — does the correct file appear in the results?")
+    print("  GROUND-TRUTH RECALL — file-level AND chunk-level")
+    print("  File-level: does the correct file appear anywhere in output?")
+    print("  Chunk-level (stricter): does the returned PREVIEW TEXT actually")
+    print("  contain the target function/identifier, not just the filename?")
     print("=" * 90)
-    print(f"  {'Query':<38}{'search_code':<14}{'query_codebase':<16}Notes")
+    print(f"  {'Query':<36}{'sc:file':<9}{'sc:chunk':<10}{'qc:file':<9}{'qc:chunk':<10}Notes")
     print("  " + "-" * 86)
 
-    sc_pass = qc_pass = total = 0
-    for query, expected in GROUND_TRUTH:
-        is_negative_control = expected == ["__NO_TRUE_POSITIVE__"]
+    sc_file_pass = qc_file_pass = sc_chunk_pass = qc_chunk_pass = total = 0
+    for query, expected_files, expected_content in GROUND_TRUTH:
+        is_negative_control = expected_files == ["__NO_TRUE_POSITIVE__"]
 
         sc_out = srv.search_code(query, k=10, project_dir=PROJECT_DIR)
         qc_out = srv.query_codebase(query, k=8, project_dir=PROJECT_DIR)
-        sc_paths = find_paths_search_code(sc_out)
-        qc_paths = find_paths_query_codebase(qc_out)
+        sc_hits = find_hits_search_code(sc_out)
+        qc_hits = find_hits_query_codebase(qc_out)
 
         if is_negative_control:
-            # No correct answer exists — "pass" means the tool didn't return
-            # zero results silently, it's just a note, not scored pass/fail.
-            note = f"(no true positive — {len(sc_paths)}/{len(qc_paths)} results returned, informational only)"
-            print(f"  {query[:36]:<38}{'n/a':<14}{'n/a':<16}{note}")
+            note = f"(no true positive — {len(sc_hits)}/{len(qc_hits)} results returned, informational only)"
+            print(f"  {query[:34]:<36}{'n/a':<9}{'n/a':<10}{'n/a':<9}{'n/a':<10}{note}")
             continue
 
-        sc_ok = contains_any(sc_paths, expected)
-        qc_ok = contains_any(qc_paths, expected)
+        sc_file, sc_chunk = file_and_chunk_match(sc_hits, expected_files, expected_content)
+        qc_file, qc_chunk = file_and_chunk_match(qc_hits, expected_files, expected_content)
         total += 1
-        sc_pass += sc_ok
-        qc_pass += qc_ok
+        sc_file_pass += sc_file; qc_file_pass += qc_file
+        sc_chunk_pass += sc_chunk; qc_chunk_pass += qc_chunk
 
-        sc_mark = "PASS" if sc_ok else "MISS"
-        qc_mark = "PASS" if qc_ok else "MISS"
-        note = "" if (sc_ok and qc_ok) else "  <-- regression" if (sc_ok and not qc_ok) else ""
-        print(f"  {query[:36]:<38}{sc_mark:<14}{qc_mark:<16}{note}")
+        note = ""
+        if sc_file and not qc_file:
+            note = "  <-- file-level regression"
+        elif sc_chunk and not qc_chunk:
+            note = "  <-- chunk-level regression (file ok, wrong content)"
+        print(f"  {query[:34]:<36}{'PASS' if sc_file else 'MISS':<9}"
+              f"{'PASS' if sc_chunk else 'MISS':<10}{'PASS' if qc_file else 'MISS':<9}"
+              f"{'PASS' if qc_chunk else 'MISS':<10}{note}")
 
     print("  " + "-" * 86)
-    print(f"  search_code recall:    {sc_pass}/{total} ({sc_pass/total*100:.0f}%)")
-    print(f"  query_codebase recall: {qc_pass}/{total} ({qc_pass/total*100:.0f}%)")
-    return sc_pass, qc_pass, total
+    print(f"  search_code    — file-level: {sc_file_pass}/{total} ({sc_file_pass/total*100:.0f}%)   "
+          f"chunk-level: {sc_chunk_pass}/{total} ({sc_chunk_pass/total*100:.0f}%)")
+    print(f"  query_codebase — file-level: {qc_file_pass}/{total} ({qc_file_pass/total*100:.0f}%)   "
+          f"chunk-level: {qc_chunk_pass}/{total} ({qc_chunk_pass/total*100:.0f}%)")
+    return sc_file_pass, qc_file_pass, total
 
 
 def run_secondary_match():
     print("\n" + "=" * 90)
-    print("  SECONDARY-MATCH STRESS TEST")
+    print("  SECONDARY-MATCH STRESS TEST (file-level AND chunk-level)")
     print("  Does query_codebase's per-file dedup / 70% cutoff clip a real but")
     print("  non-top-scoring answer that search_code would still surface?")
+    print("  Chunk-level checks the preview text actually names the target")
+    print("  function, not just that the file appeared.")
     print("=" * 90)
 
-    sc_pass = qc_pass = total = 0
-    for query, expected_file, reason in SECONDARY_MATCH:
+    sc_file_pass = qc_file_pass = sc_chunk_pass = qc_chunk_pass = total = 0
+    for query, expected_file, expected_content, reason in SECONDARY_MATCH:
         sc_out = srv.search_code(query, k=10, project_dir=PROJECT_DIR)
         qc_out = srv.query_codebase(query, k=8, project_dir=PROJECT_DIR)
-        sc_paths = find_paths_search_code(sc_out)
-        qc_paths = find_paths_query_codebase(qc_out)
+        sc_hits = find_hits_search_code(sc_out)
+        qc_hits = find_hits_query_codebase(qc_out)
 
-        sc_ok = any(expected_file in p for p in sc_paths)
-        qc_ok = any(expected_file in p for p in qc_paths)
+        sc_file, sc_chunk = file_and_chunk_match(sc_hits, [expected_file], expected_content)
+        qc_file, qc_chunk = file_and_chunk_match(qc_hits, [expected_file], expected_content)
         total += 1
-        sc_pass += sc_ok
-        qc_pass += qc_ok
+        sc_file_pass += sc_file; qc_file_pass += qc_file
+        sc_chunk_pass += sc_chunk; qc_chunk_pass += qc_chunk
 
         print(f"\n  Query: \"{query}\"")
-        print(f"  Target file: {expected_file}")
+        print(f"  Target file: {expected_file}  Target content: {expected_content}")
         print(f"  Why this stresses dedup: {reason}")
-        print(f"  search_code:    {'FOUND' if sc_ok else 'NOT FOUND'} "
-              f"(file{'s' if len(sc_paths)!=1 else ''} returned: {len(sc_paths)})")
-        print(f"  query_codebase: {'FOUND' if qc_ok else 'NOT FOUND'} "
-              f"(file{'s' if len(qc_paths)!=1 else ''} returned: {len(qc_paths)})")
-        if sc_ok and not qc_ok:
-            print(f"  >>> REGRESSION: query_codebase's dedup/cutoff dropped a match "
-                  f"search_code still found.")
+        print(f"  search_code:    file={'FOUND' if sc_file else 'MISS'}  "
+              f"chunk={'FOUND' if sc_chunk else 'MISS'}  ({len(sc_hits)} results)")
+        print(f"  query_codebase: file={'FOUND' if qc_file else 'MISS'}  "
+              f"chunk={'FOUND' if qc_chunk else 'MISS'}  ({len(qc_hits)} results)")
+        if sc_file and not qc_file:
+            print(f"  >>> FILE-LEVEL REGRESSION: query_codebase's dedup/cutoff dropped "
+                  f"the file entirely.")
+        elif sc_chunk and not qc_chunk:
+            print(f"  >>> CHUNK-LEVEL REGRESSION: file present in both, but "
+                  f"query_codebase's kept chunk doesn't contain the target function.")
 
     print("\n  " + "-" * 86)
-    print(f"  search_code secondary-match recall:    {sc_pass}/{total} ({sc_pass/total*100:.0f}%)")
-    print(f"  query_codebase secondary-match recall: {qc_pass}/{total} ({qc_pass/total*100:.0f}%)")
-    return sc_pass, qc_pass, total
+    print(f"  search_code    — file-level: {sc_file_pass}/{total} ({sc_file_pass/total*100:.0f}%)   "
+          f"chunk-level: {sc_chunk_pass}/{total} ({sc_chunk_pass/total*100:.0f}%)")
+    print(f"  query_codebase — file-level: {qc_file_pass}/{total} ({qc_file_pass/total*100:.0f}%)   "
+          f"chunk-level: {qc_chunk_pass}/{total} ({qc_chunk_pass/total*100:.0f}%)")
+    return sc_file_pass, qc_file_pass, total
 
 
 def main():

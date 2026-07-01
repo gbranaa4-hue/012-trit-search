@@ -87,13 +87,17 @@ the realistic alternative an assistant without a search tool would take),
 ## Follow-up: does the token reduction cost you the answer?
 
 See [quality_benchmark_findings.md](quality_benchmark_findings.md) for a
-direct measurement. Short version: yes, sometimes. On a 3-query stress test
-targeting secondary functions living in the same file as a more prominent
-one, query_codebase's dedup+cutoff missed 1/3 (67% recall) where search_code
-caught all 3 (100%). Combined with a tied ground-truth recall test (75%
-each), the overall measured recall was 86% (search_code) vs 71%
-(query_codebase) — a real, non-hypothetical cost for the token savings,
-not just a caveat.
+direct measurement. Short version: yes, sometimes, and there's a second,
+bigger problem underneath it. At the file level, query_codebase traded
+86% → 71% combined recall for the 66.3% token reduction (a real,
+non-hypothetical regression traced to the 70%-relevance-cutoff arithmetic
+on a specific query). But a stricter chunk-level check — does the returned
+preview text actually contain the target function, not just the right
+filename — found both tools are far weaker than file-level recall suggests:
+29% (search_code) vs 14% (query_codebase) chunk-level recall. Most of that
+gap is a shared chunking limitation, not something query_codebase's
+compression specifically caused — but it means neither tool's file-level
+"pass" reliably means an LLM would get the actual answer.
 
 ## Verdict
 
