@@ -7,6 +7,14 @@ the two query shapes that behave completely differently under keyword
 search, using the same real codebase and the same real token measurement
 methodology (`tiktoken` on literal output) as the earlier benchmarks.
 
+**Revision note:** the first pass below (concept-only queries like "how
+does someone buy an upgrade") turned out to overstate semantic search's
+advantage, since reasonable naming conventions make most natural-language
+queries grep-guessable in one try. A follow-up section ("Correction")
+re-tests with only *verified* vocabulary mismatches — legacy renames,
+domain jargon, orphaned references — which is the narrower, honest version
+of the use case. Read that section for the corrected conclusion.
+
 ## Method
 
 Two query sets against `horde-beta-version-1`:
@@ -99,3 +107,57 @@ functional description with no known identifiers should prefer
 `query_codebase`.
 
 Script: `trit_grep_vs_semantic_test.py`
+
+## Correction: the concept-only test set above overstates semantic search's advantage
+
+A fair objection: the "concept-only" queries above (e.g. "how does someone
+buy an upgrade in the shop" → guess "buy" → found in 1 try) aren't testing
+the genuinely hard case. With reasonable naming conventions, most natural-
+language descriptions ARE grep-guessable on the first or second try — that
+collapses most of the measured advantage. The real, narrower question is:
+**what happens when the codebase's actual vocabulary doesn't match natural
+English at all** — legacy renames, domain jargon, or orphaned code — not
+"can you guess an obvious synonym."
+
+### A harder, verified test
+
+Four queries built from vocabulary mismatches confirmed by direct code
+inspection *before* writing the test (not assumed):
+
+| Query | Real implementation | Verified mismatch |
+|---|---|---|
+| "creep AI behavior" | `zombie.gd`'s `ai_mode`/`AIMode` | "creep" only exists in economy code (`get_creep_upgrades`); zero overlap with AI logic |
+| "difficulty scaling" | `spawner_team_1/2.gd`'s `scaling_interval` | the word "difficulty" appears nowhere in the codebase |
+| "in-game currency spending" | `game_manager.gd`'s `spend_gold()` | "money"/"currency" only appear in `build_system.gd` calling `spend_money()` — a function that **does not exist**, an apparent leftover bug from an incomplete rename |
+| "enemy pathing/navigation" | `zombie.gd`'s `move_and_slide`/`_move_toward` | "pathing"/"navigation" only match unrelated terrain-tool files |
+
+| | Tokens | Recall |
+|---|---|---|
+| grep (cumulative guessing) | 3,735 | 1/4 |
+| query_codebase (1 call) | 600 | **2/4** |
+
+**query_codebase wins on both dimensions here** — 84% fewer tokens and
+better recall (2/4 vs 1/4). But note the honest ceiling: it still only
+found 2 of 4. "creep AI behavior" and "difficulty scaling" failed for
+*both* tools — grep because the vocabulary genuinely doesn't exist in the
+code, and query_codebase because semantic similarity apparently isn't
+strong enough to bridge "creep"→`AIMode` or "difficulty"→`scaling_interval`
+either. These are hard misses on both sides, not close calls either tool
+nearly won.
+
+### Revised conclusion
+
+The original decision rule (grep when the identifier is known, semantic
+search when only a description is available) still holds, but the
+concept-only advantage is real only in a narrower band than the first test
+suggested: **genuine terminology drift** — legacy renames, domain-specific
+jargon that doesn't map to common English, orphaned/buggy references from
+incomplete refactors — not "any query phrased as a natural-language
+question." Well-named, actively-maintained code with disciplined
+conventions makes most everyday queries grep-guessable in one or two tries,
+which erases most of semantic search's advantage. The use case that
+survives is specifically: **unfamiliar, legacy, or inconsistently-named
+codebases** where you don't yet know — and can't easily guess — the
+project's internal vocabulary.
+
+Script: `trit_naming_mismatch_test.py`
