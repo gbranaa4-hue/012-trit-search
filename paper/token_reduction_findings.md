@@ -84,6 +84,17 @@ the realistic alternative an assistant without a search tool would take),
   it should be read as "this works on this codebase, by this much," not
   as a universal guarantee.
 
+## Follow-up: does the token reduction cost you the answer?
+
+See [quality_benchmark_findings.md](quality_benchmark_findings.md) for a
+direct measurement. Short version: yes, sometimes. On a 3-query stress test
+targeting secondary functions living in the same file as a more prominent
+one, query_codebase's dedup+cutoff missed 1/3 (67% recall) where search_code
+caught all 3 (100%). Combined with a tied ground-truth recall test (75%
+each), the overall measured recall was 86% (search_code) vs 71%
+(query_codebase) — a real, non-hypothetical cost for the token savings,
+not just a caveat.
+
 ## Verdict
 
 The actual savings (66-99% depending on what you compare against) are

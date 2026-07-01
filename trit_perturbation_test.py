@@ -232,7 +232,7 @@ def robustness_auc(results, baseline_key):
     keys  = sorted(results.keys())
     vals  = [results[k] for k in keys]
     # trapezoidal integration over index (not x-value, since x-scale varies)
-    area  = np.trapz(vals, dx=1)
+    area  = np.trapezoid(vals, dx=1)
     # max possible area if accuracy stayed flat at baseline
     base  = results[baseline_key]
     max_a = base * (len(keys) - 1)
