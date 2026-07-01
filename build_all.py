@@ -1,6 +1,6 @@
 """
-012 Trit Search — Cross-Platform Build Script
-Builds TritSearch for Windows, Mac, and Linux.
+OBSERVE — Cross-Platform Build Script
+Builds OBSERVE for Windows, Mac, and Linux.
 
 On Windows: builds Windows exe, creates Mac/Linux build scripts to run remotely
 On Mac:     builds Mac .app
@@ -18,8 +18,9 @@ ROOT       = Path(__file__).parent
 DIST_DIR   = ROOT / "dist"
 BUILD_DIR  = ROOT / "build"
 MODEL_DIR  = ROOT / "models" / "code-minilm"
-APP_ICON   = ROOT / "icon.ico"   # optional
-APP_NAME   = "TritSearch"
+ICON_ICO   = ROOT / "icon.ico"    # Windows icon (optional)
+ICON_ICNS  = ROOT / "icon.icns"   # Mac icon (optional)
+APP_NAME   = "OBSERVE"
 
 def run(cmd):
     print(f"  $ {' '.join(cmd)}")
@@ -33,7 +34,7 @@ def ensure_pyinstaller():
         run([sys.executable, "-m", "pip", "install", "pyinstaller"])
 
 def build_windows():
-    print("\n[Windows] Building TritSearch.exe...")
+    print(f"\n[Windows] Building {APP_NAME}.exe...")
     ensure_pyinstaller()
 
     cmd = [
@@ -53,9 +54,8 @@ def build_windows():
     else:
         print("  No fine-tuned model found — bundling base model name only")
 
-    # Icon
-    if APP_ICON.exists():
-        cmd += ["--icon", str(APP_ICON)]
+    if ICON_ICO.exists():
+        cmd += ["--icon", str(ICON_ICO)]
 
     cmd.append(str(ROOT / "trit_app.py"))
     run(cmd)
@@ -66,7 +66,7 @@ def build_windows():
     return exe
 
 def build_mac():
-    print("\n[Mac] Building TritSearch.app...")
+    print(f"\n[Mac] Building {APP_NAME}.app...")
     ensure_pyinstaller()
 
     cmd = [
@@ -77,11 +77,14 @@ def build_mac():
         "--distpath", str(DIST_DIR / "mac"),
         "--workpath", str(BUILD_DIR / "mac"),
         "--specpath", str(BUILD_DIR),
-        "--osx-bundle-identifier", "com.012.trit-search",
+        "--osx-bundle-identifier", "com.observe.code-search",
     ]
 
     if MODEL_DIR.exists():
         cmd += ["--add-data", f"{MODEL_DIR}:models/code-minilm"]
+
+    if ICON_ICNS.exists():
+        cmd += ["--icon", str(ICON_ICNS)]
 
     cmd.append(str(ROOT / "trit_app.py"))
     run(cmd)
@@ -106,7 +109,7 @@ def _create_dmg(app_path):
         print(f"  DMG creation skipped: {e}")
 
 def build_linux():
-    print("\n[Linux] Building TritSearch binary...")
+    print(f"\n[Linux] Building {APP_NAME} binary...")
     ensure_pyinstaller()
 
     cmd = [
@@ -137,7 +140,7 @@ def create_mac_build_script():
     """Script to run on a Mac to build the Mac version."""
     script = ROOT / "build_mac.sh"
     script.write_text(f"""#!/bin/bash
-# Run this on a Mac to build TritSearch.app
+# Run this on a Mac to build {APP_NAME}.app
 # Copy the whole 012-ternary folder to the Mac first, then run this.
 
 cd "$(dirname "$0")"
@@ -145,12 +148,12 @@ cd "$(dirname "$0")"
 echo "Installing dependencies..."
 pip3 install sentence-transformers faiss-cpu flask torch pyinstaller
 
-echo "Building TritSearch.app..."
+echo "Building {APP_NAME}.app..."
 python3 build_all.py
 
 echo ""
-echo "Done! Find your app in dist/mac/TritSearch.app"
-echo "Or the DMG installer at dist/mac/TritSearch.dmg"
+echo "Done! Find your app in dist/mac/{APP_NAME}.app"
+echo "Or the DMG installer at dist/mac/{APP_NAME}.dmg"
 """)
     script.chmod(0o755)
     print(f"\n  Mac build script: {script}")
@@ -160,7 +163,7 @@ def create_linux_build_script():
     """Script to run on Linux."""
     script = ROOT / "build_linux.sh"
     script.write_text(f"""#!/bin/bash
-# Run this on Linux to build TritSearch binary
+# Run this on Linux to build {APP_NAME} binary
 
 cd "$(dirname "$0")"
 
@@ -170,12 +173,12 @@ sudo apt-get install -y python3-tk python3-pip 2>/dev/null || true
 echo "Installing Python deps..."
 pip3 install sentence-transformers faiss-cpu flask torch pyinstaller
 
-echo "Building TritSearch..."
+echo "Building {APP_NAME}..."
 python3 build_all.py
 
 echo ""
-echo "Done! Find your binary at dist/linux/TritSearch"
-echo "Make it executable: chmod +x dist/linux/TritSearch"
+echo "Done! Find your binary at dist/linux/{APP_NAME}"
+echo "Make it executable: chmod +x dist/linux/{APP_NAME}"
 """)
     script.chmod(0o755)
     print(f"\n  Linux build script: {script}")
@@ -189,7 +192,7 @@ def create_github_actions():
     workflows_dir.mkdir(parents=True, exist_ok=True)
 
     workflow = workflows_dir / "build.yml"
-    workflow.write_text(f"""name: Build TritSearch
+    workflow.write_text(f"""name: Build {APP_NAME}
 
 on:
   push:
@@ -208,12 +211,12 @@ jobs:
       - name: Install deps
         run: pip install sentence-transformers faiss-cpu flask torch pyinstaller
       - name: Build
-        run: python build_all.py
+        run: python build_all.py --windows
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: TritSearch-Windows
-          path: dist/windows/TritSearch.exe
+          name: {APP_NAME}-Windows
+          path: dist/windows/{APP_NAME}.exe
 
   build-mac:
     runs-on: macos-latest
@@ -225,12 +228,12 @@ jobs:
       - name: Install deps
         run: pip install sentence-transformers faiss-cpu flask torch pyinstaller
       - name: Build
-        run: python build_all.py
+        run: python build_all.py --mac
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: TritSearch-Mac
-          path: dist/mac/TritSearch.dmg
+          name: {APP_NAME}-Mac
+          path: dist/mac/{APP_NAME}.dmg
 
   build-linux:
     runs-on: ubuntu-latest
@@ -244,12 +247,12 @@ jobs:
           sudo apt-get install -y python3-tk
           pip install sentence-transformers faiss-cpu flask torch pyinstaller
       - name: Build
-        run: python build_all.py
+        run: python build_all.py --linux
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: TritSearch-Linux
-          path: dist/linux/TritSearch
+          name: {APP_NAME}-Linux
+          path: dist/linux/{APP_NAME}
 
   release:
     needs: [build-windows, build-mac, build-linux]
@@ -261,38 +264,38 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            TritSearch-Windows/TritSearch.exe
-            TritSearch-Mac/TritSearch.dmg
-            TritSearch-Linux/TritSearch
+            {APP_NAME}-Windows/{APP_NAME}.exe
+            {APP_NAME}-Mac/{APP_NAME}.dmg
+            {APP_NAME}-Linux/{APP_NAME}
           body: |
-            ## TritSearch ${{{{ github.ref_name }}}}
+            ## {APP_NAME} ${{{{ github.ref_name }}}}
             Local semantic code search. Free. Private. No cloud.
 
             ### Download
-            - **Windows**: TritSearch.exe
-            - **Mac**: TritSearch.dmg
-            - **Linux**: TritSearch (chmod +x first)
+            - **Windows**: {APP_NAME}.exe
+            - **Mac**: {APP_NAME}.dmg
+            - **Linux**: {APP_NAME} (chmod +x first)
 
             ### Usage
-            1. Open TritSearch
+            1. Open {APP_NAME}
             2. Click + ADD DIR and select your codebase
             3. Click INDEX CODEBASE
             4. Search by meaning
 """)
     print(f"\n  GitHub Actions workflow: {workflow}")
-    print("  Push to GitHub + tag a release → all 3 builds happen automatically")
+    print("  Push to GitHub + tag a release -> all 3 builds happen automatically")
 
 def print_summary():
     print(f"""
-╔══════════════════════════════════════════════════════════╗
-║              012 TritSearch — Build Summary              ║
-╚══════════════════════════════════════════════════════════╝
++==============================================================+
+|                  {APP_NAME} — Build Summary                       |
++==============================================================+
 
   dist/
-  ├── windows/TritSearch.exe    Windows 10/11
-  ├── mac/TritSearch.app        macOS 12+
-  ├── mac/TritSearch.dmg        Mac installer
-  └── linux/TritSearch          Ubuntu/Debian/Arch
+  |-- windows/{APP_NAME}.exe    Windows 10/11
+  |-- mac/{APP_NAME}.app        macOS 12+
+  |-- mac/{APP_NAME}.dmg        Mac installer
+  `-- linux/{APP_NAME}          Ubuntu/Debian/Arch
 
   To build all platforms automatically (free):
   1. Push this folder to a GitHub repo
@@ -301,7 +304,7 @@ def print_summary():
   4. Download from GitHub Releases page
 
   Or build manually on each platform:
-  - Windows: python build_all.py
+  - Windows: python build_all.py --windows
   - Mac:     ./build_mac.sh
   - Linux:   ./build_linux.sh
 """)

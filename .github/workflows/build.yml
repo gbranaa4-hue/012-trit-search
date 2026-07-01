@@ -1,4 +1,4 @@
-name: Build TritSearch
+name: Build OBSERVE
 
 on:
   push:
@@ -17,12 +17,12 @@ jobs:
       - name: Install deps
         run: pip install sentence-transformers faiss-cpu flask torch pyinstaller
       - name: Build
-        run: python build_all.py
+        run: python build_all.py --windows
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: TritSearch-Windows
-          path: dist/windows/TritSearch.exe
+          name: OBSERVE-Windows
+          path: dist/windows/OBSERVE.exe
 
   build-mac:
     runs-on: macos-latest
@@ -34,12 +34,12 @@ jobs:
       - name: Install deps
         run: pip install sentence-transformers faiss-cpu flask torch pyinstaller
       - name: Build
-        run: python build_all.py
+        run: python build_all.py --mac
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: TritSearch-Mac
-          path: dist/mac/TritSearch.dmg
+          name: OBSERVE-Mac
+          path: dist/mac/OBSERVE.dmg
 
   build-linux:
     runs-on: ubuntu-latest
@@ -53,12 +53,12 @@ jobs:
           sudo apt-get install -y python3-tk
           pip install sentence-transformers faiss-cpu flask torch pyinstaller
       - name: Build
-        run: python build_all.py
+        run: python build_all.py --linux
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: TritSearch-Linux
-          path: dist/linux/TritSearch
+          name: OBSERVE-Linux
+          path: dist/linux/OBSERVE
 
   release:
     needs: [build-windows, build-mac, build-linux]
@@ -70,20 +70,20 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            TritSearch-Windows/TritSearch.exe
-            TritSearch-Mac/TritSearch.dmg
-            TritSearch-Linux/TritSearch
+            OBSERVE-Windows/OBSERVE.exe
+            OBSERVE-Mac/OBSERVE.dmg
+            OBSERVE-Linux/OBSERVE
           body: |
-            ## TritSearch ${{ github.ref_name }}
+            ## OBSERVE ${{ github.ref_name }}
             Local semantic code search. Free. Private. No cloud.
 
             ### Download
-            - **Windows**: TritSearch.exe
-            - **Mac**: TritSearch.dmg
-            - **Linux**: TritSearch (chmod +x first)
+            - **Windows**: OBSERVE.exe
+            - **Mac**: OBSERVE.dmg
+            - **Linux**: OBSERVE (chmod +x first)
 
             ### Usage
-            1. Open TritSearch
+            1. Open OBSERVE
             2. Click + ADD DIR and select your codebase
             3. Click INDEX CODEBASE
             4. Search by meaning
