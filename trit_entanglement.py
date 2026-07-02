@@ -263,9 +263,21 @@ def _verify_summary_claims_v2(samples_text: str, summary: str, models=SUMMARY_VE
 def summarize_project(engine: SearchEngine, project: str, chunk_indices: list, sample_n: int = 8) -> dict:
     """Sample representative chunks, ask a local model to summarize what
     this project is/does/is for, then verify the summary's specific claims
-    against the actual sampled content via consensus check (not trusting
-    the summarizing model's own self-report — see the real "tribe = FPS"
-    hallucination this verification step was built to catch)."""
+    against the actual sampled content (not trusting the summarizing
+    model's own self-report — see the real "tribe = FPS" hallucination
+    this verification step was built to catch).
+
+    Uses the per-claim adversarial verifier (v2), not the holistic one
+    (v1). Measured via calibrate_consensus.py on 12 identical injected-
+    fabrication test cases: v1 (one holistic "any unsupported claims?"
+    question per summary) had 17% recall — it missed 5 of 6 planted
+    fabrications because a single plausible-sounding sentence blends into
+    an otherwise-correct paragraph when judged as a whole. v2 (decompose
+    into individual claims first, check each one narrowly) had 100%
+    recall on the same cases, at the cost of a higher false-positive rate
+    (67% vs 33% precision) — an acceptable trade for a hallucination
+    check: a false alarm costs a manual glance, a missed hallucination
+    silently pollutes the database."""
     rng = np.random.default_rng(hash(project) % (2**31))
     sample_idx = rng.choice(chunk_indices, size=min(sample_n, len(chunk_indices)), replace=False)
 
@@ -292,7 +304,7 @@ def summarize_project(engine: SearchEngine, project: str, chunk_indices: list, s
     except Exception as e:
         return {"summary": f"(summarization failed: {e})", "unsupported_claims": []}
 
-    unsupported = _verify_summary_claims(samples_text, summary)
+    unsupported = _verify_summary_claims_v2(samples_text, summary)
     return {"summary": summary, "unsupported_claims": unsupported or []}
 
 
