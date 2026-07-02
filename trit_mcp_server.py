@@ -636,48 +636,123 @@ def index_status() -> str:
 
 GODOT_EXE = str(Path.home() / "Downloads" / "Godot_v4.6.2-stable_win64.exe" / "Godot_v4.6.2-stable_win64_console.exe")
 
+def _find_git_root(path: Path):
+    """Walk upward from `path` looking for a .git directory. Returns the
+    repo root Path, or None if the file isn't inside any git repo."""
+    for parent in [path.parent, *path.parents]:
+        if (parent / ".git").exists():
+            return parent
+    return None
+
+def _git_file_is_dirty(repo_root: Path, path: Path) -> bool:
+    """True if this specific file has uncommitted changes RIGHT NOW,
+    before this tool touches it. A dirty file means we cannot cleanly
+    tell 'the user's own unsaved work' apart from 'this tool's edit' —
+    reverting on failure would silently discard whatever the user hadn't
+    saved yet, which is worse than doing nothing."""
+    try:
+        result = subprocess.run(
+            ["git", "status", "--porcelain", "--", str(path)],
+            cwd=str(repo_root), capture_output=True, text=True, timeout=15
+        )
+        return bool(result.stdout.strip())
+    except Exception:
+        return True   # can't determine git state — treat as dirty, refuse by default
+
+def _git_revert_file(repo_root: Path, path: Path) -> bool:
+    """Durable revert via git — works even if this tool's own process
+    already exited and restarted, unlike an in-memory Python variable."""
+    try:
+        result = subprocess.run(
+            ["git", "checkout", "--", str(path)],
+            cwd=str(repo_root), capture_output=True, text=True, timeout=15
+        )
+        return result.returncode == 0
+    except Exception:
+        return False
+
 @mcp.tool()
-def apply_and_verify(file_path: str, old_text: str, new_text: str) -> str:
+def apply_and_verify(file_path: str, old_text: str, new_text: str, force_dirty: bool = False) -> str:
     """
     Closes the loop that search_code/query_codebase/propose_change stop
     short of: applies a real edit to a real file, then verifies it by
     ACTUALLY RUNNING the code — not just checking the text changed.
 
-    Honest scope: this verifies (1) the edit applied cleanly to exactly
-    one location, (2) the file still parses/compiles after the edit
-    (catches a syntax-breaking edit), and (3) for .gd files, that Godot
-    can load the script without error. It does NOT automatically write or
-    run a custom behavioral test asserting the new value does what you
-    intended — that's a genuinely separate, per-feature step (see the
-    turret fire_rate / bulk-discount TDD examples built earlier this
-    session, done by hand with a purpose-built test file). This tool is
-    the safety-net "did I break anything" check, not a substitute for a
-    real test asserting the specific intended behavior.
+    SAFETY, layered, real fallbacks — not just a single in-memory revert:
 
-    Use this AFTER propose_change has given you a specific, grounded
-    old_text/new_text pair to apply — not as a way to skip writing a real
-    test for anything that matters.
+    1. Git-dirty refusal (default): if the target file already has
+       uncommitted changes before this tool touches it, the edit is
+       REFUSED by default. An in-memory revert on failure would go back
+       to that pre-existing dirty state, silently mixing "the user's own
+       unsaved work" with "this tool's edit" — there's no way to tell
+       them apart afterward. Pass force_dirty=True to proceed anyway
+       (e.g. you already know the dirty state is fine to build on).
+    2. Durable git-based revert: if the file IS clean (or force_dirty was
+       used) and the edit breaks the syntax check, the file is restored
+       via `git checkout --`, not an in-memory Python variable — this
+       works even if the process crashes or is killed mid-operation,
+       unlike a purely in-memory backup.
+    3. Non-git files: if the file isn't inside a git repository at all,
+       a literal `.bak` backup file is written alongside it before
+       editing, so a durable recovery copy exists on disk regardless of
+       whether this process survives to finish the operation.
+    4. Ambiguous-match refusal: old_text must appear exactly once, or
+       the edit is refused rather than guessing which occurrence to hit.
+    5. Syntax verification: the edited file must still parse/load
+       (py_compile for .py, Godot --check-only for .gd) or it's reverted.
+
+    Honest scope, still true after all of the above: this verifies the
+    file still parses/loads and (for git-tracked files) that a real,
+    durable undo path exists — it does NOT confirm the new behavior is
+    what you intended. That still needs a real test, same as the turret
+    fire_rate / bulk-discount TDD examples built by hand earlier. This
+    tool prevents "silently broken or lost work," not "wrong but valid
+    code" — those need a genuine behavioral test, not a safety net.
 
     Args:
         file_path: Absolute path to the real file to edit.
         old_text: The exact existing text to replace — must appear
-            exactly once in the file, or the edit is rejected (ambiguous
-            edits are refused rather than guessed at).
+            exactly once in the file, or the edit is rejected.
         new_text: The replacement text.
+        force_dirty: If True, proceed even if the file already has
+            uncommitted changes (default False — refuses by default).
 
     Returns:
-        A report: whether the edit applied, whether the file still
-        parses/loads after the change, and the file reverted if it broke.
+        A report of exactly what safety checks ran, what happened, and
+        (on failure) exactly how the file was restored to safety.
     """
     path = Path(file_path)
     if not path.exists():
         return f"FAILED — file does not exist: {file_path}"
 
+    repo_root = _find_git_root(path)
+    backup_path = None
+
+    if repo_root is not None:
+        if _git_file_is_dirty(repo_root, path) and not force_dirty:
+            return (
+                f"REFUSED — {file_path} already has uncommitted changes before this edit. "
+                f"Reverting on failure would silently mix your existing unsaved work with "
+                f"this tool's edit, with no way to separate them afterward. "
+                f"Commit or stash your current changes first, or pass force_dirty=True if "
+                f"you're sure it's safe to build on top of the current dirty state. "
+                f"No edit was applied."
+            )
+    else:
+        # Not a git repo at all — durable on-disk backup as the fallback,
+        # since there's no `git checkout` safety net available here.
+        backup_path = path.with_suffix(path.suffix + ".bak")
+        backup_path.write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
+
     original = path.read_text(encoding="utf-8")
     count = original.count(old_text)
     if count == 0:
+        if backup_path:
+            backup_path.unlink(missing_ok=True)
         return f"FAILED — old_text not found in {file_path}. No edit applied."
     if count > 1:
+        if backup_path:
+            backup_path.unlink(missing_ok=True)
         return (f"FAILED — old_text appears {count} times in {file_path}, ambiguous which "
                 f"one to replace. No edit applied. Include more surrounding context in old_text "
                 f"to make it unique.")
@@ -694,28 +769,44 @@ def apply_and_verify(file_path: str, old_text: str, new_text: str) -> str:
         detail = result.stderr.strip() if not ok else "compiles cleanly"
     elif ext == ".gd":
         if not Path(GODOT_EXE).exists():
-            path.write_text(original, encoding="utf-8")   # can't verify — revert to be safe
-            return (f"FAILED — edit applied but could not verify: Godot not found at "
-                    f"{GODOT_EXE}. Reverted the edit to be safe.")
-        result = subprocess.run(
-            [GODOT_EXE, "--headless", "--check-only", "--script", str(path)],
-            capture_output=True, text=True, timeout=60, cwd=str(path.parent)
-        )
-        # Godot's --check-only returns 0 and no "Parse Error" on a valid script
-        ok = result.returncode == 0 and "error" not in result.stderr.lower()
-        detail = "loads cleanly in Godot" if ok else (result.stderr.strip() or result.stdout.strip())
+            ok = False
+            detail = f"could not verify: Godot not found at {GODOT_EXE}"
+        else:
+            result = subprocess.run(
+                [GODOT_EXE, "--headless", "--check-only", "--script", str(path)],
+                capture_output=True, text=True, timeout=60, cwd=str(path.parent)
+            )
+            ok = result.returncode == 0 and "error" not in result.stderr.lower()
+            detail = "loads cleanly in Godot" if ok else (result.stderr.strip() or result.stdout.strip())
     else:
         ok = True
         detail = f"no syntax checker for {ext} files — edit applied, unverified"
 
     if not ok:
-        path.write_text(original, encoding="utf-8")   # revert — don't leave a broken file
+        # Durable revert: git checkout for tracked files (works even across
+        # process restarts), .bak restore for untracked files.
+        if repo_root is not None:
+            reverted = _git_revert_file(repo_root, path)
+            method = "git checkout --" if reverted else "git revert FAILED — manual recovery needed"
+        elif backup_path is not None:
+            path.write_text(backup_path.read_text(encoding="utf-8"), encoding="utf-8")
+            backup_path.unlink(missing_ok=True)
+            method = ".bak file restore"
+        else:
+            path.write_text(original, encoding="utf-8")
+            method = "in-memory restore (no durable backup existed)"
         return (f"REVERTED — edit broke the file. {detail}\n"
+                f"Restored via: {method}\n"
                 f"The file has been restored to its original state. No changes were kept.")
 
+    if backup_path:
+        backup_path.unlink(missing_ok=True)   # success — clean up the temp backup
+
+    revert_hint = f"`git checkout -- {file_path}`" if repo_root else "no durable undo available (not a git repo)"
     return (f"APPLIED AND VERIFIED — {file_path} edited successfully, replacing:\n"
             f'  "{old_text}"\nwith:\n  "{new_text}"\n'
             f"Syntax check: {detail}\n"
+            f"To undo this specific edit later: {revert_hint}\n"
             f"NOTE: this confirms the file still parses/loads — it does NOT confirm the new "
             f"behavior is what you intended. Write a real test for that if this change matters.")
 
