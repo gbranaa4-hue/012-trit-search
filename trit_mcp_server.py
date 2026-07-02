@@ -31,6 +31,7 @@ Usage (as an MCP server, e.g. in Claude Code's mcp config):
   }
 """
 import sys
+import subprocess
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -632,6 +633,91 @@ def index_status() -> str:
         return f"Not ready: {_loaded['error']}"
     n_chunks = len(engine.metadata)
     return f"OBSERVE index ready — {n_chunks:,} chunks indexed, model: {MODEL_PATH}"
+
+GODOT_EXE = str(Path.home() / "Downloads" / "Godot_v4.6.2-stable_win64.exe" / "Godot_v4.6.2-stable_win64_console.exe")
+
+@mcp.tool()
+def apply_and_verify(file_path: str, old_text: str, new_text: str) -> str:
+    """
+    Closes the loop that search_code/query_codebase/propose_change stop
+    short of: applies a real edit to a real file, then verifies it by
+    ACTUALLY RUNNING the code — not just checking the text changed.
+
+    Honest scope: this verifies (1) the edit applied cleanly to exactly
+    one location, (2) the file still parses/compiles after the edit
+    (catches a syntax-breaking edit), and (3) for .gd files, that Godot
+    can load the script without error. It does NOT automatically write or
+    run a custom behavioral test asserting the new value does what you
+    intended — that's a genuinely separate, per-feature step (see the
+    turret fire_rate / bulk-discount TDD examples built earlier this
+    session, done by hand with a purpose-built test file). This tool is
+    the safety-net "did I break anything" check, not a substitute for a
+    real test asserting the specific intended behavior.
+
+    Use this AFTER propose_change has given you a specific, grounded
+    old_text/new_text pair to apply — not as a way to skip writing a real
+    test for anything that matters.
+
+    Args:
+        file_path: Absolute path to the real file to edit.
+        old_text: The exact existing text to replace — must appear
+            exactly once in the file, or the edit is rejected (ambiguous
+            edits are refused rather than guessed at).
+        new_text: The replacement text.
+
+    Returns:
+        A report: whether the edit applied, whether the file still
+        parses/loads after the change, and the file reverted if it broke.
+    """
+    path = Path(file_path)
+    if not path.exists():
+        return f"FAILED — file does not exist: {file_path}"
+
+    original = path.read_text(encoding="utf-8")
+    count = original.count(old_text)
+    if count == 0:
+        return f"FAILED — old_text not found in {file_path}. No edit applied."
+    if count > 1:
+        return (f"FAILED — old_text appears {count} times in {file_path}, ambiguous which "
+                f"one to replace. No edit applied. Include more surrounding context in old_text "
+                f"to make it unique.")
+
+    edited = original.replace(old_text, new_text)
+    path.write_text(edited, encoding="utf-8")
+
+    # Verify the file still parses/loads — catches a syntax-breaking edit
+    ext = path.suffix.lower()
+    if ext == ".py":
+        result = subprocess.run([sys.executable, "-m", "py_compile", str(path)],
+                                capture_output=True, text=True, timeout=30)
+        ok = result.returncode == 0
+        detail = result.stderr.strip() if not ok else "compiles cleanly"
+    elif ext == ".gd":
+        if not Path(GODOT_EXE).exists():
+            path.write_text(original, encoding="utf-8")   # can't verify — revert to be safe
+            return (f"FAILED — edit applied but could not verify: Godot not found at "
+                    f"{GODOT_EXE}. Reverted the edit to be safe.")
+        result = subprocess.run(
+            [GODOT_EXE, "--headless", "--check-only", "--script", str(path)],
+            capture_output=True, text=True, timeout=60, cwd=str(path.parent)
+        )
+        # Godot's --check-only returns 0 and no "Parse Error" on a valid script
+        ok = result.returncode == 0 and "error" not in result.stderr.lower()
+        detail = "loads cleanly in Godot" if ok else (result.stderr.strip() or result.stdout.strip())
+    else:
+        ok = True
+        detail = f"no syntax checker for {ext} files — edit applied, unverified"
+
+    if not ok:
+        path.write_text(original, encoding="utf-8")   # revert — don't leave a broken file
+        return (f"REVERTED — edit broke the file. {detail}\n"
+                f"The file has been restored to its original state. No changes were kept.")
+
+    return (f"APPLIED AND VERIFIED — {file_path} edited successfully, replacing:\n"
+            f'  "{old_text}"\nwith:\n  "{new_text}"\n'
+            f"Syntax check: {detail}\n"
+            f"NOTE: this confirms the file still parses/loads — it does NOT confirm the new "
+            f"behavior is what you intended. Write a real test for that if this change matters.")
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
