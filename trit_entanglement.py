@@ -187,7 +187,16 @@ def _verify_summary_claims(samples_text: str, summary: str, models=SUMMARY_VERIF
     # Majority: if 2+ of the models both said something other than "NONE"
     # (allowing for minor formatting), treat this as a confirmed issue —
     # same majority-vote principle as propose_change's semantic-role check.
-    flagged = [v for v in votes if "NONE" not in v.upper()[:20]]
+    #
+    # Real bug found and fixed: originally only checked the first 20
+    # characters for "NONE", which missed cases where a model explained
+    # its reasoning BEFORE stating the final verdict (measured real case:
+    # RUSTERVER's summary got wrongly flagged because one model's response
+    # was "The summary does not contain any specific claims... NONE" -
+    # "NONE" appeared at the end, past the 20-char cutoff, so a genuinely
+    # clean verdict was miscounted as a flagged one). Search the whole
+    # response for "NONE" as a distinct word instead of a text-prefix.
+    flagged = [v for v in votes if not re.search(r"\bNONE\b", v.upper())]
     if len(flagged) > len(votes) / 2:
         return flagged
     return []
