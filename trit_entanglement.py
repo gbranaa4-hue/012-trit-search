@@ -348,6 +348,13 @@ def compute_entanglement(engine: SearchEngine, groups: dict, project_a: str, pro
 
 
 def main():
+    # Source snippets can contain arbitrary Unicode (arrows, checkmarks,
+    # non-Latin identifiers, etc.). Windows consoles default to a narrow
+    # codec (cp1252) that can't encode most of it, and a crash mid-preview-
+    # print here throws away an otherwise-complete run. Replace unencodable
+    # characters instead of crashing.
+    sys.stdout.reconfigure(errors="replace")
+
     print("Loading OBSERVE index...")
     engine = SearchEngine()
     done = {"flag": False}
