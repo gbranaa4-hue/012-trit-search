@@ -97,9 +97,25 @@ def _infer_project_name(base_dir: str, rel_path: str) -> str:
     return first
 
 
-def group_chunks_by_project(engine: SearchEngine):
-    """Returns {project_name: [chunk_indices]} using the loaded index's
-    metadata directly — no new search calls needed."""
+_DUPLICATE_SUFFIX = re.compile(r"\s*\(\d+\)$")   # "Foo(1)", "Foo (2)" -> "Foo"
+
+def group_chunks_by_project(engine: SearchEngine, merge_duplicate_suffixes: bool = True):
+    """
+    Returns {project_name: [chunk_indices]} using the loaded index's
+    metadata directly — no new search calls needed.
+
+    merge_duplicate_suffixes: if True, folders differing only by a
+    trailing "(1)"/"(2)" (the pattern Windows/browsers add when the same
+    folder gets downloaded/extracted twice) are merged into one project.
+    Measured real case: "QuasicrystalMEMS_Paper_Branaa" and
+    "QuasicrystalMEMS_Paper_Branaa(1)" both appeared as separate
+    "projects" at 206 chunks each — almost certainly the same folder
+    duplicated, not two genuinely distinct codebases. Merging is a
+    reasonable default but not guaranteed correct — a "(1)" folder COULD
+    legitimately be a different, later revision with real differences;
+    this just reports it as one project rather than silently treating
+    duplicates as separate entanglement-worthy relationships.
+    """
     groups = defaultdict(list)
     for i, m in enumerate(engine.metadata):
         if not (isinstance(m, list) and engine.path_table):
@@ -107,6 +123,8 @@ def group_chunks_by_project(engine: SearchEngine):
         p_idx, offset = m
         p = engine.path_table[p_idx]
         project = _infer_project_name(p["base_dir"], p["rel_path"])
+        if merge_duplicate_suffixes:
+            project = _DUPLICATE_SUFFIX.sub("", project)
         groups[project].append(i)
     return groups
 
