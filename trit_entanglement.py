@@ -401,7 +401,12 @@ def main():
             score, evidence = compute_entanglement(engine, groups, a, b)
             print(f"\n{a} <-> {b}: entanglement score = {score:.3f}")
             for e in evidence:
-                print(f"  [{e['score']:.2f}] {a}:{e['a_path']} <-> {b}:{e['b_path']}")
+                genuine_tag = "GENUINE" if e.get("likely_genuine") else "coincidental?"
+                print(
+                    f"  [content={e['score']:.2f} filename_sim={e.get('filename_similarity', 0):.2f} "
+                    f"combined={e.get('combined_score', e['score']):.2f}] ({genuine_tag}) "
+                    f"{a}:{e['a_path']} <-> {b}:{e['b_path']}"
+                )
                 print(f"        A: {e['a_preview'][:100]}")
                 print(f"        B: {e['b_preview'][:100]}")
             db["entanglement"].append({"a": a, "b": b, "score": score, "evidence": evidence})
