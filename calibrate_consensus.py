@@ -36,6 +36,7 @@ from trit_entanglement import (
     INDEX_DIR, MODEL_PATH, MIN_CHUNKS_PER_PROJECT,
     group_chunks_by_project, get_chunk_path, get_chunk_preview,
     _call_ollama, _verify_summary_claims, _verify_summary_claims_v2, NON_PROJECT_HINTS,
+    stable_hash,
 )
 
 sys.stdout.reconfigure(errors="replace")
@@ -103,7 +104,7 @@ def main():
     results = []  # each: dict(project, case, verifier, flagged, ...)
     for pi, project in enumerate(real_projects):
         print(f"[{pi+1}/{len(real_projects)}] {project} ...")
-        samples = sample_project(engine, project, groups[project], seed=hash(project) % (2**31))
+        samples = sample_project(engine, project, groups[project], seed=stable_hash(project) % (2**31))
         if not samples:
             print("  (no readable samples, skipping)")
             continue

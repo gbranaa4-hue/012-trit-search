@@ -18,6 +18,7 @@ import json
 import re
 import sys
 import time
+import zlib
 import urllib.request
 from pathlib import Path
 from collections import defaultdict
@@ -70,6 +71,22 @@ NON_PROJECT_HINTS = {
 }
 
 MIN_CHUNKS_PER_PROJECT = 8   # ignore noise — a handful of stray chunks isn't "a project"
+
+
+def stable_hash(s: str) -> int:
+    """Deterministic string -> int, safe to use as an RNG seed across
+    separate process runs. Real bug found and fixed: code throughout this
+    pipeline used Python's builtin hash(project) as a random seed, assuming
+    it was reproducible run-to-run because it "looks seeded." It isn't --
+    Python randomizes string hashing per-process by default (PYTHONHASHSEED,
+    a security feature since 3.3), confirmed directly: hash("Spikeling-
+    Project") returned three DIFFERENT values across three separate
+    `python -c` invocations. That meant every full pipeline run sampled a
+    genuinely different random subset of chunks per project, even for the
+    identical project — summaries, verification, and evidence previews
+    could differ between runs for no reason a user could see or explain.
+    zlib.crc32 is not randomized and gives the same value every time."""
+    return zlib.crc32(s.encode("utf-8"))
 
 
 def _call_ollama(prompt: str, model: str = OLLAMA_MODEL, timeout: int = 90) -> str:
@@ -278,7 +295,7 @@ def summarize_project(engine: SearchEngine, project: str, chunk_indices: list, s
     (67% vs 33% precision) — an acceptable trade for a hallucination
     check: a false alarm costs a manual glance, a missed hallucination
     silently pollutes the database."""
-    rng = np.random.default_rng(hash(project) % (2**31))
+    rng = np.random.default_rng(stable_hash(project) % (2**31))
     sample_idx = rng.choice(chunk_indices, size=min(sample_n, len(chunk_indices)), replace=False)
 
     samples = []
