@@ -78,6 +78,10 @@ _ENGINE_API_DENYLIST = {
     "get_viewport", "get_window", "queue_redraw", "set_process",
     "set_physics_process", "instantiate", "preload", "load", "connect",
     "disconnect", "emit_signal", "is_instance_valid", "class_name",
+    "has_method", "has_signal", "is_connected", "create_tween",
+    "tween_property", "begins_with", "ends_with", "to_upper", "to_lower",
+    "get_pressed", "get_width", "get_height", "get_surface", "get_rel",
+    "set_mode", "set_visible", "set_caption", "draw_box", "draw_sphere",
     # Python dunder/stdlib
     "__main__", "__name__", "__init__", "__repr__", "__str__", "__len__",
     "__eq__", "__hash__", "__iter__", "__next__", "__enter__", "__exit__",

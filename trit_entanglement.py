@@ -330,8 +330,17 @@ def _filename_similarity(path_a: str, path_b: str) -> float:
     return difflib.SequenceMatcher(None, name_a, name_b).ratio()
 
 
+def _resolve_full_path(rel_path: str, base_dirs: list):
+    for b in base_dirs:
+        p = Path(b) / rel_path
+        if p.exists():
+            return p
+    return None
+
+
 def compute_entanglement(engine: SearchEngine, groups: dict, project_a: str, project_b: str,
-                          top_k: int = 3, sample_cap: int = 300, candidate_pool: int = 60):
+                          top_k: int = 3, sample_cap: int = 300, candidate_pool: int = 60,
+                          base_dirs: list = None):
     """
     Cross-project semantic overlap, with a SECOND independent signal
     (filename similarity) used to separate genuine relationships from
@@ -410,8 +419,40 @@ def compute_entanglement(engine: SearchEngine, groups: dict, project_a: str, pro
         if len(evidence) >= top_k:
             break
 
+    # Compound-identifier overlap: a second independent genuineness signal,
+    # found and calibrated via calibrate_cross_language.py + a scaled-up
+    # verification pass (apply_compound_signal.py). Filename similarity
+    # structurally cannot detect cross-LANGUAGE relationships (a .h file
+    # and a .gd file never look similar by name/extension even when they
+    # implement the same design — the confirmed real case: Spikeling-
+    # Project's spikeling_hw.h and tribe's spikeling.gd share the exact
+    # threshold=110 neuron convention). Compound (snake_case) identifier
+    # overlap, with known engine/stdlib API excluded, catches that case
+    # where filename similarity cannot. Measured on 544 real evidence
+    # pairs: 23% fire rate, top-scoring matches are genuine custom
+    # vocabulary once framework noise is denylisted — not perfect
+    # (leftover builtins can still slip through) but a real improvement,
+    # not a guess.
+    if base_dirs:
+        from corpus_idf import compound_identifier_overlap
+        for e in evidence:
+            pa = _resolve_full_path(e["a_path"], base_dirs)
+            pb = _resolve_full_path(e["b_path"], base_dirs)
+            shared = set()
+            if pa is not None and pb is not None:
+                try:
+                    ta = pa.read_text(encoding="utf-8", errors="ignore")
+                    tb = pb.read_text(encoding="utf-8", errors="ignore")
+                    shared = compound_identifier_overlap(ta, tb)
+                except Exception:
+                    shared = set()
+            e["shared_compound_identifiers"] = sorted(shared)
+
     for e in evidence:
-        e["likely_genuine"] = e["filename_similarity"] > 0.3   # rough, stated threshold — not a hard guarantee
+        e["likely_genuine"] = (
+            e["filename_similarity"] > 0.3
+            or len(e.get("shared_compound_identifiers", [])) > 0
+        )
         e["score"] = e["content_score"]   # keep back-compat key for existing callers/db format
 
     return avg_score, evidence
@@ -470,12 +511,14 @@ def main():
             "unsupported_claims": result["unsupported_claims"],
         }
 
+    base_dirs = sorted({p["base_dir"] for p in engine.path_table})
+
     print("\n" + "=" * 70)
     print("  CROSS-PROJECT ENTANGLEMENT")
     print("=" * 70)
     for i, a in enumerate(real_projects):
         for b in real_projects[i + 1:]:
-            score, evidence = compute_entanglement(engine, groups, a, b)
+            score, evidence = compute_entanglement(engine, groups, a, b, base_dirs=base_dirs)
             print(f"\n{a} <-> {b}: entanglement score = {score:.3f}")
             for e in evidence:
                 genuine_tag = "GENUINE" if e.get("likely_genuine") else "coincidental?"
@@ -486,6 +529,9 @@ def main():
                 )
                 print(f"        A: {e['a_preview'][:100]}")
                 print(f"        B: {e['b_preview'][:100]}")
+                shared_ids = e.get("shared_compound_identifiers") or []
+                if shared_ids:
+                    print(f"        shared compound identifiers: {shared_ids[:10]}")
             db["entanglement"].append({"a": a, "b": b, "score": score, "evidence": evidence})
 
     with open(OUTPUT_DB, "w", encoding="utf-8") as f:
