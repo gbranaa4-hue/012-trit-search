@@ -255,6 +255,20 @@ def main():
         deduped.append(r)
     cross_project_refs = deduped
 
+    # Recompute "ambiguous" AFTER dedup, not before. Real bug found via
+    # manual GUI inspection: `ambiguous` was set from the raw candidate
+    # count at append time, which counted the same physical target file
+    # indexed twice under different base_dir conventions as "2 different
+    # candidates" -- e.g. spikeling_sdk.py and _kiss_fft_guts.h were both
+    # shown as [AMBIGUOUS] even though exactly one distinct target
+    # survived deduplication. Ambiguity should reflect distinct targets
+    # AFTER dedup, not raw pre-dedup candidate count.
+    group_sizes = defaultdict(int)
+    for r in cross_project_refs:
+        group_sizes[(r["source_project"], r["source_path"], r["raw_reference"])] += 1
+    for r in cross_project_refs:
+        r["ambiguous"] = group_sizes[(r["source_project"], r["source_path"], r["raw_reference"])] > 1
+
     print(f"{within_project_count} within-project references resolved")
     print(f"{unresolved_count} references didn't resolve to any indexed file (external libs, stdlib, etc.)")
     print(f"{len(cross_project_refs)} CROSS-PROJECT references found (deduplicated)\n")

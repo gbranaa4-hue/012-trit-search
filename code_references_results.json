@@ -6,7 +6,7 @@
       "target_project": "Spikeling-Project",
       "target_path": "Spikeling-Project\\legacy-versions\\spikeling_sdk.py",
       "raw_reference": "spikeling_sdk",
-      "ambiguous": true
+      "ambiguous": false
     },
     {
       "source_project": "(loose scripts, no project folder)",
@@ -14,7 +14,7 @@
       "target_project": "Spikeling-Project",
       "target_path": "Spikeling-Project\\legacy-versions\\spikeling_sdk.py",
       "raw_reference": "spikeling_sdk",
-      "ambiguous": true
+      "ambiguous": false
     },
     {
       "source_project": "(loose scripts, no project folder)",
@@ -22,7 +22,7 @@
       "target_project": "Spikeling-Project",
       "target_path": "Spikeling-Project\\parallel-audio\\spikeling_test\\_kiss_fft_guts.h",
       "raw_reference": "_kiss_fft_guts.h",
-      "ambiguous": true
+      "ambiguous": false
     },
     {
       "source_project": "(loose scripts, no project folder)",
