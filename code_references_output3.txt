@@ -1,0 +1,45 @@
+Loading OBSERVE index...
+  Loading model...
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|##########| 103/103 [00:00<00:00, 7589.97it/s]
+  Loading ternary-compressed index...
+  Ready - 58,224 chunks indexed (4.48MB on disk, 19.9x compressed). Start searching!
+990 unique files across 20 real projects
+
+9332 within-project references resolved
+2417312 references didn't resolve to any indexed file (external libs, stdlib, etc.)
+5 CROSS-PROJECT references found (deduplicated)
+
+======================================================================
+  CROSS-PROJECT REFERENCES (code literally importing/loading
+  a file from a DIFFERENT indexed project)
+======================================================================
+
+(loose scripts, no project folder):gemini-code-1781614419928.py
+  -> imports/loads "spikeling_sdk"
+  -> resolves to Spikeling-Project:Spikeling-Project\legacy-versions\spikeling_sdk.py [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):gemini-code-1781614424987.py
+  -> imports/loads "spikeling_sdk"
+  -> resolves to Spikeling-Project:Spikeling-Project\legacy-versions\spikeling_sdk.py [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):Users\gbran\Downloads\kiss_fft.c
+  -> imports/loads "_kiss_fft_guts.h"
+  -> resolves to Spikeling-Project:Spikeling-Project\parallel-audio\spikeling_test\_kiss_fft_guts.h [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):Users\gbran\Downloads\LeaperCreep.gd
+  -> imports/loads "res://zombie/zombie.gd"
+  -> resolves to horde-beta-version-1:zombie.gd [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):Users\gbran\Downloads\LeaperCreep.gd
+  -> imports/loads "res://zombie/zombie.gd"
+  -> resolves to all_scripts:Users\gbran\Downloads\all_scripts\zombie.gd [AMBIGUOUS -- multiple files share this name]
+
+======================================================================
+  C# NAMESPACE REFERENCES (weaker signal -- not file-resolved)
+======================================================================
+
+(loose scripts, no project folder): ['CompanionServer', 'ConVar', 'Facepunch', 'Network', 'Newtonsoft.Json', 'Newtonsoft.Json.Converters', 'Oxide.Core', 'Oxide.Core.Configuration', 'Oxide.Core.Libraries', 'Oxide.Core.Libraries.Covalence', 'Oxide.Core.Plugins', 'Oxide.Game.Rust', 'Oxide.Game.Rust.Cui', 'Oxide.Plugins', 'Oxide.Plugins.NTeleportationExtensionMethods']
+
+RUSTERVER: ['CompanionServer', 'ConVar', 'Facepunch', 'Facepunch.CardGames', 'Facepunch.Extend', 'Facepunch.Math', 'Network', 'Newtonsoft.Json', 'Newtonsoft.Json.Converters', 'Newtonsoft.Json.Linq', 'Oxide.Core', 'Oxide.Core.Configuration', 'Oxide.Core.Database', 'Oxide.Core.Libraries', 'Oxide.Core.Libraries.Covalence']
+
+Saved: C:\Users\gbran\OneDrive\Documents\012-ternary\code_references_results.json

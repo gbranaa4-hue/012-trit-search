@@ -204,6 +204,27 @@ def main():
                     unresolved_count += 1
                     continue
 
+                # Real bug found and fixed via manual GUI verification: a
+                # module can exist ANYWHERE within the source's own
+                # project, not just its exact same directory (the
+                # resolves_same_directory check above only catches the
+                # single-folder case). Confirmed real case: acoustic-
+                # vortex-sim scripts under reservoir_computing/ and
+                # filter_bank_concept/ import "fem_plate_bending_
+                # homogenized", and acoustic-vortex-sim genuinely has TWO
+                # of its own copies of that file elsewhere in its own
+                # tree (plate_bending_review/ and QuasicrystalMEMS_Paper_
+                # Branaa/plate_bending_review/) -- neither in the same
+                # directory as the importing script, so both were missed
+                # and this got wrongly reported as ambiguous cross-project.
+                # If ANY candidate is in the source's own project, prefer
+                # that over any cross-project guess, regardless of which
+                # subdirectory it's in.
+                same_project_elsewhere = [(p, r) for p, r in candidates if p == proj]
+                if same_project_elsewhere:
+                    within_project_count += 1
+                    continue
+
                 cross = [(p, r) for p, r in candidates if p != proj]
                 if cross:
                     for target_proj, target_path in cross:
