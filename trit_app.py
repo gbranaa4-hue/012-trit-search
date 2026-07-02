@@ -14,7 +14,7 @@ Usage:
 """
 
 import tkinter as tk
-from tkinter import ttk, filedialog, scrolledtext
+from tkinter import ttk, filedialog, scrolledtext, messagebox
 import threading, subprocess, sys, os, json, time, random, webbrowser
 from pathlib import Path
 
@@ -549,6 +549,10 @@ class TritSearchApp:
                                     width=18)
         self.serve_btn.pack(pady=4, padx=8, fill="x")
 
+        self.entangle_btn = self._btn(self.sidebar, "⊞ ENTANGLEMENT", self._open_entanglement_window,
+                                       width=18)
+        self.entangle_btn.pack(pady=4, padx=8, fill="x")
+
         tk.Frame(self.sidebar, bg=t["border"], height=1).pack(fill="x", pady=8, padx=8)
 
         # Stats
@@ -861,6 +865,136 @@ class TritSearchApp:
 
     def _open_browser(self):
         webbrowser.open(f"http://localhost:5050")
+
+    # ── ENTANGLEMENT WINDOW ──────────────────────────────────────────────────
+    # Browses code_entanglement_db.json (built separately by
+    # trit_entanglement.py -- this window only reads it, never runs the
+    # pipeline itself, since that takes many minutes and needs Ollama).
+
+    def _entanglement_db_path(self):
+        return Path(__file__).resolve().parent / "code_entanglement_db.json"
+
+    def _open_entanglement_window(self):
+        db_path = self._entanglement_db_path()
+        if not db_path.exists():
+            messagebox.showinfo(
+                "No entanglement database",
+                f"No database found at:\n{db_path}\n\n"
+                "Run `python trit_entanglement.py` from a terminal first "
+                "to build it (takes a while -- summarizes every project "
+                "with a local model and computes cross-project overlap)."
+            )
+            return
+        try:
+            db = json.loads(db_path.read_text(encoding="utf-8"))
+        except Exception as e:
+            messagebox.showerror("Failed to load database", str(e))
+            return
+
+        t = self.t
+        win = tk.Toplevel(self.root)
+        win.title("OBSERVE — Code Entanglement")
+        win.geometry("1000x680")
+        win.configure(bg=t["bg"])
+
+        header = tk.Label(win, text="⊞ CODE ENTANGLEMENT", font=t["font_title"],
+                           bg=t["bg"], fg=t["accent"])
+        header.pack(pady=(12, 4))
+
+        n_proj = len(db.get("projects", {}))
+        n_pairs = len(db.get("entanglement", []))
+        info = tk.Label(win, text=f"{n_proj} projects  ·  {n_pairs} entanglement pairs  ·  {db_path.name}",
+                         font=t["font_small"], bg=t["bg"], fg=t["fg_dim"])
+        info.pack(pady=(0, 8))
+
+        body = tk.Frame(win, bg=t["bg"])
+        body.pack(fill="both", expand=True, padx=12, pady=(0, 12))
+
+        # Left: project list
+        left = tk.Frame(body, bg=t["bg2"], width=260)
+        left.pack(side="left", fill="y")
+        left.pack_propagate(False)
+        tk.Label(left, text="PROJECTS (click one)", font=t["font_small"],
+                 bg=t["bg2"], fg=t["fg_dim"]).pack(pady=(8, 4), padx=8, anchor="w")
+
+        proj_list = tk.Listbox(left, bg=t["bg"], fg=t["fg"], font=t["font_small"],
+                                selectbackground=t["border"], selectforeground=t["fg_bright"],
+                                relief="flat", highlightthickness=0)
+        proj_list.pack(fill="both", expand=True, padx=8, pady=(0, 8))
+
+        projects = db.get("projects", {})
+        proj_names = sorted(projects.keys(), key=lambda n: -projects[n].get("chunk_count", 0))
+        for name in proj_names:
+            flagged = "  [!]" if projects[name].get("unsupported_claims") else ""
+            proj_list.insert("end", f"{name}{flagged}  ({projects[name].get('chunk_count', 0)} chunks)")
+
+        # Right: detail pane
+        right = tk.Frame(body, bg=t["bg"])
+        right.pack(side="left", fill="both", expand=True, padx=(12, 0))
+
+        detail = scrolledtext.ScrolledText(
+            right, bg=t["bg2"], fg=t["fg"], font=t["font_small"],
+            wrap="word", relief="flat", highlightthickness=0, insertbackground=t["fg"]
+        )
+        detail.pack(fill="both", expand=True)
+        detail.insert("end", "Select a project on the left to see its summary and\n"
+                              "the projects it's most entangled with, backed by real\n"
+                              "matching file evidence (not just a bare score).")
+        detail.config(state="disabled")
+
+        entanglement = db.get("entanglement", [])
+
+        def show_project(name):
+            info_p = projects.get(name, {})
+            related = []
+            for pair in entanglement:
+                if pair["a"] == name:
+                    related.append((pair["b"], pair["score"], pair["evidence"]))
+                elif pair["b"] == name:
+                    related.append((pair["a"], pair["score"], pair["evidence"]))
+            related.sort(key=lambda r: -r[1])
+
+            detail.config(state="normal")
+            detail.delete("1.0", "end")
+            detail.insert("end", f"{name}\n", "h1")
+            detail.insert("end", f"{info_p.get('chunk_count', 0)} chunks indexed\n\n")
+            detail.insert("end", f"{info_p.get('summary', '(no summary)')}\n\n")
+
+            claims = info_p.get("unsupported_claims") or []
+            if claims:
+                detail.insert("end", "FLAGGED — possibly unsupported claim(s):\n")
+                for c in claims:
+                    detail.insert("end", f"  - {c[:200]}\n")
+                detail.insert("end", "\n")
+
+            detail.insert("end", "─" * 60 + "\n")
+            detail.insert("end", f"MOST ENTANGLED WITH ({len(related)} other projects)\n")
+            detail.insert("end", "─" * 60 + "\n\n")
+
+            for other, score, evidence in related[:8]:
+                detail.insert("end", f"{other}   score={score:.3f}\n")
+                for e in evidence[:2]:
+                    genuine = "genuine" if e.get("likely_genuine") else "coincidental?"
+                    detail.insert("end", f"    [{genuine}] {e['a_path']}\n")
+                    detail.insert("end", f"           <-> {e['b_path']}\n")
+                    shared = e.get("shared_compound_identifiers") or []
+                    if shared:
+                        detail.insert("end", f"           shared identifiers: {shared[:8]}\n")
+                    direction = e.get("direction")
+                    if direction:
+                        detail.insert("end", f"           {direction}\n")
+                detail.insert("end", "\n")
+
+            detail.config(state="disabled")
+
+        def on_select(evt):
+            sel = proj_list.curselection()
+            if not sel:
+                return
+            idx = sel[0]
+            show_project(proj_names[idx])
+
+        proj_list.bind("<<ListboxSelect>>", on_select)
 
     # ── ENGINE ────────────────────────────────────────────────────────────────
 
