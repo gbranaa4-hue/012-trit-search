@@ -1,0 +1,277 @@
+Loading OBSERVE index...
+  Loading model...
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|##########| 103/103 [00:00<00:00, 12344.65it/s]
+  Loading ternary-compressed index...
+  Ready - 58,224 chunks indexed (4.48MB on disk, 19.9x compressed). Start searching!
+990 unique files across 20 real projects
+
+7846 within-project references resolved
+2417312 references didn't resolve to any indexed file (external libs, stdlib, etc.)
+63 CROSS-PROJECT references found (deduplicated)
+
+======================================================================
+  CROSS-PROJECT REFERENCES (code literally importing/loading
+  a file from a DIFFERENT indexed project)
+======================================================================
+
+horde-beta-version-1:health_component.gd
+  -> imports/loads "res://HealthComponent.gd"
+  -> resolves to all_scripts:Users\gbran\Downloads\all_scripts\HealthComponent.gd
+
+(loose scripts, no project folder):gemini-code-1781614419928.py
+  -> imports/loads "spikeling_sdk"
+  -> resolves to Spikeling-Project:Spikeling-Project\legacy-versions\spikeling_sdk.py [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):gemini-code-1781614424987.py
+  -> imports/loads "spikeling_sdk"
+  -> resolves to Spikeling-Project:Spikeling-Project\legacy-versions\spikeling_sdk.py [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):Users\gbran\Downloads\kiss_fft.c
+  -> imports/loads "_kiss_fft_guts.h"
+  -> resolves to Spikeling-Project:Spikeling-Project\parallel-audio\spikeling_test\_kiss_fft_guts.h [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):Users\gbran\Downloads\LeaperCreep.gd
+  -> imports/loads "res://zombie/zombie.gd"
+  -> resolves to horde-beta-version-1:zombie.gd [AMBIGUOUS -- multiple files share this name]
+
+(loose scripts, no project folder):Users\gbran\Downloads\LeaperCreep.gd
+  -> imports/loads "res://zombie/zombie.gd"
+  -> resolves to all_scripts:Users\gbran\Downloads\all_scripts\zombie.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\word_system.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to horde-beta-version-1:player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\word_system.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to top:top\scripts\player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\word_system.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to tribe:tribe\player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\word_system.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to all_scripts:Users\gbran\Downloads\all_scripts\player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\word_system.gd
+  -> imports/loads "res://assets/sprites/tree.png"
+  -> resolves to tribe:tribe\tree.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\world.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to horde-beta-version-1:player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\world.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to top:top\scripts\player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\world.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to tribe:tribe\player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\world.gd
+  -> imports/loads "res://scenes/player.tscn"
+  -> resolves to all_scripts:Users\gbran\Downloads\all_scripts\player.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\world.gd
+  -> imports/loads "res://scenes/ui.tscn"
+  -> resolves to horde-beta-version-1:demo\src\UI.gd [AMBIGUOUS -- multiple files share this name]
+
+abc-squirrel:abc-squirrel\scripts\world.gd
+  -> imports/loads "res://assets/sprites/tree.png"
+  -> resolves to tribe:tribe\tree.gd [AMBIGUOUS -- multiple files share this name]
+
+Spikeling-Project:Spikeling-Project\parallel-audio\spikeling_test\mic_band_encoder_test.c
+  -> imports/loads "kiss_fft.h"
+  -> resolves to (loose scripts, no project folder):Users\gbran\Downloads\kiss_fft.c [AMBIGUOUS -- multiple files share this name]
+
+Spikeling-Project:Spikeling-Project\parallel-audio\spikeling_test\mic_fft_test.c
+  -> imports/loads "kiss_fft.h"
+  -> resolves to (loose scripts, no project folder):Users\gbran\Downloads\kiss_fft.c [AMBIGUOUS -- multiple files share this name]
+
+Spikeling-Project:Spikeling-Project\parallel-audio\spikeling_test\_kiss_fft_guts.h
+  -> imports/loads "kiss_fft.h"
+  -> resolves to (loose scripts, no project folder):Users\gbran\Downloads\kiss_fft.c [AMBIGUOUS -- multiple files share this name]
+
+Spikeling-Project:Spikeling-Project\parallel-audio\src\spikeling_native.c
+  -> imports/loads "kiss_fft.h"
+  -> resolves to (loose scripts, no project folder):Users\gbran\Downloads\kiss_fft.c [AMBIGUOUS -- multiple files share this name]
+
+tribe:tribe\Tribemanager.gd
+  -> imports/loads "res://tree.gd"
+  -> resolves to abc-squirrel:abc-squirrel\scripts\tree.gd [AMBIGUOUS -- multiple files share this name]
+
+tribe:tribe\Tribemanager.gd
+  -> imports/loads "res://tribemember.gd"
+  -> resolves to main:Users\gbran\Downloads\main\TribeMember.gd [AMBIGUOUS -- multiple files share this name]
+
+tribe:tribe\Tribemanager.gd
+  -> imports/loads "res://tribemember.gd"
+  -> resolves to tribe godot drop in:Users\gbran\Downloads\tribe godot drop in\TribeMember.gd [AMBIGUOUS -- multiple files share this name]
+
+tribe:tribe\world_tribe.gd
+  -> imports/loads "res://tree.gd"
+  -> resolves to abc-squirrel:abc-squirrel\scripts\tree.gd [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\filter_bank_concept\filter_bank_realism.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\filter_bank_concept\filter_bank_realism.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\filter_bank_concept\filter_bank_sim.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\filter_bank_concept\filter_bank_sim.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\bandgap_isolation.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\bandgap_isolation.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\cavity_symmetry.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\cavity_symmetry.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\full_sim_optomech.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\full_sim_optomech.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\peer_review_cavity.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\peer_review_cavity.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung2_3.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung2_3.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\verify_selection_rule.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\verify_selection_rule.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to symmetry-sensor:Users\gbran\symmetry-sensor\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+all_scripts:Users\gbran\Downloads\all_scripts\AIPlayer.gd
+  -> imports/loads "res://zombie/zombie.tscn"
+  -> resolves to horde-beta-version-1:zombie.gd [AMBIGUOUS -- multiple files share this name]
+
+all_scripts:Users\gbran\Downloads\all_scripts\NecromancerCreep.gd
+  -> imports/loads "res://assets/weapons/resources/Player/zombie.gd"
+  -> resolves to horde-beta-version-1:zombie.gd [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\arrangement_isolation.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\arrangement_isolation.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\arrangement_isolation.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\defect_detection.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\defect_types_study.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\design_optimizer.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\sensor_audio_reconstruct.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\sensor_audio_test.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\sensor_beat_realfem_crosscheck.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\sensor_correlator.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\symmetry_isolation.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\symmetry_isolation.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\symmetry_isolation.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\zero_background_sensing.py
+  -> imports/loads "reservoir_rung4_modeshapes"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\reservoir_computing\reservoir_rung4_modeshapes.py
+
+symmetry-sensor:Users\gbran\symmetry-sensor\engine\reservoir_rung2_3.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\engine\reservoir_rung2_3.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\engine\reservoir_rung4_modeshapes.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to acoustic-vortex-sim:Users\gbran\acoustic-vortex-sim\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+symmetry-sensor:Users\gbran\symmetry-sensor\engine\reservoir_rung4_modeshapes.py
+  -> imports/loads "fem_plate_bending_homogenized"
+  -> resolves to QuasicrystalMEMS_Paper_Branaa:Users\gbran\Downloads\QuasicrystalMEMS_Paper_Branaa\plate_bending_review\fem_plate_bending_homogenized.py [AMBIGUOUS -- multiple files share this name]
+
+======================================================================
+  C# NAMESPACE REFERENCES (weaker signal -- not file-resolved)
+======================================================================
+
+(loose scripts, no project folder): ['CompanionServer', 'ConVar', 'Facepunch', 'Network', 'Newtonsoft.Json', 'Newtonsoft.Json.Converters', 'Oxide.Core', 'Oxide.Core.Configuration', 'Oxide.Core.Libraries', 'Oxide.Core.Libraries.Covalence', 'Oxide.Core.Plugins', 'Oxide.Game.Rust', 'Oxide.Game.Rust.Cui', 'Oxide.Plugins', 'Oxide.Plugins.NTeleportationExtensionMethods']
+
+RUSTERVER: ['CompanionServer', 'ConVar', 'Facepunch', 'Facepunch.CardGames', 'Facepunch.Extend', 'Facepunch.Math', 'Network', 'Newtonsoft.Json', 'Newtonsoft.Json.Converters', 'Newtonsoft.Json.Linq', 'Oxide.Core', 'Oxide.Core.Configuration', 'Oxide.Core.Database', 'Oxide.Core.Libraries', 'Oxide.Core.Libraries.Covalence']
+
+Saved: C:\Users\gbran\OneDrive\Documents\012-ternary\code_references_results.json

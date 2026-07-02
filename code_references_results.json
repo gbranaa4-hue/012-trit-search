@@ -1,0 +1,510 @@
+{
+  "cross_project_references": [
+    {
+      "source_project": "horde-beta-version-1",
+      "source_path": "health_component.gd",
+      "target_project": "all_scripts",
+      "target_path": "Users\\gbran\\Downloads\\all_scripts\\HealthComponent.gd",
+      "raw_reference": "res://HealthComponent.gd",
+      "ambiguous": false
+    },
+    {
+      "source_project": "(loose scripts, no project folder)",
+      "source_path": "gemini-code-1781614419928.py",
+      "target_project": "Spikeling-Project",
+      "target_path": "Spikeling-Project\\legacy-versions\\spikeling_sdk.py",
+      "raw_reference": "spikeling_sdk",
+      "ambiguous": true
+    },
+    {
+      "source_project": "(loose scripts, no project folder)",
+      "source_path": "gemini-code-1781614424987.py",
+      "target_project": "Spikeling-Project",
+      "target_path": "Spikeling-Project\\legacy-versions\\spikeling_sdk.py",
+      "raw_reference": "spikeling_sdk",
+      "ambiguous": true
+    },
+    {
+      "source_project": "(loose scripts, no project folder)",
+      "source_path": "Users\\gbran\\Downloads\\kiss_fft.c",
+      "target_project": "Spikeling-Project",
+      "target_path": "Spikeling-Project\\parallel-audio\\spikeling_test\\_kiss_fft_guts.h",
+      "raw_reference": "_kiss_fft_guts.h",
+      "ambiguous": true
+    },
+    {
+      "source_project": "(loose scripts, no project folder)",
+      "source_path": "Users\\gbran\\Downloads\\LeaperCreep.gd",
+      "target_project": "horde-beta-version-1",
+      "target_path": "zombie.gd",
+      "raw_reference": "res://zombie/zombie.gd",
+      "ambiguous": true
+    },
+    {
+      "source_project": "(loose scripts, no project folder)",
+      "source_path": "Users\\gbran\\Downloads\\LeaperCreep.gd",
+      "target_project": "all_scripts",
+      "target_path": "Users\\gbran\\Downloads\\all_scripts\\zombie.gd",
+      "raw_reference": "res://zombie/zombie.gd",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\word_system.gd",
+      "target_project": "horde-beta-version-1",
+      "target_path": "player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\word_system.gd",
+      "target_project": "top",
+      "target_path": "top\\scripts\\player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\word_system.gd",
+      "target_project": "tribe",
+      "target_path": "tribe\\player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\word_system.gd",
+      "target_project": "all_scripts",
+      "target_path": "Users\\gbran\\Downloads\\all_scripts\\player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\word_system.gd",
+      "target_project": "tribe",
+      "target_path": "tribe\\tree.gd",
+      "raw_reference": "res://assets/sprites/tree.png",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\world.gd",
+      "target_project": "horde-beta-version-1",
+      "target_path": "player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\world.gd",
+      "target_project": "top",
+      "target_path": "top\\scripts\\player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\world.gd",
+      "target_project": "tribe",
+      "target_path": "tribe\\player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\world.gd",
+      "target_project": "all_scripts",
+      "target_path": "Users\\gbran\\Downloads\\all_scripts\\player.gd",
+      "raw_reference": "res://scenes/player.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\world.gd",
+      "target_project": "horde-beta-version-1",
+      "target_path": "demo\\src\\UI.gd",
+      "raw_reference": "res://scenes/ui.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "abc-squirrel",
+      "source_path": "abc-squirrel\\scripts\\world.gd",
+      "target_project": "tribe",
+      "target_path": "tribe\\tree.gd",
+      "raw_reference": "res://assets/sprites/tree.png",
+      "ambiguous": true
+    },
+    {
+      "source_project": "Spikeling-Project",
+      "source_path": "Spikeling-Project\\parallel-audio\\spikeling_test\\mic_band_encoder_test.c",
+      "target_project": "(loose scripts, no project folder)",
+      "target_path": "Users\\gbran\\Downloads\\kiss_fft.c",
+      "raw_reference": "kiss_fft.h",
+      "ambiguous": true
+    },
+    {
+      "source_project": "Spikeling-Project",
+      "source_path": "Spikeling-Project\\parallel-audio\\spikeling_test\\mic_fft_test.c",
+      "target_project": "(loose scripts, no project folder)",
+      "target_path": "Users\\gbran\\Downloads\\kiss_fft.c",
+      "raw_reference": "kiss_fft.h",
+      "ambiguous": true
+    },
+    {
+      "source_project": "Spikeling-Project",
+      "source_path": "Spikeling-Project\\parallel-audio\\spikeling_test\\_kiss_fft_guts.h",
+      "target_project": "(loose scripts, no project folder)",
+      "target_path": "Users\\gbran\\Downloads\\kiss_fft.c",
+      "raw_reference": "kiss_fft.h",
+      "ambiguous": true
+    },
+    {
+      "source_project": "Spikeling-Project",
+      "source_path": "Spikeling-Project\\parallel-audio\\src\\spikeling_native.c",
+      "target_project": "(loose scripts, no project folder)",
+      "target_path": "Users\\gbran\\Downloads\\kiss_fft.c",
+      "raw_reference": "kiss_fft.h",
+      "ambiguous": true
+    },
+    {
+      "source_project": "tribe",
+      "source_path": "tribe\\Tribemanager.gd",
+      "target_project": "abc-squirrel",
+      "target_path": "abc-squirrel\\scripts\\tree.gd",
+      "raw_reference": "res://tree.gd",
+      "ambiguous": true
+    },
+    {
+      "source_project": "tribe",
+      "source_path": "tribe\\Tribemanager.gd",
+      "target_project": "main",
+      "target_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
+      "raw_reference": "res://tribemember.gd",
+      "ambiguous": true
+    },
+    {
+      "source_project": "tribe",
+      "source_path": "tribe\\Tribemanager.gd",
+      "target_project": "tribe godot drop in",
+      "target_path": "Users\\gbran\\Downloads\\tribe godot drop in\\TribeMember.gd",
+      "raw_reference": "res://tribemember.gd",
+      "ambiguous": true
+    },
+    {
+      "source_project": "tribe",
+      "source_path": "tribe\\world_tribe.gd",
+      "target_project": "abc-squirrel",
+      "target_path": "abc-squirrel\\scripts\\tree.gd",
+      "raw_reference": "res://tree.gd",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\filter_bank_concept\\filter_bank_realism.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\filter_bank_concept\\filter_bank_realism.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\filter_bank_concept\\filter_bank_sim.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\filter_bank_concept\\filter_bank_sim.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\bandgap_isolation.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\bandgap_isolation.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\cavity_symmetry.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\cavity_symmetry.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\full_sim_optomech.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\full_sim_optomech.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\peer_review_cavity.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\peer_review_cavity.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung2_3.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung2_3.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\verify_selection_rule.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "acoustic-vortex-sim",
+      "source_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\verify_selection_rule.py",
+      "target_project": "symmetry-sensor",
+      "target_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "all_scripts",
+      "source_path": "Users\\gbran\\Downloads\\all_scripts\\AIPlayer.gd",
+      "target_project": "horde-beta-version-1",
+      "target_path": "zombie.gd",
+      "raw_reference": "res://zombie/zombie.tscn",
+      "ambiguous": true
+    },
+    {
+      "source_project": "all_scripts",
+      "source_path": "Users\\gbran\\Downloads\\all_scripts\\NecromancerCreep.gd",
+      "target_project": "horde-beta-version-1",
+      "target_path": "zombie.gd",
+      "raw_reference": "res://assets/weapons/resources/Player/zombie.gd",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\arrangement_isolation.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\arrangement_isolation.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\arrangement_isolation.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\defect_detection.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\defect_types_study.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\design_optimizer.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\sensor_audio_reconstruct.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\sensor_audio_test.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\sensor_beat_realfem_crosscheck.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\sensor_correlator.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\symmetry_isolation.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\symmetry_isolation.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\symmetry_isolation.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\zero_background_sensing.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
+      "raw_reference": "reservoir_rung4_modeshapes",
+      "ambiguous": false
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung2_3.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung2_3.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung4_modeshapes.py",
+      "target_project": "acoustic-vortex-sim",
+      "target_path": "Users\\gbran\\acoustic-vortex-sim\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    },
+    {
+      "source_project": "symmetry-sensor",
+      "source_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung4_modeshapes.py",
+      "target_project": "QuasicrystalMEMS_Paper_Branaa",
+      "target_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
+      "raw_reference": "fem_plate_bending_homogenized",
+      "ambiguous": true
+    }
+  ],
+  "within_project_count": 7846,
+  "unresolved_count": 2417312
+}
