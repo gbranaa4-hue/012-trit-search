@@ -98,8 +98,31 @@ def jaccard(a: set, b: set) -> float:
     return inter / union if union else 0.0
 
 
+def idf_weighted_overlap(text_a: str, text_b: str, df: dict, n_files: int):
+    """A shared token counts in proportion to how RARE it is across the
+    whole corpus, not just its presence. This is the fix for the earlier
+    negative result: raw overlap was dominated by common programming
+    vocabulary (append, array, between) that a fixed stopword list
+    couldn't fully exclude, because it doesn't know what's actually rare
+    in THIS corpus specifically -- only IDF (computed from the real
+    document-frequency counts in corpus_idf.py) can."""
+    from corpus_idf import idf, identifier_only_tokens
+    toks_a = identifier_only_tokens(text_a)
+    toks_b = identifier_only_tokens(text_b)
+    shared = toks_a & toks_b
+    if not shared:
+        return 0.0, []
+    weighted_score = sum(idf(t, df, n_files) for t in shared)
+    ranked = sorted(shared, key=lambda t: -idf(t, df, n_files))
+    return weighted_score, ranked
+
+
 def main():
     print("Testing distinctive-literal-overlap signal on known cases:\n")
+
+    from corpus_idf import load_or_build
+    df, n_files = load_or_build()
+    print(f"\nUsing corpus IDF: {n_files} files, {len(df)} distinct tokens\n")
 
     for label, pairs in (("CONFIRMED GENUINE (cross-language)", CONFIRMED_GENUINE),
                           ("CONFIRMED COINCIDENTAL", CONFIRMED_COINCIDENTAL)):
@@ -121,11 +144,24 @@ def main():
             shared_id = ida & idb
             score_id = jaccard(ida, idb)
 
+            idf_score, ranked = idf_weighted_overlap(ta, tb, df, n_files)
+            mean_idf = idf_score / len(shared_id) if shared_id else 0.0
+
+            # Compound identifiers (snake_case, camelCase-ish underscore
+            # constructs) are actual code vocabulary, not incidental
+            # English prose that happens to appear in a comment. Restrict
+            # to those and see if THAT separates genuine from coincidental,
+            # since raw IDF (both sum and mean) did not.
+            from corpus_idf import idf as _idf
+            compound_shared = {t for t in shared_id if "_" in t}
+            compound_idf_sum = sum(_idf(t, df, n_files) for t in compound_shared) if compound_shared else 0.0
+
             print(f"  jaccard(mixed)={score:.4f} shared={len(shared)}   "
-                  f"jaccard(ident-only)={score_id:.4f} shared={len(shared_id)}   "
+                  f"IDF-weighted={idf_score:.2f}  mean-IDF={mean_idf:.2f}   "
+                  f"compound-shared={len(compound_shared)} compound-IDF={compound_idf_sum:.2f}   "
                   f"{pa.name} <-> {pb.name}")
-            if shared_id:
-                print(f"    ident-only shared: {sorted(shared_id)[:15]}")
+            if compound_shared:
+                print(f"    compound identifiers shared: {sorted(compound_shared)}")
         print()
 
 
