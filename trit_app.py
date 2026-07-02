@@ -227,18 +227,23 @@ class SearchEngine:
                     raw = json.load(open(meta_path, encoding="utf-8"))
                     self.path_table = raw.get("paths", [])
                     self.metadata   = raw.get("chunks", [])
-                    on_status(f"✓ Ready — {len(self.metadata):,} chunks indexed "
+                    on_status(f"Ready - {len(self.metadata):,} chunks indexed "
                               f"({disk_mb:.2f}MB on disk, 19.9x compressed). Start searching!")
                 elif os.path.exists(idx_path) and os.path.exists(meta_path):
                     on_status("Loading index...")
                     self.index    = faiss.read_index(idx_path)
                     self.metadata = json.load(open(meta_path, encoding="utf-8"))
-                    on_status(f"✓ Ready — {len(self.metadata):,} chunks indexed. Start searching!")
+                    on_status(f"Ready - {len(self.metadata):,} chunks indexed. Start searching!")
                 else:
-                    on_status("⟳ No index yet — add a directory then click INDEX CODEBASE")
-                self.ready = True
+                    on_status("No index yet - add a directory then click INDEX CODEBASE")
             except Exception as e:
                 on_status(f"Error: {e}")
+            finally:
+                # Loop waiting on self.ready must always terminate, even if
+                # on_status() itself raises (e.g. non-ASCII text hitting a
+                # Windows console codec that can't encode it) - a status-print
+                # failure must never silently hang every caller forever.
+                self.ready = True
         threading.Thread(target=_load, daemon=True).start()
 
     def search(self, query, k=10, base_dir_filter=None):
