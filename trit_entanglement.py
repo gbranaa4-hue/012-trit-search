@@ -202,6 +202,64 @@ def _verify_summary_claims(samples_text: str, summary: str, models=SUMMARY_VERIF
     return []
 
 
+def _decompose_claims(summary: str) -> list:
+    """Split a summary into individual sentence-level claims. Deterministic
+    (no LLM call) on purpose -- decomposition itself shouldn't be a second
+    place for hallucination/failure to creep in."""
+    parts = re.split(r"(?<=[.!?])\s+", summary.replace("\n", " ").strip())
+    return [p.strip() for p in parts if len(p.strip()) > 15]
+
+
+def _check_claim_support(samples_text: str, claim: str, models=SUMMARY_VERIFY_MODELS) -> bool:
+    """One claim, one focused YES/NO question per model, majority vote.
+    Returns True if the claim is judged UNSUPPORTED (majority said NO)."""
+    prompt = (
+        f"Source snippets (real, sampled from the project):\n{samples_text}\n\n"
+        f"Claim: \"{claim}\"\n\n"
+        f"Is this specific claim explicitly supported by concrete evidence in "
+        f"the source snippets above? Answer with exactly one word first: "
+        f"YES or NO. Then, only if YES, quote the specific evidence."
+    )
+    votes = []
+    for m in models:
+        try:
+            raw = _call_ollama(prompt, model=m, timeout=90)
+            votes.append(raw)
+        except Exception:
+            pass
+    if not votes:
+        return False
+    no_votes = [v for v in votes if re.match(r"\s*NO\b", v.upper())]
+    return len(no_votes) > len(votes) / 2
+
+
+def _verify_summary_claims_v2(samples_text: str, summary: str, models=SUMMARY_VERIFY_MODELS):
+    """
+    Adversarial, per-claim alternative to _verify_summary_claims (v1).
+
+    v1 asks one holistic question about the whole summary at once ("does
+    this contain any unsupported claims?") -- measured via
+    calibrate_consensus.py to have only 30% recall on injected fabricated
+    claims, because models tend to eyeball a whole paragraph and let a
+    single plausible-sounding extra sentence blend in.
+
+    v2 instead: (1) mechanically splits the summary into individual
+    sentence-level claims first (so nothing gets averaged away), then
+    (2) asks a separate, narrowly-scoped YES/NO support question per claim.
+    This is the "push/pull" idea applied concretely -- pulling the summary
+    apart into individually-checkable pieces before pushing each one
+    against the source, instead of judging the whole thing at once.
+
+    Returns a list of unsupported claim strings (empty if none found).
+    """
+    claims = _decompose_claims(summary)
+    unsupported = []
+    for claim in claims:
+        if _check_claim_support(samples_text, claim, models=models):
+            unsupported.append(claim)
+    return unsupported
+
+
 def summarize_project(engine: SearchEngine, project: str, chunk_indices: list, sample_n: int = 8) -> dict:
     """Sample representative chunks, ask a local model to summarize what
     this project is/does/is for, then verify the summary's specific claims
