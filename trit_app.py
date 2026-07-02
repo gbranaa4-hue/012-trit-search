@@ -871,18 +871,27 @@ class TritSearchApp:
     # trit_entanglement.py -- this window only reads it, never runs the
     # pipeline itself, since that takes many minutes and needs Ollama).
 
-    def _entanglement_db_path(self):
-        return Path(__file__).resolve().parent / "code_entanglement_db.json"
+    def _references_db_path(self):
+        return Path(__file__).resolve().parent / "code_references_results.json"
 
     def _open_entanglement_window(self):
-        db_path = self._entanglement_db_path()
+        # NOTE: this window shows real code REFERENCES (imports, preload/
+        # load() calls, require(), #include), not embedding-similarity
+        # "entanglement" scores. By explicit request: this should show
+        # where code actually SPEAKS to other files/projects, not how
+        # similar they conceptually look. Built by code_references.py,
+        # which resolves each reference against the real filesystem
+        # before ever claiming a cross-project relationship -- see that
+        # file's docstring/commit history for the two real false-positive
+        # classes found and fixed (basename collisions, bare Python
+        # imports resolving to a same-directory sibling instead).
+        db_path = self._references_db_path()
         if not db_path.exists():
             messagebox.showinfo(
-                "No entanglement database",
+                "No references database",
                 f"No database found at:\n{db_path}\n\n"
-                "Run `python trit_entanglement.py` from a terminal first "
-                "to build it (takes a while -- summarizes every project "
-                "with a local model and computes cross-project overlap)."
+                "Run `python code_references.py` from a terminal first "
+                "to build it (fast -- static parsing only, no LLM calls)."
             )
             return
         try:
@@ -893,24 +902,28 @@ class TritSearchApp:
 
         t = self.t
         win = tk.Toplevel(self.root)
-        win.title("OBSERVE — Code Entanglement")
+        win.title("OBSERVE — Code References")
         win.geometry("1000x680")
         win.configure(bg=t["bg"])
 
-        header = tk.Label(win, text="⊞ CODE ENTANGLEMENT", font=t["font_title"],
+        header = tk.Label(win, text="⊞ CODE REFERENCES", font=t["font_title"],
                            bg=t["bg"], fg=t["accent"])
         header.pack(pady=(12, 4))
 
-        n_proj = len(db.get("projects", {}))
-        n_pairs = len(db.get("entanglement", []))
-        info = tk.Label(win, text=f"{n_proj} projects  ·  {n_pairs} entanglement pairs  ·  {db_path.name}",
-                         font=t["font_small"], bg=t["bg"], fg=t["fg_dim"])
+        refs = db.get("cross_project_references", [])
+        within = db.get("within_project_count", 0)
+        info = tk.Label(
+            win,
+            text=(f"{len(refs)} cross-project references (real imports/loads/includes, "
+                  f"filesystem-verified)  ·  {within} within-project  ·  {db_path.name}"),
+            font=t["font_small"], bg=t["bg"], fg=t["fg_dim"])
         info.pack(pady=(0, 8))
 
         body = tk.Frame(win, bg=t["bg"])
         body.pack(fill="both", expand=True, padx=12, pady=(0, 12))
 
-        # Left: project list
+        # Left: project list, derived from which projects actually appear
+        # as the SOURCE of a real cross-project reference.
         left = tk.Frame(body, bg=t["bg2"], width=260)
         left.pack(side="left", fill="y")
         left.pack_propagate(False)
@@ -922,11 +935,12 @@ class TritSearchApp:
                                 relief="flat", highlightthickness=0)
         proj_list.pack(fill="both", expand=True, padx=8, pady=(0, 8))
 
-        projects = db.get("projects", {})
-        proj_names = sorted(projects.keys(), key=lambda n: -projects[n].get("chunk_count", 0))
+        by_source = {}
+        for r in refs:
+            by_source.setdefault(r["source_project"], []).append(r)
+        proj_names = sorted(by_source.keys(), key=lambda n: -len(by_source[n]))
         for name in proj_names:
-            flagged = "  [!]" if projects[name].get("unsupported_claims") else ""
-            proj_list.insert("end", f"{name}{flagged}  ({projects[name].get('chunk_count', 0)} chunks)")
+            proj_list.insert("end", f"{name}  ({len(by_source[name])} references)")
 
         # Right: detail pane
         right = tk.Frame(body, bg=t["bg"])
@@ -937,53 +951,32 @@ class TritSearchApp:
             wrap="word", relief="flat", highlightthickness=0, insertbackground=t["fg"]
         )
         detail.pack(fill="both", expand=True)
-        detail.insert("end", "Select a project on the left to see its summary and\n"
-                              "the projects it's most entangled with, backed by real\n"
-                              "matching file evidence (not just a bare score).")
+        detail.insert(
+            "end",
+            "Select a project on the left to see the real files it literally\n"
+            "imports, loads, or includes from OTHER projects -- an actual\n"
+            "reference, not an inferred similarity.\n\n"
+            "[non-ambiguous] = exactly one indexed file matches this reference\n"
+            "[AMBIGUOUS] = multiple files share this name; shown but not certain"
+        )
         detail.config(state="disabled")
 
-        entanglement = db.get("entanglement", [])
-
         def show_project(name):
-            info_p = projects.get(name, {})
-            related = []
-            for pair in entanglement:
-                if pair["a"] == name:
-                    related.append((pair["b"], pair["score"], pair["evidence"]))
-                elif pair["b"] == name:
-                    related.append((pair["a"], pair["score"], pair["evidence"]))
-            related.sort(key=lambda r: -r[1])
+            related = by_source.get(name, [])
 
             detail.config(state="normal")
             detail.delete("1.0", "end")
             detail.insert("end", f"{name}\n", "h1")
-            detail.insert("end", f"{info_p.get('chunk_count', 0)} chunks indexed\n\n")
-            detail.insert("end", f"{info_p.get('summary', '(no summary)')}\n\n")
-
-            claims = info_p.get("unsupported_claims") or []
-            if claims:
-                detail.insert("end", "FLAGGED — possibly unsupported claim(s):\n")
-                for c in claims:
-                    detail.insert("end", f"  - {c[:200]}\n")
-                detail.insert("end", "\n")
-
+            detail.insert("end", f"{len(related)} cross-project reference(s) found\n\n")
             detail.insert("end", "─" * 60 + "\n")
-            detail.insert("end", f"MOST ENTANGLED WITH ({len(related)} other projects)\n")
+            detail.insert("end", "REAL REFERENCES (imports / loads / includes)\n")
             detail.insert("end", "─" * 60 + "\n\n")
 
-            for other, score, evidence in related[:8]:
-                detail.insert("end", f"{other}   score={score:.3f}\n")
-                for e in evidence[:2]:
-                    genuine = "genuine" if e.get("likely_genuine") else "coincidental?"
-                    detail.insert("end", f"    [{genuine}] {e['a_path']}\n")
-                    detail.insert("end", f"           <-> {e['b_path']}\n")
-                    shared = e.get("shared_compound_identifiers") or []
-                    if shared:
-                        detail.insert("end", f"           shared identifiers: {shared[:8]}\n")
-                    direction = e.get("direction")
-                    if direction:
-                        detail.insert("end", f"           {direction}\n")
-                detail.insert("end", "\n")
+            for r in related:
+                tag = "AMBIGUOUS" if r.get("ambiguous") else "confirmed"
+                detail.insert("end", f"[{tag}] {r['source_path']}\n")
+                detail.insert("end", f"    -> \"{r['raw_reference']}\"\n")
+                detail.insert("end", f"    -> {r['target_project']}:{r['target_path']}\n\n")
 
             detail.config(state="disabled")
 
