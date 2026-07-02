@@ -31,11 +31,8 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\engine.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 80,
+    "compound_shared_count": 77,
     "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__",
       "_attack_timer",
       "_check_hits",
       "_color",
@@ -114,34 +111,28 @@
       "take_damage",
       "tick_leak"
     ],
-    "compound_idf_sum": 430.4017400706332
+    "compound_idf_sum": 425.7521640958664
   },
   {
     "a_path": "Spikeling-Project\\ai-apps\\spikeling_gui.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8181818181818182,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 4.649575974766785
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\Spikeling-Project\\research\\noise_sweet_spot.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\python noise_sweet_spot.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8205128205128205,
-    "compound_shared_count": 4,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "default_rng",
       "n_features"
     ],
-    "compound_idf_sum": 12.686888346266453
+    "compound_idf_sum": 8.923587207433558
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\Spikeling-Project\\sdk-verilog\\spikeling_hw.h",
@@ -208,13 +199,9 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\shopui.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.42105263157894735,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "class_name",
-      "font_size",
-      "key_enter"
-    ],
-    "compound_idf_sum": 10.6739493852312
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\Spikeling-Project\\fps-game\\engine.py",
@@ -298,11 +285,9 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\spikeling.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8181818181818182,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "class_name"
-    ],
-    "compound_idf_sum": 2.710824127984935
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\Spikeling-Project\\AcousticVortexTrap_Package\\simulation\\phased_array_sim.py",
@@ -495,12 +480,9 @@
     "b_path": "Users\\gbran\\Downloads\\files(3)\\fem_plate_bending_2d.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3076923076923077,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\Spikeling-Project\\parallel-audio\\include\\miniaudio.h",
@@ -606,12 +588,9 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.47058823529411764,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_ready",
-      "global_position"
-    ],
-    "compound_idf_sum": 3.849912210719782
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\Spikeling-Project\\sdk-verilog\\spikeling_verilog.py",
@@ -627,15 +606,13 @@
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 17,
+    "compound_shared_count": 15,
     "compound_shared_tokens": [
       " % (n, refr_ticks, p_width))\n    print(",
       " % p_width)\n    w(",
       " % r_width)\n    w(",
       " % refr_ticks)\n    w(",
       ")\n\nif __name__ == ",
-      "__main__",
-      "__name__",
       "compile_to_verilog",
       "find_config_file",
       "leak_of",
@@ -647,20 +624,18 @@
       "spikeling_verilog",
       "thresh_of"
     ],
-    "compound_idf_sum": 88.3609965019166
+    "compound_idf_sum": 84.5976953630837
   },
   {
     "a_path": "Spikeling-Project\\sdk-verilog\\spikeling_resonator_verilog.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7727272727272727,
-    "compound_shared_count": 3,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "spikeling_verilog"
     ],
-    "compound_idf_sum": 8.863721736801507
+    "compound_idf_sum": 5.10042059796861
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\Spikeling-Project\\sdk-verilog\\spikeling_hw.h",
@@ -1249,52 +1224,43 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_benchmark.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.6896551724137931,
-    "compound_shared_count": 4,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "add_argument",
       "parse_args"
     ],
-    "compound_idf_sum": 11.484760560914086
+    "compound_idf_sum": 7.721459422081191
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\import serial.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_lm.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "__init__"
-    ],
-    "compound_idf_sum": 0.8862748359338894
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\import serial.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\personal_lm.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4166666666666667,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 4.649575974766785
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\Shop.gd",
     "b_path": "Users\\gbran\\Downloads\\all_scripts\\shop.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 89,
+    "compound_shared_count": 75,
     "compound_shared_tokens": [
       "_activate_focused",
       "_current_turret_index",
       "_enter_placement_mode",
       "_focused_index",
       "_focused_tab",
-      "_input",
       "_make_button",
       "_make_placeholder",
       "_make_section_label",
@@ -1307,14 +1273,11 @@
       "_populate_creep_upgrade_tab",
       "_populate_player_upgrade_tab",
       "_populate_turret_tab",
-      "_ready",
       "_register_button",
       "_show_status",
       "_tab_buttons",
       "_update_tab_hint",
-      "add_child",
       "add_theme_constant_override",
-      "add_theme_font_size_override",
       "apply_upgrade",
       "attack_creep_costs",
       "attack_creep_labels",
@@ -1322,31 +1285,21 @@
       "autowrap_mode",
       "autowrap_word_smart",
       "btn_min_height",
-      "button_index",
       "close_shop",
       "creep_spawn_count",
       "creep_upgrade_costs",
       "creep_upgrades",
       "current_tab",
-      "custom_minimum_size",
       "defend_creep_costs",
       "defend_creep_labels",
       "defend_creep_scenes",
       "direct_space_state",
-      "emit_signal",
-      "font_size",
       "game_manager",
       "get_basename",
-      "get_child",
       "get_file",
       "get_mouse_position",
-      "get_node_or_null",
-      "get_tree",
-      "get_viewport",
       "get_world_3d",
-      "global_position",
       "has_method",
-      "horizontal_alignment",
       "intersect_ray",
       "margin_bottom",
       "margin_left",
@@ -1379,14 +1332,14 @@
       "turret_costs",
       "turret_scenes"
     ],
-    "compound_idf_sum": 419.9768886074808
+    "compound_idf_sum": 374.3651908090813
   },
   {
     "a_path": "Users\\gbran\\Downloads\\GhostCreep.gd",
     "b_path": "Users\\gbran\\Downloads\\all_scripts\\GhostCreep.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 106,
+    "compound_shared_count": 87,
     "compound_shared_tokens": [
       "):\n\t\t\tif h.has_method(",
       "_ability_timer",
@@ -1400,10 +1353,8 @@
       "_health_bar_node",
       "_idle_timer",
       "_nav_agent",
-      "_physics_process",
       "_play_sfx",
       "_push_flow",
-      "_ready",
       "_sep_force",
       "_show_health_bar",
       "_target_alive",
@@ -1413,10 +1364,7 @@
       "_update_health_bar",
       "_update_nav",
       "_use_ability",
-      "add_child",
       "add_gold",
-      "add_to_group",
-      "albedo_color",
       "apply_knockback",
       "apply_slow",
       "assign_target",
@@ -1425,13 +1373,9 @@
       "avoidance_enabled",
       "blend_position",
       "connect_one_shot",
-      "create_timer",
       "create_tween",
       "death_sounds",
-      "distance_to",
       "eff_range",
-      "emission_enabled",
-      "emission_energy_multiplier",
       "enemy_base",
       "find_children",
       "floor_snap_length",
@@ -1440,10 +1384,7 @@
       "get_first_node_in_group",
       "get_health_ratio",
       "get_next_path_position",
-      "get_node_or_null",
       "get_nodes_in_group",
-      "get_tree",
-      "global_position",
       "gold_reward",
       "gravity_force",
       "has_method",
@@ -1454,15 +1395,11 @@
       "is_commanded",
       "is_dead",
       "is_empty",
-      "is_in_group",
-      "is_instance_valid",
       "is_navigation_finished",
       "is_on_floor",
       "lane_id",
       "length_squared",
       "lerp_angle",
-      "look_at",
-      "material_override",
       "max_distance",
       "max_health",
       "motion_mode",
@@ -1474,14 +1411,11 @@
       "owner_id",
       "parameters/move_blend/blend_position",
       "pitch_scale",
-      "queue_free",
-      "randf_range",
       "record_quest_event",
       "set_collision_layer_value",
       "set_delay",
       "set_flow_direction",
       "set_lane",
-      "set_physics_process",
       "set_separation_force",
       "set_surface_override_material",
       "shading_mode",
@@ -1495,14 +1429,14 @@
       "volume_db",
       "zombie_kills"
     ],
-    "compound_idf_sum": 405.9915217798887
+    "compound_idf_sum": 353.324592183865
   },
   {
     "a_path": "Users\\gbran\\Downloads\\BomberCreep.gd",
     "b_path": "Users\\gbran\\Downloads\\all_scripts\\BomberCreep.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 102,
+    "compound_shared_count": 83,
     "compound_shared_tokens": [
       "):\n\t\t\tif h.has_method(",
       "_ability_timer",
@@ -1516,10 +1450,8 @@
       "_health_bar_node",
       "_idle_timer",
       "_nav_agent",
-      "_physics_process",
       "_play_sfx",
       "_push_flow",
-      "_ready",
       "_sep_force",
       "_show_health_bar",
       "_target_alive",
@@ -1529,10 +1461,7 @@
       "_update_health_bar",
       "_update_nav",
       "_use_ability",
-      "add_child",
       "add_gold",
-      "add_to_group",
-      "albedo_color",
       "apply_knockback",
       "apply_slow",
       "assign_target",
@@ -1541,12 +1470,8 @@
       "avoidance_enabled",
       "blend_position",
       "connect_one_shot",
-      "create_timer",
       "death_sounds",
-      "distance_to",
       "eff_range",
-      "emission_enabled",
-      "emission_energy_multiplier",
       "enemy_base",
       "find_children",
       "floor_snap_length",
@@ -1555,10 +1480,7 @@
       "get_first_node_in_group",
       "get_health_ratio",
       "get_next_path_position",
-      "get_node_or_null",
       "get_nodes_in_group",
-      "get_tree",
-      "global_position",
       "gold_reward",
       "gravity_force",
       "has_method",
@@ -1569,15 +1491,11 @@
       "is_commanded",
       "is_dead",
       "is_empty",
-      "is_in_group",
-      "is_instance_valid",
       "is_navigation_finished",
       "is_on_floor",
       "lane_id",
       "length_squared",
       "lerp_angle",
-      "look_at",
-      "material_override",
       "max_distance",
       "max_health",
       "motion_mode",
@@ -1589,12 +1507,9 @@
       "owner_id",
       "parameters/move_blend/blend_position",
       "pitch_scale",
-      "queue_free",
-      "randf_range",
       "record_quest_event",
       "set_flow_direction",
       "set_lane",
-      "set_physics_process",
       "set_separation_force",
       "set_surface_override_material",
       "shading_mode",
@@ -1607,27 +1522,21 @@
       "volume_db",
       "zombie_kills"
     ],
-    "compound_idf_sum": 387.15393722595337
+    "compound_idf_sum": 334.48700762992956
   },
   {
     "a_path": "Users\\gbran\\Downloads\\Gun_1.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\gun.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 18,
+    "compound_shared_count": 12,
     "compound_shared_tokens": [
-      "_ready",
       "ammo_changed",
       "can_shoot",
-      "create_timer",
       "direct_space_state",
       "fire_rate",
-      "get_parent",
       "get_rid",
-      "get_tree",
       "get_world_3d",
-      "global_position",
-      "global_transform",
       "has_method",
       "intersect_ray",
       "is_reloading",
@@ -1635,43 +1544,34 @@
       "reload_time",
       "take_damage"
     ],
-    "compound_idf_sum": 60.809234244934174
+    "compound_idf_sum": 45.647596208698985
   },
   {
     "a_path": "Users\\gbran\\Downloads\\first_snn.py",
     "b_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung1.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34782608695652173,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\first_snn.py",
     "b_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung2_3.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34782608695652173,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\first_snn_1.py",
     "b_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung1.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34782608695652173,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\spikeling.py",
@@ -1714,13 +1614,11 @@
     "b_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.32142857142857145,
-    "compound_shared_count": 3,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "n_fold"
     ],
-    "compound_idf_sum": 7.013121767550518
+    "compound_idf_sum": 3.249820628717622
   },
   {
     "a_path": "Users\\gbran\\Downloads\\NTeleportation.cs",
@@ -1754,19 +1652,16 @@
     "b_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung2_3.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34782608695652173,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\hud.gd",
     "b_path": "top\\hud.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 83,
+    "compound_shared_count": 74,
     "compound_shared_tokens": [
       "_anchor_bottom_center",
       "_anchor_bottom_left",
@@ -1795,13 +1690,8 @@
       "_panel",
       "_player_health_bar",
       "_player_health_label",
-      "_process",
       "_progress_bar",
-      "_ready",
       "_update_bow_charge",
-      "add_child",
-      "add_theme_color_override",
-      "add_theme_font_size_override",
       "add_theme_stylebox_override",
       "anchor_bottom",
       "anchor_left",
@@ -1821,15 +1711,12 @@
       "dragon_mountable",
       "ease_out",
       "font_color",
-      "font_size",
       "get_bow_charge",
       "has_method",
       "has_signal",
       "health_changed",
       "hide_death_screen",
       "hide_mount_prompt",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
       "is_connected",
       "max_health",
       "max_value",
@@ -1849,17 +1736,16 @@
       "show_death_screen",
       "show_percentage",
       "tween_property",
-      "vertical_alignment",
       "vertical_alignment_center"
     ],
-    "compound_idf_sum": 418.27297306572757
+    "compound_idf_sum": 387.7648512031087
   },
   {
     "a_path": "Users\\gbran\\Downloads\\hud.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\top\\hud.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 83,
+    "compound_shared_count": 74,
     "compound_shared_tokens": [
       "_anchor_bottom_center",
       "_anchor_bottom_left",
@@ -1888,13 +1774,8 @@
       "_panel",
       "_player_health_bar",
       "_player_health_label",
-      "_process",
       "_progress_bar",
-      "_ready",
       "_update_bow_charge",
-      "add_child",
-      "add_theme_color_override",
-      "add_theme_font_size_override",
       "add_theme_stylebox_override",
       "anchor_bottom",
       "anchor_left",
@@ -1914,15 +1795,12 @@
       "dragon_mountable",
       "ease_out",
       "font_color",
-      "font_size",
       "get_bow_charge",
       "has_method",
       "has_signal",
       "health_changed",
       "hide_death_screen",
       "hide_mount_prompt",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
       "is_connected",
       "max_health",
       "max_value",
@@ -1942,10 +1820,9 @@
       "show_death_screen",
       "show_percentage",
       "tween_property",
-      "vertical_alignment",
       "vertical_alignment_center"
     ],
-    "compound_idf_sum": 418.27297306572757
+    "compound_idf_sum": 387.7648512031087
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\engine.py",
@@ -2017,11 +1894,8 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 18,
+    "compound_shared_count": 15,
     "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__",
       "fast_sigmoid",
       "first_snn",
       "init_leaky",
@@ -2038,18 +1912,15 @@
       "spike_grad",
       "zero_grad"
     ],
-    "compound_idf_sum": 78.4602097484144
+    "compound_idf_sum": 73.81063377364762
   },
   {
     "a_path": "Users\\gbran\\Downloads\\first_snn.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 18,
+    "compound_shared_count": 15,
     "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__",
       "fast_sigmoid",
       "first_snn",
       "init_leaky",
@@ -2066,18 +1937,15 @@
       "spike_grad",
       "zero_grad"
     ],
-    "compound_idf_sum": 78.4602097484144
+    "compound_idf_sum": 73.81063377364762
   },
   {
     "a_path": "Users\\gbran\\Downloads\\first_snn.py",
     "b_path": "acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 18,
+    "compound_shared_count": 15,
     "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__",
       "fast_sigmoid",
       "first_snn",
       "init_leaky",
@@ -2094,17 +1962,15 @@
       "spike_grad",
       "zero_grad"
     ],
-    "compound_idf_sum": 78.4602097484144
+    "compound_idf_sum": 73.81063377364762
   },
   {
     "a_path": "Users\\gbran\\Downloads\\strain_decoherence_model(1).py",
     "b_path": "Users\\gbran\\Downloads\\files(5)\\strain_decoherence_model.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.9411764705882353,
-    "compound_shared_count": 28,
+    "compound_shared_count": 26,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "angular_factor",
       "curve_fit",
       "eps_example",
@@ -2132,17 +1998,15 @@
       "theta_example",
       "theta_test"
     ],
-    "compound_idf_sum": 159.94273655100292
+    "compound_idf_sum": 156.17943541217002
   },
   {
     "a_path": "Users\\gbran\\Downloads\\qubit_decoherence.py",
     "b_path": "Users\\gbran\\Downloads\\files(5)\\strain_decoherence_model.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.6341463414634146,
-    "compound_shared_count": 24,
+    "compound_shared_count": 22,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "angular_factor",
       "curve_fit",
       "eps_example",
@@ -2166,7 +2030,7 @@
       "theta_example",
       "theta_test"
     ],
-    "compound_idf_sum": 134.919286367511
+    "compound_idf_sum": 131.1559852286781
   },
   {
     "a_path": "Users\\gbran\\Downloads\\NTeleportation.cs",
@@ -2263,79 +2127,58 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.45454545454545453,
-    "compound_shared_count": 6,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "distance_to",
-      "get_nodes_in_group",
-      "get_tree",
-      "global_position"
+      "get_nodes_in_group"
     ],
-    "compound_idf_sum": 14.007019022667077
+    "compound_idf_sum": 2.646285606847364
   },
   {
     "a_path": "Users\\gbran\\Downloads\\README(1).md",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "_ready"
-    ],
-    "compound_idf_sum": 1.7175723549746518
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\GhostCreep.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.38095238095238093,
-    "compound_shared_count": 6,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "distance_to",
-      "get_nodes_in_group",
-      "get_tree",
-      "global_position"
+      "get_nodes_in_group"
     ],
-    "compound_idf_sum": 14.007019022667077
+    "compound_idf_sum": 2.646285606847364
   },
   {
     "a_path": "Users\\gbran\\Downloads\\spikeling_v10.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7857142857142857,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\spikeling.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.6923076923076923,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\first_snn.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.15384615384615385,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_merge.py",
@@ -2391,11 +2234,9 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\turret.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3333333333333333,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "_process"
-    ],
-    "compound_idf_sum": 2.630781420311399
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\memory_model.py",
@@ -2411,12 +2252,9 @@
     "b_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\cavity_symmetry.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.55,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_memory_store.py",
@@ -2488,36 +2326,27 @@
     "b_path": "Users\\gbran\\symmetry-sensor\\symmetry_isolation.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.5116279069767442,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_symmetry_cavity_test.py",
     "b_path": "Users\\gbran\\symmetry-sensor\\sensor_audio_test.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3333333333333333,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_symmetry_cavity_test.py",
     "b_path": "Users\\gbran\\symmetry-sensor\\defect_types_study.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.32558139534883723,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_mega_train.py",
@@ -2607,43 +2436,36 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.375,
-    "compound_shared_count": 3,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "__init__",
       "no_grad",
       "zero_grad"
     ],
-    "compound_idf_sum": 8.019639853458278
+    "compound_idf_sum": 7.133365017524389
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_distill.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.38095238095238093,
-    "compound_shared_count": 5,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__",
       "no_grad",
       "zero_grad"
     ],
-    "compound_idf_sum": 11.782940992291174
+    "compound_idf_sum": 7.133365017524389
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_rag.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.35294117647058826,
-    "compound_shared_count": 5,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "__init__",
-      "__main__",
-      "__name__",
       "no_grad",
       "zero_grad"
     ],
-    "compound_idf_sum": 11.782940992291174
+    "compound_idf_sum": 7.133365017524389
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_benchmark.py",
@@ -2769,14 +2591,11 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.56,
-    "compound_shared_count": 4,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "distance_to",
-      "get_nodes_in_group",
-      "get_tree",
-      "global_position"
+      "get_nodes_in_group"
     ],
-    "compound_idf_sum": 9.509629668220537
+    "compound_idf_sum": 2.646285606847364
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_resonant_memory.py",
@@ -2801,56 +2620,43 @@
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2857142857142857,
-    "compound_shared_count": 3,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      ")\n\nif __name__ == ",
-      "__main__",
-      "__name__"
+      ")\n\nif __name__ == "
     ],
-    "compound_idf_sum": 8.170574556241561
+    "compound_idf_sum": 4.407273417408666
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\012-ternary\\trit_rag.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.24,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\BaseGun.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\basegun.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 21,
+    "compound_shared_count": 13,
     "compound_shared_tokens": [
-      "_ready",
       "ammo_changed",
-      "class_name",
-      "create_timer",
       "current_ammo",
       "direct_space_state",
       "fire_rate",
-      "get_parent",
       "get_rid",
-      "get_tree",
       "get_world_3d",
-      "global_position",
-      "global_transform",
       "has_method",
       "intersect_ray",
-      "is_instance_valid",
       "max_ammo",
       "push_warning",
       "reload_time",
       "take_damage",
       "team_id"
     ],
-    "compound_idf_sum": 65.50029143518806
+    "compound_idf_sum": 45.527676101718704
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\TankCreep.gd",
@@ -2884,40 +2690,26 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 44,
+    "compound_shared_count": 29,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_child",
-      "add_to_group",
-      "button_index",
       "create_tween",
       "current_scene",
-      "distance_to",
       "get_first_node_in_group",
       "get_nodes_in_group",
-      "get_tree",
-      "global_position",
-      "global_transform",
       "has_meta",
       "has_method",
       "is_action_just_pressed",
       "is_empty",
-      "is_instance_valid",
       "is_key_pressed",
       "is_on_floor",
       "jump_velocity",
       "key_a",
       "key_ctrl",
       "key_d",
-      "key_escape",
       "key_f",
       "key_g",
       "key_s",
       "key_w",
-      "mouse_button_left",
-      "mouse_button_right",
       "mouse_mode",
       "mouse_mode_captured",
       "mouse_mode_visible",
@@ -2925,54 +2717,38 @@
       "move_and_slide",
       "move_toward",
       "rotate_y",
-      "rotation_degrees",
       "set_script",
       "take_damage",
       "tween_callback",
       "tween_property"
     ],
-    "compound_idf_sum": 167.25354034991742
+    "compound_idf_sum": 121.140869536553
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\AIPlayer.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7058823529411765,
-    "compound_shared_count": 13,
+    "compound_shared_count": 5,
     "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "add_to_group",
-      "class_name",
       "current_scene",
       "get_first_node_in_group",
       "get_nodes_in_group",
-      "get_tree",
-      "global_position",
-      "global_transform",
       "has_method",
-      "is_empty",
-      "is_instance_valid"
+      "is_empty"
     ],
-    "compound_idf_sum": 32.33154112317204
+    "compound_idf_sum": 13.87346966882203
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\TitanCreep.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\tree.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.5714285714285714,
-    "compound_shared_count": 8,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "add_to_group",
-      "albedo_color",
-      "material_override",
-      "move_and_slide",
-      "queue_free",
-      "randf_range"
+      "move_and_slide"
     ],
-    "compound_idf_sum": 21.113464515676746
+    "compound_idf_sum": 3.20785642961859
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\CrystalShard.gd",
@@ -3033,20 +2809,13 @@
     "b_path": "top\\scripts\\player.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 32,
+    "compound_shared_count": 25,
     "compound_shared_tokens": [
       "_mounted_dragon",
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
       "anim_death",
       "anim_jump",
       "collision_mask",
-      "create_timer",
-      "get_tree",
       "get_vector",
-      "global_position",
       "has_method",
       "health_changed",
       "is_action_just_pressed",
@@ -3068,24 +2837,19 @@
       "sprint_speed",
       "take_damage"
     ],
-    "compound_idf_sum": 123.35319341727909
+    "compound_idf_sum": 105.19483435134055
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\hud.gd",
     "b_path": "top\\hud.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 38,
+    "compound_shared_count": 29,
     "compound_shared_tokens": [
       "_build_ui",
       "_death_screen",
       "_on_player_health_changed",
       "_panel",
-      "_process",
-      "_ready",
-      "add_child",
-      "add_theme_color_override",
-      "add_theme_font_size_override",
       "add_theme_stylebox_override",
       "anchor_bottom",
       "anchor_left",
@@ -3095,12 +2859,9 @@
       "create_tween",
       "ease_out",
       "font_color",
-      "font_size",
       "has_method",
       "has_signal",
       "health_changed",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
       "is_connected",
       "max_health",
       "max_value",
@@ -3113,30 +2874,22 @@
       "set_ease",
       "show_percentage",
       "tween_property",
-      "vertical_alignment",
       "vertical_alignment_center"
     ],
-    "compound_idf_sum": 156.89542871850625
+    "compound_idf_sum": 126.38730685588739
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\player.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\player.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 32,
+    "compound_shared_count": 25,
     "compound_shared_tokens": [
       "_mounted_dragon",
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
       "anim_death",
       "anim_jump",
       "collision_mask",
-      "create_timer",
-      "get_tree",
       "get_vector",
-      "global_position",
       "has_method",
       "health_changed",
       "is_action_just_pressed",
@@ -3158,7 +2911,7 @@
       "sprint_speed",
       "take_damage"
     ],
-    "compound_idf_sum": 123.35319341727909
+    "compound_idf_sum": 105.19483435134055
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\player.gd",
@@ -3194,111 +2947,76 @@
     "b_path": "abc-squirrel\\scripts\\player.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 20,
+    "compound_shared_count": 9,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_child",
-      "add_to_group",
-      "create_timer",
-      "get_children",
       "get_first_node_in_group",
-      "get_tree",
       "get_vector",
-      "is_instance_valid",
       "move_and_slide",
       "move_left",
       "move_right",
       "move_speed",
-      "process_frame",
-      "queue_free",
       "set_meta",
       "show_message",
       "z_index"
     ],
-    "compound_idf_sum": 68.62303846105691
+    "compound_idf_sum": 38.228043384228506
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\player.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 20,
+    "compound_shared_count": 9,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_child",
-      "add_to_group",
-      "create_timer",
-      "get_children",
       "get_first_node_in_group",
-      "get_tree",
       "get_vector",
-      "is_instance_valid",
       "move_and_slide",
       "move_left",
       "move_right",
       "move_speed",
-      "process_frame",
-      "queue_free",
       "set_meta",
       "show_message",
       "z_index"
     ],
-    "compound_idf_sum": 68.62303846105691
+    "compound_idf_sum": 38.228043384228506
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\MusicManager.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\audio_manager.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.72,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "_ready"
-    ],
-    "compound_idf_sum": 1.7175723549746518
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\BaseGun.gd",
     "b_path": "acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7272727272727273,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child"
-    ],
-    "compound_idf_sum": 3.7778089168184374
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\BaseGun.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7272727272727273,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child"
-    ],
-    "compound_idf_sum": 3.7778089168184374
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\BaseTurret.gd",
     "b_path": "acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.5714285714285714,
-    "compound_shared_count": 6,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_delta",
-      "_process",
-      "add_child",
-      "albedo_color",
-      "look_at",
-      "material_override"
+      "_delta"
     ],
-    "compound_idf_sum": 18.25711355183219
+    "compound_idf_sum": 4.001808309300501
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\player_v2.gd",
@@ -3332,87 +3050,41 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.375,
-    "compound_shared_count": 10,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "distance_to",
-      "get_tree",
-      "global_position",
-      "material_override",
-      "process_frame",
-      "randf_range",
-      "rotation_degrees"
-    ],
-    "compound_idf_sum": 27.27975514152291
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\TitanCreep.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2857142857142857,
-    "compound_shared_count": 14,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "create_timer",
-      "distance_to",
-      "emission_enabled",
-      "emission_energy_multiplier",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "look_at",
-      "material_override",
-      "queue_free",
-      "randf_range"
-    ],
-    "compound_idf_sum": 38.371050067667674
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\TitanCreep.gd",
     "b_path": "3d-simulation\\main.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2857142857142857,
-    "compound_shared_count": 14,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "create_timer",
-      "distance_to",
-      "emission_enabled",
-      "emission_energy_multiplier",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "look_at",
-      "material_override",
-      "queue_free",
-      "randf_range"
-    ],
-    "compound_idf_sum": 38.371050067667674
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 20,
+    "compound_shared_count": 15,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
       "is_action_just_pressed",
       "is_key_pressed",
       "is_on_floor",
       "jump_velocity",
       "key_a",
       "key_d",
-      "key_escape",
       "key_s",
       "key_w",
       "mouse_mode",
@@ -3423,31 +3095,25 @@
       "move_toward",
       "rotate_y"
     ],
-    "compound_idf_sum": 82.21893276732145
+    "compound_idf_sum": 66.63735564078289
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\TalentTree.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.38095238095238093,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "_ready"
-    ],
-    "compound_idf_sum": 1.7175723549746518
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\WraithCreep.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2727272727272727,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "is_in_group"
-    ],
-    "compound_idf_sum": 7.852570498821987
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\RespawnScreen.gd",
@@ -3481,42 +3147,29 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.45454545454545453,
-    "compound_shared_count": 6,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "distance_to",
-      "get_nodes_in_group",
-      "get_tree",
-      "global_position"
+      "get_nodes_in_group"
     ],
-    "compound_idf_sum": 14.007019022667077
+    "compound_idf_sum": 2.646285606847364
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\TalentTree.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.38095238095238093,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "_ready"
-    ],
-    "compound_idf_sum": 1.7175723549746518
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\TankCreep.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 5,
-    "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "distance_to",
-      "get_tree",
-      "global_position"
-    ],
-    "compound_idf_sum": 11.360733415819713
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\all_scripts\\player.gd",
@@ -3568,19 +3221,12 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 23,
+    "compound_shared_count": 16,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "add_to_group",
       "get_first_node_in_group",
       "get_nodes_in_group",
-      "get_tree",
-      "global_position",
-      "global_transform",
       "has_method",
       "is_action_just_pressed",
-      "is_instance_valid",
       "is_on_floor",
       "jump_velocity",
       "key_1",
@@ -3594,21 +3240,17 @@
       "rotate_y",
       "take_damage"
     ],
-    "compound_idf_sum": 77.96485917982523
+    "compound_idf_sum": 61.498031415832045
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\scripts\\player.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 12,
+    "compound_shared_count": 8,
     "compound_shared_tokens": [
       "_attacker",
-      "_physics_process",
-      "_ready",
-      "add_to_group",
       "create_tween",
-      "global_position",
       "input_dir",
       "is_on_floor",
       "move_and_slide",
@@ -3616,7 +3258,7 @@
       "take_damage",
       "tween_property"
     ],
-    "compound_idf_sum": 38.11450980518902
+    "compound_idf_sum": 29.010345245076646
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\lazerprojectile.gd",
@@ -3668,14 +3310,8 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\player.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 24,
+    "compound_shared_count": 18,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "add_to_group",
-      "create_timer",
-      "get_tree",
-      "global_position",
       "has_method",
       "health_changed",
       "is_action_just_pressed",
@@ -3695,7 +3331,7 @@
       "sprint_speed",
       "take_damage"
     ],
-    "compound_idf_sum": 84.8297874666147
+    "compound_idf_sum": 71.07870181808482
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\fireturret.gd",
@@ -3711,31 +3347,21 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_ready",
-      "deg_to_rad"
-    ],
-    "compound_idf_sum": 5.6895277011254715
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\canvas_layer.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.375,
-    "compound_shared_count": 9,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
       "_delta",
-      "_process",
-      "_ready",
-      "add_child",
-      "add_theme_font_size_override",
-      "custom_minimum_size",
-      "font_size",
-      "preset_full_rect",
-      "set_anchors_preset"
+      "preset_full_rect"
     ],
-    "compound_idf_sum": 29.43458925834777
+    "compound_idf_sum": 7.8112447259535465
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\flame_effect.gd",
@@ -3769,61 +3395,26 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.35294117647058826,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "_input",
-      "_ready",
-      "deg_to_rad"
-    ],
-    "compound_idf_sum": 9.359202175403357
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\shopui.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2,
-    "compound_shared_count": 27,
-    "compound_shared_tokens": [
-      "_input",
-      "_process",
-      "_ready",
-      "add_child",
-      "add_theme_font_size_override",
-      "albedo_color",
-      "button_index",
-      "custom_minimum_size",
-      "deg_to_rad",
-      "distance_to",
-      "font_size",
-      "get_child",
-      "get_children",
-      "get_instance_id",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
-      "key_escape",
-      "mouse_button_left",
-      "mouse_button_right",
-      "process_frame",
-      "queue_free",
-      "randf_range",
-      "transparency_alpha",
-      "world_pos"
-    ],
-    "compound_idf_sum": 93.1231523739873
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 11,
+    "compound_shared_count": 8,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "add_to_group",
       "is_action_just_pressed",
       "is_on_floor",
       "jump_velocity",
@@ -3833,7 +3424,7 @@
       "move_toward",
       "rotate_y"
     ],
-    "compound_idf_sum": 38.844081051578996
+    "compound_idf_sum": 31.872256347211753
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\basenode.gd",
@@ -3849,29 +3440,20 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.42424242424242425,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "global_position"
-    ],
-    "compound_idf_sum": 6.480693631031181
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\turret.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.35294117647058826,
-    "compound_shared_count": 6,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "distance_to",
-      "get_nodes_in_group",
-      "get_tree",
-      "global_position"
+      "get_nodes_in_group"
     ],
-    "compound_idf_sum": 13.857983443506589
+    "compound_idf_sum": 2.646285606847364
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\horde-beta-version-1\\ice_projectile.gd",
@@ -3932,14 +3514,11 @@
     "b_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\cross_check_lst6_element.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 53,
+    "compound_shared_count": 50,
     "compound_shared_tokens": [
       " for nf in n_folds))\n    print(f",
       " if abs(cov - target_cov) > 0.4 else ",
       "\\nper-n_fold means (mhz): ",
-      "__len__",
-      "__main__",
-      "__name__",
       "_centroid",
       "_gauss3",
       "_shape_lst6",
@@ -3988,17 +3567,15 @@
       "target_cov",
       "total_nodes"
     ],
-    "compound_idf_sum": 244.34296553447845
+    "compound_idf_sum": 236.37718539088291
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 39,
+    "compound_shared_count": 37,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "_largest_connected_component",
       "boundary_mask",
       "build_mesh",
@@ -4037,7 +3614,7 @@
       "solve_modes",
       "total_n"
     ],
-    "compound_idf_sum": 178.20594166176562
+    "compound_idf_sum": 174.44264052293275
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\QuasicrystalMEMS_Paper_Branaa\\PAPER_DRAFT.md",
@@ -4060,7 +3637,7 @@
     "b_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung2_3.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 71,
+    "compound_shared_count": 69,
     "compound_shared_tokens": [
       " * 72)\n\n\nif __name__ == ",
       ")\n    axs.plot(np.sort(per_spec) / 1e6, ",
@@ -4068,8 +3645,6 @@
       ")\n    axs.set_xlabel(",
       "); axs.set_ylabel(",
       "__file__",
-      "__main__",
-      "__name__",
       "build_coupling",
       "build_mesh",
       "clamped_free_dofs",
@@ -4134,18 +3709,15 @@
       "tol_frac",
       "u_series"
     ],
-    "compound_idf_sum": 342.0573501796796
+    "compound_idf_sum": 338.2940490408467
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "b_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 36,
+    "compound_shared_count": 33,
     "compound_shared_tokens": [
-      "__len__",
-      "__main__",
-      "__name__",
       "analytical f1: {f_anal/1e6:.4f} mhz",
       "build_mesh",
       "clamped_free_dofs",
@@ -4180,21 +3752,19 @@
       "sub_n",
       "theta_k"
     ],
-    "compound_idf_sum": 150.62567224689542
+    "compound_idf_sum": 142.65989210329988
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung4_modeshapes.py",
     "b_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung4_modeshapes.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 87,
+    "compound_shared_count": 85,
     "compound_shared_tokens": [
       " * 74)\n\n\nif __name__ == ",
       "(reduce a_quad/b_cubic/input_amp/dt)",
       ")\n    axa.set_ylabel(",
       "__file__",
-      "__main__",
-      "__name__",
       "_drng",
       "a_quad",
       "aw_norm",
@@ -4277,7 +3847,7 @@
       "w_nodes",
       "x_drive"
     ],
-    "compound_idf_sum": 442.69760432924096
+    "compound_idf_sum": 438.93430319040806
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung7b_depth.py",
@@ -4365,46 +3935,35 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4166666666666667,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung1.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34782608695652173,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung2_3.py",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34782608695652173,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\Downloads\\files(4)\\fem_plate_bending_2d_v2.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 25,
+    "compound_shared_count": 23,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -4429,17 +3988,15 @@
       "shape_derivs",
       "solve_modes"
     ],
-    "compound_idf_sum": 97.7671873698388
+    "compound_idf_sum": 94.00388623100591
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\Downloads\\files(4)\\fem_plate_bending_2d_v2.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 25,
+    "compound_shared_count": 23,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -4464,17 +4021,15 @@
       "shape_derivs",
       "solve_modes"
     ],
-    "compound_idf_sum": 97.7671873698388
+    "compound_idf_sum": 94.00388623100591
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\Downloads\\files(3)\\fem_plate_bending_2d.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.9523809523809523,
-    "compound_shared_count": 20,
+    "compound_shared_count": 18,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -4494,7 +4049,7 @@
       "run_case",
       "solve_modes"
     ],
-    "compound_idf_sum": 72.57523930829959
+    "compound_idf_sum": 68.81193816946669
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\make_figures.py",
@@ -4609,24 +4164,18 @@
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3225806451612903,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung2_3.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3225806451612903,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\acoustic-vortex-sim\\reservoir_computing\\reservoir_rung2_3.py",
@@ -4696,68 +4245,45 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\top\\gamer_manager.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.64,
-    "compound_shared_count": 10,
+    "compound_shared_count": 4,
     "compound_shared_tokens": [
-      "_ready",
-      "add_child",
       "call_deferred",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
       "has_method",
       "is_empty",
-      "light_color",
-      "queue_free"
+      "light_color"
     ],
-    "compound_idf_sum": 27.151774342524575
+    "compound_idf_sum": 13.871709817938315
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\dog.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\dragon.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4444444444444444,
-    "compound_shared_count": 21,
+    "compound_shared_count": 10,
     "compound_shared_tokens": [
-      "_physics_process",
       "_player",
-      "_ready",
-      "add_child",
-      "add_to_group",
-      "albedo_color",
       "chase_speed",
       "default_gravity",
-      "distance_to",
-      "get_node_or_null",
       "get_setting",
-      "get_tree",
-      "global_position",
       "has_method",
-      "is_in_group",
       "is_on_floor",
       "lerp_angle",
       "move_and_slide",
       "move_toward",
-      "physics/3d/default_gravity",
-      "randf_range"
+      "physics/3d/default_gravity"
     ],
-    "compound_idf_sum": 68.95726182743068
+    "compound_idf_sum": 40.86949617979479
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\animal.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\dragonskinmesh.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 7,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_head",
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "billboard_enabled",
-      "global_position",
-      "is_instance_valid"
+      "_head"
     ],
-    "compound_idf_sum": 20.28549247227392
+    "compound_idf_sum": 5.418874329087146
   },
   {
     "a_path": "tribe\\FPSPlayer.gd",
@@ -4791,44 +4317,34 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 9,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_child",
-      "add_to_group",
       "get_first_node_in_group",
-      "get_tree",
-      "is_instance_valid",
       "move_and_slide"
     ],
-    "compound_idf_sum": 23.57015603736868
+    "compound_idf_sum": 6.061781401244199
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\world_tribe.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\world.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.625,
-    "compound_shared_count": 2,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "add_child",
       "set_script"
     ],
-    "compound_idf_sum": 6.9194951029955085
+    "compound_idf_sum": 4.859258541151722
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\world_tribe.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\word_system.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.6363636363636364,
-    "compound_shared_count": 3,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "add_child",
-      "add_to_group",
       "set_script"
     ],
-    "compound_idf_sum": 9.393930452916212
+    "compound_idf_sum": 4.859258541151722
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\spikeling.gd",
@@ -4847,20 +4363,11 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.26666666666666666,
-    "compound_shared_count": 10,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_delta",
-      "_exit_tree",
-      "_process",
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "emission_enabled",
-      "font_size",
-      "material_override",
-      "rotation_degrees"
+      "_delta"
     ],
-    "compound_idf_sum": 31.844097406696072
+    "compound_idf_sum": 4.001808309300501
   },
   {
     "a_path": "tribe\\spikeling.gd",
@@ -4906,95 +4413,43 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 11,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "billboard_enabled",
-      "distance_to",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "material_override",
-      "queue_free",
-      "randf_range"
-    ],
-    "compound_idf_sum": 29.081840127397648
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\Tribemanager.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.375,
-    "compound_shared_count": 31,
+    "compound_shared_count": 8,
     "compound_shared_tokens": [
       "_build_ui",
-      "_process",
-      "_ready",
-      "add_child",
-      "add_theme_color_override",
-      "add_theme_font_size_override",
-      "albedo_color",
       "begins_with",
-      "billboard_enabled",
-      "bottom_radius",
-      "custom_minimum_size",
-      "distance_to",
       "font_color",
-      "font_size",
-      "get_children",
-      "get_instance_id",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
       "key_1",
       "key_2",
       "key_3",
       "key_4",
-      "key_r",
-      "material_override",
-      "queue_free",
-      "randf_range",
-      "set_anchors_preset",
-      "top_radius"
+      "key_r"
     ],
-    "compound_idf_sum": 112.04972941702485
+    "compound_idf_sum": 37.715124742619636
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\npc.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2857142857142857,
-    "compound_shared_count": 16,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "billboard_enabled",
-      "bottom_radius",
-      "distance_to",
-      "emission_enabled",
-      "font_size",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "material_override",
-      "queue_free",
-      "randf_range",
-      "rotation_degrees",
-      "top_radius"
-    ],
-    "compound_idf_sum": 47.154423007768116
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "tribe\\spikeling.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\Spikeling.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 27,
+    "compound_shared_count": 26,
     "compound_shared_tokens": [
       ")\n\t\t\tn.threshold = float(_kv(line, ",
       "))\n\t\t\tn.leak = float(_kv(line, ",
@@ -5002,7 +4457,6 @@
       "_name_to_idx",
       "_pending",
       "begins_with",
-      "class_name",
       "default_val",
       "did_fire",
       "dst_n",
@@ -5024,20 +4478,15 @@
       "stimulate_idx",
       "strip_edges"
     ],
-    "compound_idf_sum": 139.7792385617492
+    "compound_idf_sum": 137.06841443376425
   },
   {
     "a_path": "tribe\\FPSPlayer.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 27,
+    "compound_shared_count": 21,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
-      "class_name",
       "default_gravity",
       "get_setting",
       "input_dir",
@@ -5047,7 +4496,6 @@
       "jump_velocity",
       "key_a",
       "key_d",
-      "key_escape",
       "key_s",
       "key_w",
       "mouse_mode",
@@ -5061,14 +4509,14 @@
       "rotate_y",
       "ui_accept"
     ],
-    "compound_idf_sum": 114.61716963307066
+    "compound_idf_sum": 96.32476837854716
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\spikeling.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\Spikeling.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 27,
+    "compound_shared_count": 26,
     "compound_shared_tokens": [
       ")\n\t\t\tn.threshold = float(_kv(line, ",
       "))\n\t\t\tn.leak = float(_kv(line, ",
@@ -5076,7 +4524,6 @@
       "_name_to_idx",
       "_pending",
       "begins_with",
-      "class_name",
       "default_val",
       "did_fire",
       "dst_n",
@@ -5098,7 +4545,7 @@
       "stimulate_idx",
       "strip_edges"
     ],
-    "compound_idf_sum": 139.7792385617492
+    "compound_idf_sum": 137.06841443376425
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\tribemember.gd",
@@ -5132,7 +4579,7 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 42,
+    "compound_shared_count": 35,
     "compound_shared_tokens": [
       "\n\ttrust_label.text = ",
       " if player_in_range else ",
@@ -5141,27 +4588,20 @@
       "_delta",
       "_e_was_down",
       "_on_now_backing_you",
-      "_physics_process",
-      "_process",
       "_rank_thought",
-      "_ready",
       "_think",
       "_thought_timer",
       "_tick_accum",
       "_update_label",
       "_update_rank",
       "_update_thought_label",
-      "class_name",
       "current_rank",
       "current_thought",
-      "distance_to",
       "e_down",
       "follow_fires",
       "follow_threshold_hits",
       "get_nodes_in_group",
       "get_potential",
-      "get_tree",
-      "global_position",
       "interact_range",
       "is_backing_you",
       "is_key_pressed",
@@ -5177,14 +4617,14 @@
       "trust_label",
       "trust_p"
     ],
-    "compound_idf_sum": 209.20760537899986
+    "compound_idf_sum": 192.50526641488383
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\tribe\\tribemember.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 42,
+    "compound_shared_count": 35,
     "compound_shared_tokens": [
       "\n\ttrust_label.text = ",
       " if player_in_range else ",
@@ -5193,27 +4633,20 @@
       "_delta",
       "_e_was_down",
       "_on_now_backing_you",
-      "_physics_process",
-      "_process",
       "_rank_thought",
-      "_ready",
       "_think",
       "_thought_timer",
       "_tick_accum",
       "_update_label",
       "_update_rank",
       "_update_thought_label",
-      "class_name",
       "current_rank",
       "current_thought",
-      "distance_to",
       "e_down",
       "follow_fires",
       "follow_threshold_hits",
       "get_nodes_in_group",
       "get_potential",
-      "get_tree",
-      "global_position",
       "interact_range",
       "is_backing_you",
       "is_key_pressed",
@@ -5229,27 +4662,22 @@
       "trust_label",
       "trust_p"
     ],
-    "compound_idf_sum": 209.20760537899986
+    "compound_idf_sum": 192.50526641488383
   },
   {
     "a_path": "tribe\\Tribemanager.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.6956521739130435,
-    "compound_shared_count": 10,
+    "compound_shared_count": 5,
     "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "distance_to",
       "follow_fires",
       "get_nodes_in_group",
-      "get_tree",
-      "global_position",
       "is_backing_you",
       "is_key_pressed",
       "member_name"
     ],
-    "compound_idf_sum": 34.41816308330546
+    "compound_idf_sum": 23.206465246646236
   },
   {
     "a_path": "tribe\\spikeling.gd",
@@ -5287,11 +4715,8 @@
     "b_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 36,
+    "compound_shared_count": 33,
     "compound_shared_tokens": [
-      "__len__",
-      "__main__",
-      "__name__",
       "analytical f1: {f_anal/1e6:.4f} mhz",
       "build_mesh",
       "clamped_free_dofs",
@@ -5326,18 +4751,15 @@
       "sub_n",
       "theta_k"
     ],
-    "compound_idf_sum": 150.62567224689542
+    "compound_idf_sum": 142.65989210329988
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa(1)\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "b_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 36,
+    "compound_shared_count": 33,
     "compound_shared_tokens": [
-      "__len__",
-      "__main__",
-      "__name__",
       "analytical f1: {f_anal/1e6:.4f} mhz",
       "build_mesh",
       "clamped_free_dofs",
@@ -5372,17 +4794,15 @@
       "sub_n",
       "theta_k"
     ],
-    "compound_idf_sum": 150.62567224689542
+    "compound_idf_sum": 142.65989210329988
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7450980392156863,
-    "compound_shared_count": 24,
+    "compound_shared_count": 22,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -5406,7 +4826,7 @@
       "shape_derivs",
       "solve_modes"
     ],
-    "compound_idf_sum": 92.66676677187019
+    "compound_idf_sum": 88.90346563303729
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\PAPER_DRAFT.md",
@@ -5512,22 +4932,17 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.25806451612903225,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\Downloads\\files(4)\\fem_plate_bending_2d_v2.py",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 25,
+    "compound_shared_count": 23,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -5552,17 +4967,15 @@
       "shape_derivs",
       "solve_modes"
     ],
-    "compound_idf_sum": 97.7671873698388
+    "compound_idf_sum": 94.00388623100591
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\Downloads\\files(3)\\fem_plate_bending_2d.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.9523809523809523,
-    "compound_shared_count": 20,
+    "compound_shared_count": 18,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -5582,17 +4995,15 @@
       "run_case",
       "solve_modes"
     ],
-    "compound_idf_sum": 72.57523930829959
+    "compound_idf_sum": 68.81193816946669
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "b_path": "Users\\gbran\\Downloads\\files(3)\\fem_plate_bending_2d.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7755102040816326,
-    "compound_shared_count": 19,
+    "compound_shared_count": 17,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -5611,7 +5022,7 @@
       "run_case",
       "solve_modes"
     ],
-    "compound_idf_sum": 67.47481871033098
+    "compound_idf_sum": 63.71151757149808
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\make_figures.py",
@@ -5726,36 +5137,27 @@
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.358974358974359,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa(1)\\plate_bending_review\\fem_plate_bending_2d_v2.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.358974358974359,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\QuasicrystalMEMS_Paper_Branaa\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34782608695652173,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\symmetry-sensor\\engine\\reservoir_rung4_modeshapes.py",
@@ -5870,10 +5272,8 @@
     "b_path": "Users\\gbran\\Downloads\\files(3)\\fem_plate_bending_2d.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7755102040816326,
-    "compound_shared_count": 19,
+    "compound_shared_count": 17,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -5892,17 +5292,15 @@
       "run_case",
       "solve_modes"
     ],
-    "compound_idf_sum": 67.47481871033098
+    "compound_idf_sum": 63.71151757149808
   },
   {
     "a_path": "Users\\gbran\\symmetry-sensor\\plate_bending_review\\fem_plate_bending_homogenized.py",
     "b_path": "Users\\gbran\\Downloads\\files(4)\\fem_plate_bending_2d_v2.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.7450980392156863,
-    "compound_shared_count": 24,
+    "compound_shared_count": 22,
     "compound_shared_tokens": [
-      "__main__",
-      "__name__",
       "build_mesh",
       "clamped_free_dofs",
       "column_stack",
@@ -5926,7 +5324,7 @@
       "shape_derivs",
       "solve_modes"
     ],
-    "compound_idf_sum": 92.66676677187019
+    "compound_idf_sum": 88.90346563303729
   },
   {
     "a_path": "Users\\gbran\\symmetry-sensor\\symmetry_isolation.py",
@@ -6041,36 +5439,27 @@
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3225806451612903,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\symmetry-sensor\\sensor_beat_detector.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.21621621621621623,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\symmetry-sensor\\symmetry_isolation.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2857142857142857,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\player.gd",
@@ -6104,17 +5493,10 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 15,
+    "compound_shared_count": 8,
     "compound_shared_tokens": [
-      "_physics_process",
       "_play_anim",
-      "_ready",
-      "_unhandled_input",
       "_update_animation",
-      "add_to_group",
-      "create_timer",
-      "get_parent",
-      "get_tree",
       "get_vector",
       "has_animation",
       "move_and_slide",
@@ -6122,38 +5504,29 @@
       "move_right",
       "move_speed"
     ],
-    "compound_idf_sum": 56.556886607498335
+    "compound_idf_sum": 37.15968591158303
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\world_environment.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\word_system.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.5,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child"
-    ],
-    "compound_idf_sum": 3.7778089168184374
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\hud.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\ui.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 23,
+    "compound_shared_count": 16,
     "compound_shared_tokens": [
       "_build_ui",
-      "_ready",
-      "add_child",
-      "add_theme_font_size_override",
       "add_theme_stylebox_override",
       "bg_color",
       "create_tween",
       "ease_out",
-      "font_size",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
       "max_value",
       "min_value",
       "mouse_filter",
@@ -6164,45 +5537,29 @@
       "offset_top",
       "set_ease",
       "tween_property",
-      "vertical_alignment",
       "vertical_alignment_center"
     ],
-    "compound_idf_sum": 93.80118840752336
+    "compound_idf_sum": 69.9256562745164
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\player.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 3,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_cam_pitch",
-      "_ready",
-      "_unhandled_input"
+      "_cam_pitch"
     ],
-    "compound_idf_sum": 12.013723730716197
+    "compound_idf_sum": 5.8888779583328805
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\dragonskinmesh.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3333333333333333,
-    "compound_shared_count": 12,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "bottom_radius",
-      "cull_disabled",
-      "cull_mode",
-      "deg_to_rad",
-      "emission_enabled",
-      "emission_energy_multiplier",
-      "top_radius",
-      "transparency_alpha"
-    ],
-    "compound_idf_sum": 42.30490318167527
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\dragonskinmesh.gd",
@@ -6245,87 +5602,43 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 19,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "bottom_radius",
-      "create_timer",
-      "cull_disabled",
-      "cull_mode",
-      "deg_to_rad",
-      "distance_to",
-      "emission_enabled",
-      "emission_energy_multiplier",
-      "get_children",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "radial_segments",
-      "randf_range",
-      "top_radius",
-      "transparency_alpha"
+      "radial_segments"
     ],
-    "compound_idf_sum": 63.666712336217024
+    "compound_idf_sum": 4.790265669664771
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\gamer_manager.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.35294117647058826,
-    "compound_shared_count": 11,
+    "compound_shared_count": 3,
     "compound_shared_tokens": [
-      "_ready",
-      "add_child",
       "ambient_light_color",
       "ambient_light_energy",
-      "background_mode",
-      "create_timer",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "light_energy",
-      "queue_free"
+      "light_energy"
     ],
-    "compound_idf_sum": 35.70854945467639
+    "compound_idf_sum": 14.737041403949197
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\dragonskinmesh.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3333333333333333,
-    "compound_shared_count": 15,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "add_child",
-      "albedo_color",
-      "billboard_enabled",
-      "bottom_radius",
-      "cull_disabled",
-      "cull_mode",
-      "deg_to_rad",
-      "emission_enabled",
-      "emission_energy_multiplier",
-      "global_position",
-      "radial_segments",
-      "top_radius",
-      "transparency_alpha"
+      "radial_segments"
     ],
-    "compound_idf_sum": 53.17047651636274
+    "compound_idf_sum": 4.790265669664771
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 16,
+    "compound_shared_count": 12,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
       "default_gravity",
       "get_setting",
       "input_dir",
@@ -6339,19 +5652,15 @@
       "physics/3d/default_gravity",
       "rotate_y"
     ],
-    "compound_idf_sum": 61.70797596046805
+    "compound_idf_sum": 50.32887783869214
   },
   {
     "a_path": "top\\scripts\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 16,
+    "compound_shared_count": 12,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
       "default_gravity",
       "get_setting",
       "input_dir",
@@ -6365,19 +5674,16 @@
       "physics/3d/default_gravity",
       "rotate_y"
     ],
-    "compound_idf_sum": 61.70797596046805
+    "compound_idf_sum": 50.32887783869214
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\dragonskinmesh.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.32,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready"
-    ],
-    "compound_idf_sum": 4.348353775286051
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\player.gd",
@@ -6411,38 +5717,27 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.32,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "global_position"
-    ],
-    "compound_idf_sum": 6.480693631031181
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\biomeresource.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3333333333333333,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "class_name"
-    ],
-    "compound_idf_sum": 2.710824127984935
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\scripts\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.23529411764705882,
-    "compound_shared_count": 4,
-    "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "get_tree",
-      "global_position"
-    ],
-    "compound_idf_sum": 8.598615993447227
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\top\\island_generator_node.gd",
@@ -6692,39 +5987,30 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready"
-    ],
-    "compound_idf_sum": 4.348353775286051
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 5,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "_ready",
-      "_unhandled_input",
-      "add_child",
       "begins_with",
       "remove_at"
     ],
-    "compound_idf_sum": 18.011230080722914
+    "compound_idf_sum": 9.82614774649581
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\word_system.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.26666666666666666,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_ready",
-      "add_child"
-    ],
-    "compound_idf_sum": 3.7778089168184374
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
@@ -6758,103 +6044,63 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4444444444444444,
-    "compound_shared_count": 12,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "add_child",
-      "add_theme_font_size_override",
-      "distance_to",
-      "font_size",
-      "get_node_or_null",
-      "get_tree",
-      "global_position",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
-      "queue_free"
-    ],
-    "compound_idf_sum": 33.57495580568573
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\ui.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3333333333333333,
-    "compound_shared_count": 14,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
       "_build_ui",
-      "_ready",
-      "add_child",
-      "add_theme_font_size_override",
-      "bg_color",
-      "create_timer",
-      "custom_minimum_size",
-      "font_size",
-      "get_children",
-      "get_tree",
-      "horizontal_alignment",
-      "horizontal_alignment_center",
-      "queue_free",
-      "set_anchors_preset"
+      "bg_color"
     ],
-    "compound_idf_sum": 46.06308986229512
+    "compound_idf_sum": 8.297131401372285
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\camera.gd",
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2,
-    "compound_shared_count": 5,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "get_tree",
-      "global_position",
-      "process_frame"
-    ],
-    "compound_idf_sum": 12.36437734659761
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 5,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
       "move_and_slide"
     ],
-    "compound_idf_sum": 14.5869545513945
+    "compound_idf_sum": 3.20785642961859
   },
   {
     "a_path": "abc-squirrel\\scripts\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.8,
-    "compound_shared_count": 5,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "_unhandled_input",
-      "add_to_group",
       "move_and_slide"
     ],
-    "compound_idf_sum": 14.5869545513945
+    "compound_idf_sum": 3.20785642961859
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\camera.gd",
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.4,
-    "compound_shared_count": 2,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_ready",
       "is_action_just_pressed"
     ],
-    "compound_idf_sum": 6.080394009812483
+    "compound_idf_sum": 4.362821654837831
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\audio_manager.gd",
@@ -6888,40 +6134,29 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.5333333333333333,
-    "compound_shared_count": 6,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_delta",
-      "_process",
-      "_ready",
-      "distance_to",
-      "get_tree",
-      "global_position"
+      "_delta"
     ],
-    "compound_idf_sum": 15.213506145959725
+    "compound_idf_sum": 4.001808309300501
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\word_system.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2727272727272727,
-    "compound_shared_count": 1,
-    "compound_shared_tokens": [
-      "_ready"
-    ],
-    "compound_idf_sum": 1.7175723549746518
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.23529411764705882,
-    "compound_shared_count": 3,
-    "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "get_tree"
-    ],
-    "compound_idf_sum": 6.4662761377020965
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\abc-squirrel\\scripts\\player.gd",
@@ -6955,36 +6190,27 @@
     "b_path": "Users\\gbran\\Downloads\\files(4)\\fem_plate_bending_2d_v2.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.1935483870967742,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "b_path": "Users\\gbran\\Downloads\\files(5)\\strain_decoherence_model.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.24242424242424243,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
     "b_path": "Users\\gbran\\Downloads\\files(3)\\fem_plate_bending_2d.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.20689655172413793,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
@@ -7000,39 +6226,13 @@
     "b_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.25,
-    "compound_shared_count": 29,
+    "compound_shared_count": 3,
     "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "add_child",
-      "add_theme_font_size_override",
-      "albedo_color",
-      "background_color",
-      "background_mode",
       "begins_with",
       "bg_color",
-      "bottom_radius",
-      "button_index",
-      "cull_disabled",
-      "cull_mode",
-      "custom_minimum_size",
-      "deg_to_rad",
-      "emission_enabled",
-      "emission_energy_multiplier",
-      "font_size",
-      "light_energy",
-      "look_at",
-      "look_at_from_position",
-      "material_override",
-      "mouse_button_right",
-      "mouse_button_wheel_down",
-      "mouse_button_wheel_up",
-      "rotation_degrees",
-      "set_anchors_preset",
-      "top_radius",
-      "transparency_alpha"
+      "light_energy"
     ],
-    "compound_idf_sum": 114.37303176492772
+    "compound_idf_sum": 13.39442210633197
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
@@ -7063,12 +6263,9 @@
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 0.3076923076923077,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_ready",
-      "_unhandled_input"
-    ],
-    "compound_idf_sum": 6.124845772383318
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\base.gd",
@@ -7102,26 +6299,22 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.26666666666666666,
-    "compound_shared_count": 3,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_delta",
-      "_process",
-      "_ready"
+      "_delta"
     ],
-    "compound_idf_sum": 8.350162084586552
+    "compound_idf_sum": 4.001808309300501
   },
   {
     "a_path": "acoustic-3d\\base.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.26666666666666666,
-    "compound_shared_count": 3,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_delta",
-      "_process",
-      "_ready"
+      "_delta"
     ],
-    "compound_idf_sum": 8.350162084586552
+    "compound_idf_sum": 4.001808309300501
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\acoustic-3d\\first_snn.py",
@@ -7155,12 +6348,9 @@
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": false,
     "filename_similarity": 0.15384615384615385,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\files(4)\\fem_plate_bending_2d_v2.py",
@@ -7275,36 +6465,27 @@
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.358974358974359,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\files(5)\\strain_decoherence_model.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.34146341463414637,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\Downloads\\files(3)\\fem_plate_bending_2d.py",
     "b_path": "Users\\gbran\\Downloads\\spikeling verilog\\spikeling_verilog.py",
     "likely_genuine_existing": true,
     "filename_similarity": 0.32432432432432434,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "__main__",
-      "__name__"
-    ],
-    "compound_idf_sum": 3.763301138832896
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
@@ -7333,12 +6514,9 @@
     "b_path": "Users\\gbran\\Downloads\\tribe godot drop in\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.13333333333333333,
-    "compound_shared_count": 2,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready"
-    ],
-    "compound_idf_sum": 4.348353775286051
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
@@ -7372,30 +6550,18 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.13333333333333333,
-    "compound_shared_count": 5,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "distance_to",
-      "get_tree",
-      "global_position"
-    ],
-    "compound_idf_sum": 11.211697836659225
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "3d-simulation\\main.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.13333333333333333,
-    "compound_shared_count": 5,
-    "compound_shared_tokens": [
-      "_process",
-      "_ready",
-      "distance_to",
-      "get_tree",
-      "global_position"
-    ],
-    "compound_idf_sum": 11.211697836659225
+    "compound_shared_count": 0,
+    "compound_shared_tokens": [],
+    "compound_idf_sum": 0.0
   },
   {
     "a_path": "Users\\gbran\\OneDrive\\Documents\\3d-simulation\\main.gd",
@@ -7456,19 +6622,15 @@
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": true,
     "filename_similarity": 1.0,
-    "compound_shared_count": 24,
+    "compound_shared_count": 20,
     "compound_shared_tokens": [
       "\n\ttrust_label.text = ",
       "_brain_tick",
       "_delta",
       "_e_was_down",
       "_on_now_backing_you",
-      "_physics_process",
-      "_process",
-      "_ready",
       "_tick_accum",
       "_update_label",
-      "class_name",
       "follow_fires",
       "follow_threshold_hits",
       "is_backing_you",
@@ -7483,34 +6645,30 @@
       "trust_display",
       "trust_label"
     ],
-    "compound_idf_sum": 115.96225603946837
+    "compound_idf_sum": 106.1232611367255
   },
   {
     "a_path": "Users\\gbran\\Downloads\\tribe godot drop in\\Spikeling.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2,
-    "compound_shared_count": 3,
+    "compound_shared_count": 2,
     "compound_shared_tokens": [
-      "class_name",
       "get_potential",
       "load_from_text"
     ],
-    "compound_idf_sum": 12.003673394862698
+    "compound_idf_sum": 9.292849266877763
   },
   {
     "a_path": "Users\\gbran\\Downloads\\tribe godot drop in\\FPSPlayer.gd",
     "b_path": "Users\\gbran\\Downloads\\main\\TribeMember.gd",
     "likely_genuine_existing": false,
     "filename_similarity": 0.2,
-    "compound_shared_count": 4,
+    "compound_shared_count": 1,
     "compound_shared_tokens": [
-      "_physics_process",
-      "_ready",
-      "class_name",
       "is_key_pressed"
     ],
-    "compound_idf_sum": 11.873316009142238
+    "compound_idf_sum": 4.665102526710765
   },
   {
     "a_path": "Users\\gbran\\Downloads\\tribe godot drop in\\Spikeling.gd",

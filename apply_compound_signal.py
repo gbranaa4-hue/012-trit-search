@@ -21,7 +21,7 @@ from pathlib import Path
 sys.stdout.reconfigure(errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from corpus_idf import load_or_build, idf, identifier_only_tokens
+from corpus_idf import load_or_build, idf, identifier_only_tokens, compound_identifier_overlap
 
 DB_PATH = Path(__file__).resolve().parent / "code_entanglement_db.json"
 BASE_DIR_CANDIDATES = [
@@ -62,9 +62,7 @@ def main():
             skipped += 1
             continue
 
-        toks_a = identifier_only_tokens(ta)
-        toks_b = identifier_only_tokens(tb)
-        compound_shared = {t for t in (toks_a & toks_b) if "_" in t}
+        compound_shared = compound_identifier_overlap(ta, tb)
         compound_idf_sum = sum(idf(t, df, n_files) for t in compound_shared) if compound_shared else 0.0
 
         results.append({
