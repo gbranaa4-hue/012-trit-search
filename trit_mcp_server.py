@@ -672,26 +672,29 @@ def _git_revert_file(repo_root: Path, path: Path) -> bool:
         return False
 
 @mcp.tool()
-def apply_and_verify(file_path: str, old_text: str, new_text: str, force_dirty: bool = False) -> str:
+def apply_and_verify(file_path: str, old_text: str, new_text: str) -> str:
     """
     Closes the loop that search_code/query_codebase/propose_change stop
     short of: applies a real edit to a real file, then verifies it by
     ACTUALLY RUNNING the code — not just checking the text changed.
 
-    SAFETY, layered, real fallbacks — not just a single in-memory revert:
+    SAFETY, layered, real fallbacks — no bypass exists for any of them:
 
-    1. Git-dirty refusal (default): if the target file already has
-       uncommitted changes before this tool touches it, the edit is
-       REFUSED by default. An in-memory revert on failure would go back
-       to that pre-existing dirty state, silently mixing "the user's own
-       unsaved work" with "this tool's edit" — there's no way to tell
-       them apart afterward. Pass force_dirty=True to proceed anyway
-       (e.g. you already know the dirty state is fine to build on).
-    2. Durable git-based revert: if the file IS clean (or force_dirty was
-       used) and the edit breaks the syntax check, the file is restored
-       via `git checkout --`, not an in-memory Python variable — this
-       works even if the process crashes or is killed mid-operation,
-       unlike a purely in-memory backup.
+    1. Git-dirty refusal, ALWAYS ENFORCED, no override parameter exists:
+       if the target file already has uncommitted changes before this
+       tool touches it, the edit is unconditionally refused. An in-memory
+       revert on failure would go back to that pre-existing dirty state,
+       silently mixing "the user's own unsaved work" with "this tool's
+       edit" — there's no way to tell them apart afterward, and no
+       parameter to disable this check. If you need to build on dirty
+       state, commit or stash it yourself first with real git commands —
+       that gives you a real, inspectable checkpoint to diff against,
+       which a bypass flag would not.
+    2. Durable git-based revert: if the file is clean and the edit breaks
+       the syntax check, the file is restored via `git checkout --`, not
+       an in-memory Python variable — this works even if the process
+       crashes or is killed mid-operation, unlike a purely in-memory
+       backup.
     3. Non-git files: if the file isn't inside a git repository at all,
        a literal `.bak` backup file is written alongside it before
        editing, so a durable recovery copy exists on disk regardless of
@@ -714,8 +717,6 @@ def apply_and_verify(file_path: str, old_text: str, new_text: str, force_dirty: 
         old_text: The exact existing text to replace — must appear
             exactly once in the file, or the edit is rejected.
         new_text: The replacement text.
-        force_dirty: If True, proceed even if the file already has
-            uncommitted changes (default False — refuses by default).
 
     Returns:
         A report of exactly what safety checks ran, what happened, and
@@ -729,13 +730,13 @@ def apply_and_verify(file_path: str, old_text: str, new_text: str, force_dirty: 
     backup_path = None
 
     if repo_root is not None:
-        if _git_file_is_dirty(repo_root, path) and not force_dirty:
+        if _git_file_is_dirty(repo_root, path):
             return (
                 f"REFUSED — {file_path} already has uncommitted changes before this edit. "
                 f"Reverting on failure would silently mix your existing unsaved work with "
-                f"this tool's edit, with no way to separate them afterward. "
-                f"Commit or stash your current changes first, or pass force_dirty=True if "
-                f"you're sure it's safe to build on top of the current dirty state. "
+                f"this tool's edit, with no way to separate them afterward. There is no "
+                f"override for this check. Commit or stash your current changes first — "
+                f"that gives you a real, inspectable checkpoint — then retry. "
                 f"No edit was applied."
             )
     else:
