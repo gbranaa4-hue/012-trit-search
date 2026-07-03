@@ -149,7 +149,35 @@ def train_seed(mode, steps=500, h=28, w=28, unroll=(28, 48)):
     return ca, target
 
 
-def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48), pool_size=32, batch=8):
+def train_seed_repair(mode, steps=600, h=28, w=28, unroll=(36, 56), dmg_prob=0.5):
+    """Diagnosis-driven self-heal: the pool trainer failed because persisted
+    states accumulate into long horizons my model can't hold (degrade-loop,
+    isolated via the no-damage diagnostic). This sidesteps the pool entirely:
+    grow from a fresh seed, but with probability dmg_prob erase half the state
+    at a random point PARTWAY through, and require the model to have recovered
+    the target by the end. Teaches repair directly, with no state persistence
+    across training steps -- so no long-horizon feedback loop to destabilize."""
+    torch.manual_seed(0)
+    ca = GrowCA(mode=mode)
+    target = target_square(h, w)
+    opt = torch.optim.Adam(ca.parameters(), lr=2e-3)
+    for step in range(steps):
+        x = seed_batch(h, w, ca.channels, 1)
+        n = torch.randint(unroll[0], unroll[1], (1,)).item()
+        dmg_at = torch.randint(n // 3, 2 * n // 3, (1,)).item() if torch.rand(1).item() < dmg_prob else -1
+        for t in range(n):
+            x = ca.step(x)
+            if t == dmg_at:
+                x = damage(x)                      # erase half mid-growth; must recover by step n
+        loss = F.mse_loss(x[:, :1].clamp(0, 1), target)
+        opt.zero_grad(); loss.backward(); _grad_normalize(ca); opt.step()
+        if step % 50 == 0 or step == steps - 1:
+            print(f"  [{mode}/seed-repair] step {step:4d}  loss={loss.item():.4f}")
+    return ca, target
+
+
+def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48),
+               pool_size=32, batch=8, use_damage=True):
     """Warm-started persistent-pool training. The first attempt failed by
     throwing damage at an untrained model from step 0 -> unstable, never grew.
     Fix: PHASE 1 grows from the seed (no pool, no damage) until the model can
@@ -184,7 +212,7 @@ def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48), pool_si
         with torch.no_grad():
             losses = ((x[:, :1].clamp(0, 1) - tgt_b) ** 2).mean(dim=(1, 2, 3))
         x[losses.argmax().item()] = seed_batch(h, w, ca.channels, 1)[0]   # keep from-seed growth fresh
-        if batch > 3:
+        if use_damage and batch > 3:
             x[[1, 2]] = damage(x[[1, 2]])                                  # damage a couple for repair
         n = torch.randint(unroll[0], unroll[1], (1,)).item()
         for _ in range(n):
@@ -199,7 +227,8 @@ def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48), pool_si
 
 def demo(mode="ternary", trainer="seed"):
     print(f"=== mode={mode}, trainer={trainer} ===\n")
-    ca, target = (train_seed if trainer == "seed" else train_pool)(mode)
+    trainers = {"seed": train_seed, "pool": train_pool, "seed-repair": train_seed_repair}
+    ca, target = trainers[trainer](mode)
     h = w = 28
 
     x = seed_batch(h, w, ca.channels, 1)

@@ -93,6 +93,31 @@ sample selection, gradient handling) -- real effort, uncertain, not cracked
 here. From-seed training with partial (~0.095) self-heal stands as the
 working result.
 
+**Diagnostic (pool, no damage) -- isolates the cause.** Ran pool training
+with damage OFF: it STILL regressed (grown MSE 0.113 mush). So damage is not
+the culprit -- the pool mechanism itself is. Root cause: pooled states persist
+across training iterations and accumulate into long horizons (hundreds of
+steps) that a model trained only to ~40 steps cannot hold; it degrades them to
+mush, and training on those degraded states feeds the failure back. Long-horizon
+instability, not damage.
+
+**Fourth attempt -- seed-repair (no pool) -- fixes growth, not heal.** Based on
+that diagnosis: grow from a fresh seed but erase half PARTWAY through and require
+recovery by the end -- teaching repair with no state persistence, so no
+long-horizon feedback loop. Result: growth preserved (loss ~0.035, grown MSE
+0.033 -- confirms the diagnosis, no regression) BUT heal got WORSE (healed MSE
+0.172 vs the 0.095 baseline): trained on half-erasure, the model regrows too
+aggressively and overshoots the square boundary at heal time.
+
+**Net after four attempts: clean self-heal is unsolved.** Growth, ternary
+communication, and the redesigned consensus gate all work. Robust clean
+self-repair does not -- pool training regresses growth (long-horizon
+instability); seed-repair preserves growth but overshoots on heal. The plain
+from-seed model's partial heal (~0.095) remains the best. A genuinely clean
+solution likely needs faithful replication of the original Growing-NCA recipe
+(long-horizon stability training + careful pool management), which is real
+research effort, not a tweak.
+
 ## Honest scope
 
 This is morphogenesis — growing coherent STRUCTURE — which is real and now

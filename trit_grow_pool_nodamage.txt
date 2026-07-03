@@ -1,0 +1,14 @@
+  [ternary/warmup] step    0  loss=0.1263
+  [ternary/warmup] step   50  loss=0.0580
+  [ternary/warmup] step  100  loss=0.0343
+  [ternary/warmup] step  150  loss=0.0708
+  [ternary/warmup] step  200  loss=0.0424
+  [ternary/pool] step  250  loss=0.1667
+  [ternary/pool] step  300  loss=0.0946
+  [ternary/pool] step  350  loss=0.1206
+  [ternary/pool] step  400  loss=0.1450
+  [ternary/pool] step  450  loss=0.1029
+  [ternary/pool] step  500  loss=0.1165
+  [ternary/pool] step  550  loss=0.1132
+  [ternary/pool] step  599  loss=0.1152
+POOL NO-DAMAGE grown MSE: 0.1131  (0.08=nothing, ~0.03=grows square)

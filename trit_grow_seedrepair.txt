@@ -1,0 +1,77 @@
+=== mode=ternary, trainer=seed-repair ===
+
+  [ternary/seed-repair] step    0  loss=0.1263
+  [ternary/seed-repair] step   50  loss=0.0321
+  [ternary/seed-repair] step  100  loss=0.0444
+  [ternary/seed-repair] step  150  loss=0.0341
+  [ternary/seed-repair] step  200  loss=0.0370
+  [ternary/seed-repair] step  250  loss=0.0712
+  [ternary/seed-repair] step  300  loss=0.0327
+  [ternary/seed-repair] step  350  loss=0.0829
+  [ternary/seed-repair] step  400  loss=0.0688
+  [ternary/seed-repair] step  450  loss=0.0388
+  [ternary/seed-repair] step  500  loss=0.0373
+  [ternary/seed-repair] step  550  loss=0.0588
+  [ternary/seed-repair] step  599  loss=0.0359
+
+grown from seed:
+                            
+            .               
+        . .. .              
+       .. .. ..  . .        
+      ..:.... .   .         
+      .:.:::-:..: :         
+      .:=---@.: .:=..       
+      .=-::-+.::::-.        
+      .++:-=.::--%:         
+     .:-=*:*+===-==:.       
+     .=:@@+-#*+@@:.-:       
+      .:@@#@@@@@@=+:.       
+       -:-@@@%@@@#=.:       
+       :-+@@@@@@@@==.       
+     .::-#@@@@@@@@*=:       
+     ..:=@@@@@@@+@%.        
+     ..*:#%+@@@%@*-.        
+     .:.++%*+@@@=++:.       
+      .-===--@#=+-@:.       
+     . .:.:.=:..-:.:        
+        . ........ .        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+  grown MSE: 0.0333  (0.08 = did nothing)
+
+after erasing left half + 48 steps (self-heal):
+             --=::=-:+.:    
+           .:-*=--=----     
+          .-**+*#*==*-.:    
+          .:+=%=@#=+#*-:.   
+          .-+-@#@%#@==:-:   
+         ..**@@+@%@@=--:.   
+         ..==@@@@@@@-+...   
+         ..:-#@@@@@@++-=.   
+         . :*=@@@@@=#@*-.   
+          .:++@@@@@@@+##:.  
+          .=#*@@@@@@@=::... 
+          ..++@@@@@@@=+.... 
+          ..+@@@@@@@@=  ::. 
+         .::%@@@@@@@#===... 
+         .:.:-@@@@@@#@=:.   
+         .:-+=@@@@@%@#+-.   
+         ..+*@@@@@@@=@#=.   
+         ..-**@@@@@@+@@-.   
+          ..=+@@@@@+*-:=..  
+           -:-@@@@@@%+: ..  
+         ..-+*@@@@@@%%-     
+         ...-@#@@@*@#=..    
+           =--+*%#---.:.    
+          .=:=-*--:--::.    
+         ..--.=:--....      
+         .... ....          
+              .             
+                            
+  healed MSE: 0.1722  (compare to grown; close = clean repair)
