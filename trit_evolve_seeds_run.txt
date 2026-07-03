@@ -1,0 +1,113 @@
+gen   0  best_fit(this gen)=0.888  sigma=0.497
+gen  25  best_fit(this gen)=0.912  sigma=0.439
+gen  50  best_fit(this gen)=0.955  sigma=0.387
+gen  75  best_fit(this gen)=0.947  sigma=0.342
+gen 100  best_fit(this gen)=0.957  sigma=0.301
+gen 125  best_fit(this gen)=0.955  sigma=0.266
+gen 150  best_fit(this gen)=0.971  sigma=0.235
+gen 175  best_fit(this gen)=0.961  sigma=0.207
+gen 179  best_fit(this gen)=0.950  sigma=0.203
+seed 0 unconstrained: N21 solved 93.2 hard 84.8  |  N149 solved 78.0 hard 56.9
+gen   0  best_fit(this gen)=0.890  sigma=0.497
+gen  25  best_fit(this gen)=0.955  sigma=0.439
+gen  50  best_fit(this gen)=0.941  sigma=0.387
+gen  75  best_fit(this gen)=0.957  sigma=0.342
+gen 100  best_fit(this gen)=0.950  sigma=0.301
+gen 125  best_fit(this gen)=0.975  sigma=0.266
+gen 150  best_fit(this gen)=0.961  sigma=0.235
+gen 175  best_fit(this gen)=0.950  sigma=0.207
+gen 179  best_fit(this gen)=0.979  sigma=0.203
+seed 0 equivariant  : N21 solved 89.7 hard 77.1  |  N149 solved 59.4 hard 13.9
+gen   0  best_fit(this gen)=0.872  sigma=0.497
+gen  25  best_fit(this gen)=0.951  sigma=0.439
+gen  50  best_fit(this gen)=0.944  sigma=0.387
+gen  75  best_fit(this gen)=0.948  sigma=0.342
+gen 100  best_fit(this gen)=0.966  sigma=0.301
+gen 125  best_fit(this gen)=0.968  sigma=0.266
+gen 150  best_fit(this gen)=0.968  sigma=0.235
+gen 175  best_fit(this gen)=0.959  sigma=0.207
+gen 179  best_fit(this gen)=0.939  sigma=0.203
+seed 1 unconstrained: N21 solved 91.3 hard 80.0  |  N149 solved 61.2 hard 12.4
+gen   0  best_fit(this gen)=0.931  sigma=0.497
+gen  25  best_fit(this gen)=0.956  sigma=0.439
+gen  50  best_fit(this gen)=0.952  sigma=0.387
+gen  75  best_fit(this gen)=0.968  sigma=0.342
+gen 100  best_fit(this gen)=0.957  sigma=0.301
+gen 125  best_fit(this gen)=0.956  sigma=0.266
+gen 150  best_fit(this gen)=0.949  sigma=0.235
+gen 175  best_fit(this gen)=0.964  sigma=0.207
+gen 179  best_fit(this gen)=0.939  sigma=0.203
+seed 1 equivariant  : N21 solved 91.2 hard 79.6  |  N149 solved 60.7 hard 12.0
+gen   0  best_fit(this gen)=0.872  sigma=0.497
+gen  25  best_fit(this gen)=0.961  sigma=0.439
+gen  50  best_fit(this gen)=0.938  sigma=0.387
+gen  75  best_fit(this gen)=0.933  sigma=0.342
+gen 100  best_fit(this gen)=0.967  sigma=0.301
+gen 125  best_fit(this gen)=0.951  sigma=0.266
+gen 150  best_fit(this gen)=0.971  sigma=0.235
+gen 175  best_fit(this gen)=0.948  sigma=0.207
+gen 179  best_fit(this gen)=0.977  sigma=0.203
+seed 2 unconstrained: N21 solved 92.6 hard 83.5  |  N149 solved 62.3 hard 20.5
+gen   0  best_fit(this gen)=0.926  sigma=0.497
+gen  25  best_fit(this gen)=0.941  sigma=0.439
+gen  50  best_fit(this gen)=0.934  sigma=0.387
+gen  75  best_fit(this gen)=0.973  sigma=0.342
+gen 100  best_fit(this gen)=0.929  sigma=0.301
+gen 125  best_fit(this gen)=0.958  sigma=0.266
+gen 150  best_fit(this gen)=0.956  sigma=0.235
+gen 175  best_fit(this gen)=0.968  sigma=0.207
+gen 179  best_fit(this gen)=0.979  sigma=0.203
+seed 2 equivariant  : N21 solved 91.5 hard 81.1  |  N149 solved 59.2 hard 12.4
+gen   0  best_fit(this gen)=0.862  sigma=0.497
+gen  25  best_fit(this gen)=0.941  sigma=0.439
+gen  50  best_fit(this gen)=0.958  sigma=0.387
+gen  75  best_fit(this gen)=0.953  sigma=0.342
+gen 100  best_fit(this gen)=0.969  sigma=0.301
+gen 125  best_fit(this gen)=0.966  sigma=0.266
+gen 150  best_fit(this gen)=0.965  sigma=0.235
+gen 175  best_fit(this gen)=0.967  sigma=0.207
+gen 179  best_fit(this gen)=0.963  sigma=0.203
+seed 3 unconstrained: N21 solved 90.3 hard 78.7  |  N149 solved 62.1 hard 17.2
+gen   0  best_fit(this gen)=0.838  sigma=0.497
+gen  25  best_fit(this gen)=0.954  sigma=0.439
+gen  50  best_fit(this gen)=0.930  sigma=0.387
+gen  75  best_fit(this gen)=0.962  sigma=0.342
+gen 100  best_fit(this gen)=0.956  sigma=0.301
+gen 125  best_fit(this gen)=0.934  sigma=0.266
+gen 150  best_fit(this gen)=0.954  sigma=0.235
+gen 175  best_fit(this gen)=0.970  sigma=0.207
+gen 179  best_fit(this gen)=0.971  sigma=0.203
+seed 3 equivariant  : N21 solved 91.3 hard 80.6  |  N149 solved 62.3 hard 18.1
+gen   0  best_fit(this gen)=0.820  sigma=0.497
+gen  25  best_fit(this gen)=0.924  sigma=0.439
+gen  50  best_fit(this gen)=0.949  sigma=0.387
+gen  75  best_fit(this gen)=0.979  sigma=0.342
+gen 100  best_fit(this gen)=0.974  sigma=0.301
+gen 125  best_fit(this gen)=0.962  sigma=0.266
+gen 150  best_fit(this gen)=0.973  sigma=0.235
+gen 175  best_fit(this gen)=0.944  sigma=0.207
+gen 179  best_fit(this gen)=0.935  sigma=0.203
+seed 4 unconstrained: N21 solved 92.8 hard 83.8  |  N149 solved 75.6 hard 54.7
+gen   0  best_fit(this gen)=0.925  sigma=0.497
+gen  25  best_fit(this gen)=0.947  sigma=0.439
+gen  50  best_fit(this gen)=0.931  sigma=0.387
+gen  75  best_fit(this gen)=0.951  sigma=0.342
+gen 100  best_fit(this gen)=0.965  sigma=0.301
+gen 125  best_fit(this gen)=0.943  sigma=0.266
+gen 150  best_fit(this gen)=0.963  sigma=0.235
+gen 175  best_fit(this gen)=0.948  sigma=0.207
+gen 179  best_fit(this gen)=0.962  sigma=0.203
+seed 4 equivariant  : N21 solved 88.8 hard 75.1  |  N149 solved 60.3 hard 19.4
+
+==================================================================
+  SUMMARY (mean +/- std over 5 seeds)
+==================================================================
+  unconstrained   N21 solved 92.1+/-1.1   N149 solved 67.8+/-7.4   N149 hard 32.4+/-19.3
+  equivariant     N21 solved 90.5+/-1.1   N149 solved 60.4+/-1.1   N149 hard 15.2+/-3.0
+
+  generalization gap (unconstrained - equivariant) at N=149:
+    solved: +7.5pp   hard: +17.2pp
+
+  Honest read: if unconstrained consistently > equivariant at N=149,
+  the 'exact symmetry hurts generalization' finding replicates. If the
+  spread overlaps, the single-run gap was seed-luck.

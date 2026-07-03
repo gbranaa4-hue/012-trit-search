@@ -117,3 +117,28 @@ little slack, not perfectly symmetric.
 
 Caveat: single evolution run each. The N=21 tie is solid; the generalization gap
 (large: 54% vs 15%) should be confirmed across multiple seeds to be ironclad.
+
+## CORRECTION: 5-seed replication refines (and partly retracts) the above
+
+The single-run "exact symmetry hurts generalization" claim above was an
+OVERSTATEMENT. Re-ran both modes across 5 seeds (trit_evolve_seeds.py):
+
+|              | N=21 solved | N=149 solved | N=149 hard |
+|--------------|-------------|--------------|------------|
+| unconstrained| 92.1 ± 1.1  | 67.8 ± 7.4   | 32.4 ± 19.3|
+| equivariant  | 90.5 ± 1.1  | 60.4 ± 1.1   | 15.2 ± 3.0 |
+
+- N=21: TIED (overlapping) -- "exact symmetry is free at trained size" CONFIRMED.
+- N=149: the unconstrained rule's generalization is BIMODAL/high-variance
+  (per-seed hard: 56.9, 12.4, 20.5, 17.2, 54.7) -- 2/5 seeds find excellent
+  generalizers, 3/5 are as weak as equivariant. The equivariant rule is tight
+  (12-19%, std 3.0) and NEVER reaches the good solutions.
+
+Corrected claim: exact symmetry does not RELIABLY hurt each run. It CAPS the
+ceiling and removes variance -- the extra freedom gives the unconstrained rule
+occasional ACCESS to a much-better-generalizing solution (~40% of seeds) that
+the exactly-symmetric rule can't reach; it trades that upside for consistency.
+The +17pp average gap rides on ~2 lucky seeds; with n=5 and huge variance it is
+SUGGESTIVE, not conclusive. The dramatic single-run gap was largely seed-luck,
+exactly as the original caveat feared. This does NOT affect the main compute-
+frontier result (evolved rule computes global majority), which replicated cleanly.
