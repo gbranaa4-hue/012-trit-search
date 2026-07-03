@@ -26,21 +26,68 @@ from pathlib import Path
 
 from trit_app import SearchEngine
 
+import json
+
 INDEX_DIR = str(Path.home() / ".trit-search" / "index")
 MODEL_PATH = str(Path(__file__).resolve().parent / "models" / "code-minilm")
 if not Path(MODEL_PATH).exists():
     MODEL_PATH = "all-MiniLM-L6-v2"
 
-# Known "container" path prefixes to strip before taking the next folder
-# as the project name -- otherwise everything under Documents groups as
-# one giant "project."
-CONTAINER_PREFIXES = [
-    "Users/gbran/OneDrive/Documents/",
-    "Users/gbran/OneDrive/Desktop/",
-    "Users/gbran/OneDrive/",   # catch-all for other OneDrive subfolders -- must come AFTER the more specific ones above
-    "Users/gbran/Downloads/",
-    "Users/gbran/",
-]
+# ── PER-DEPLOYMENT CONFIG ────────────────────────────────────────────────
+# Everything that describes a SPECIFIC machine / user / software install --
+# the folder layout to strip and the non-code denylist -- was previously
+# hardcoded to one user (Users/gbran/OneDrive/...) and one person's
+# installed apps (Image-Line, Call of Duty, ...). That made the framework
+# unusable on any other machine or for any other software implementation
+# without editing source. This block makes it portable:
+#   1. Container prefixes are DERIVED from the current user's home dir,
+#      so they're correct on any machine without hardcoding a username.
+#   2. An optional observe_config.json next to this module can override or
+#      extend both lists for a new deployment, without touching code.
+_CONFIG_PATH = Path(__file__).resolve().parent / "observe_config.json"
+
+
+def _load_config() -> dict:
+    if _CONFIG_PATH.exists():
+        try:
+            return json.loads(_CONFIG_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+
+_CONFIG = _load_config()
+
+
+def _strip_drive(p: str) -> str:
+    """Remove a leading Windows drive letter (C:/, G:\\, d:, ...) OR a
+    leading POSIX slash. Real portability bug this fixes: the old code did
+    p.lstrip('C:/'), which (a) only handled the C: drive -- files indexed
+    from G:/ or E:/ were never stripped and so misgrouped -- and (b) is a
+    character-set strip, so a real folder literally named starting with
+    'C' could be partially eaten. A drive-anchored regex handles every
+    drive letter and can't over-strip a folder name."""
+    p = re.sub(r"^[A-Za-z]:[/\\]?", "", p)
+    return p.lstrip("/\\")
+
+
+def _default_container_prefixes() -> list:
+    """Container prefixes derived from Path.home() instead of a hardcoded
+    username, in the same drive-stripped forward-slash form
+    _infer_project_name compares against. Ordered most-specific-first so
+    the catch-all home prefix only applies when nothing deeper matched."""
+    home_norm = _strip_drive(str(Path.home()).replace("\\", "/"))
+    subfolders = [
+        "OneDrive/Documents", "OneDrive/Desktop", "OneDrive",
+        "Documents", "Desktop", "Downloads",
+    ]
+    prefixes = [f"{home_norm}/{s}/" for s in subfolders]
+    prefixes.append(f"{home_norm}/")   # catch-all -- must come last
+    return prefixes
+
+
+# config override wins; otherwise derive from this machine's home dir
+CONTAINER_PREFIXES = _CONFIG.get("container_prefixes") or _default_container_prefixes()
 
 # Code file extensions -- if the "first path component" after stripping
 # containers ends in one of these, the file was indexed directly under a
@@ -52,18 +99,21 @@ _CODE_EXTENSIONS = {
     ".java", ".lua", ".rb", ".php", ".md", ".sh", ".ps1",
 }
 
-# Folders that are clearly not "a codebase" in any meaningful sense --
-# reported separately, not silently dropped, so this tool is honest about
-# what's actually in the index rather than pretending it's all curated.
-NON_PROJECT_HINTS = {
+# Folders that are clearly not "a codebase" -- reported separately, not
+# silently dropped. The default list is this machine's installed non-code
+# software; a new deployment can replace it entirely via
+# observe_config.json's "non_project_hints" (empty list disables it).
+_DEFAULT_NON_PROJECT_HINTS = {
     "image-line", "ableton", "native instruments", "universal audio",
     "fabfilter", "blue cat audio", "xfer", "vital", "tone2", "oeksound",
     "naughty seal audio", "zoom", "max 8", "my cheat tables",
     "call of duty", "call of duty modern warfare", "overwatch",
     "starcraft ii", "stronghold kingdoms", "addictive keys logs",
 }
+NON_PROJECT_HINTS = set(_CONFIG["non_project_hints"]) if "non_project_hints" in _CONFIG \
+    else _DEFAULT_NON_PROJECT_HINTS
 
-MIN_CHUNKS_PER_PROJECT = 8   # ignore noise -- a handful of stray chunks isn't "a project"
+MIN_CHUNKS_PER_PROJECT = _CONFIG.get("min_chunks_per_project", 8)   # ignore noise -- a handful of stray chunks isn't "a project"
 
 
 def stable_hash(s: str) -> int:
@@ -81,7 +131,7 @@ def stable_hash(s: str) -> int:
 
 def _infer_project_name(base_dir: str, rel_path: str) -> str:
     full = (base_dir.rstrip("/\\") + "/" + rel_path.replace("\\", "/")).replace("//", "/")
-    full = full.lstrip("C:/").lstrip("/")
+    full = _strip_drive(full)   # handles any drive letter, not just C: (see _strip_drive)
     for prefix in CONTAINER_PREFIXES:
         if full.startswith(prefix):
             full = full[len(prefix):]

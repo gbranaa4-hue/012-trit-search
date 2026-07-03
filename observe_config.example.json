@@ -1,0 +1,20 @@
+{
+  "_comment": "Copy this file to observe_config.json to reconfigure OBSERVE for a different machine, user, or software implementation, WITHOUT editing any code. All keys are optional -- omit a key to use the built-in default. Delete observe_config.json entirely to fall back to fully auto-derived defaults (container prefixes derived from the current user's home directory).",
+
+  "_comment_container_prefixes": "Path prefixes (drive-stripped, forward-slash form) to strip before taking the next folder as the project name. Order matters: most-specific first, broad catch-alls last. If omitted, these are auto-derived from Path.home() -- e.g. Users/<you>/OneDrive/Documents/, Users/<you>/Documents/, Users/<you>/. Only set this if your codebases live somewhere the auto-derivation doesn't cover (e.g. a dedicated D:/code/ root).",
+  "container_prefixes": [
+    "Users/example/projects/",
+    "Users/example/"
+  ],
+
+  "_comment_non_project_hints": "Folder names (lowercase) that are NOT codebases -- indexed but reported separately instead of treated as projects. Default is one machine's installed non-code software (DAWs, games). Replace with your own, or set to [] to disable the distinction entirely.",
+  "non_project_hints": [
+    "node_modules",
+    "venv",
+    ".venv",
+    "site-packages"
+  ],
+
+  "_comment_min_chunks_per_project": "Groups smaller than this many indexed chunks are ignored as noise rather than treated as a project. Default 8.",
+  "min_chunks_per_project": 8
+}
