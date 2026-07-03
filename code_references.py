@@ -38,10 +38,7 @@ sys.stdout.reconfigure(errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from trit_app import SearchEngine
-from trit_entanglement import (
-    INDEX_DIR, MODEL_PATH, MIN_CHUNKS_PER_PROJECT,
-    group_chunks_by_project, get_chunk_path, NON_PROJECT_HINTS,
-)
+from observe_pipeline import get_chunk_path, load_pipeline_inputs
 
 _RE_GD_LOAD = re.compile(r'(?:preload|load)\(\s*"([^"]+)"\s*\)')
 _RE_GD_EXTENDS = re.compile(r'^\s*extends\s+"([^"]+)"', re.MULTILINE)
@@ -91,15 +88,9 @@ def _basename_no_ext(p: str) -> str:
 
 def main():
     print("Loading OBSERVE index...")
-    engine = SearchEngine()
-    engine.load(INDEX_DIR, MODEL_PATH, lambda m: print(f"  {m}"))
-    while not engine.ready:
-        time.sleep(0.2)
-
-    groups = group_chunks_by_project(engine)
-    groups = {k: v for k, v in groups.items() if len(v) >= MIN_CHUNKS_PER_PROJECT}
-    real_projects = [n for n in groups if n.lower() not in NON_PROJECT_HINTS]
-    base_dirs = sorted({p["base_dir"] for p in engine.path_table})
+    engine, groups, real_projects, base_dirs = load_pipeline_inputs(
+        status_cb=lambda m: print(f"  {m}")
+    )
 
     # file basename (no ext) -> [(project, full_rel_path), ...] -- used to
     # resolve a bare import/load target ("Spikeling", "Sky3D") to a real

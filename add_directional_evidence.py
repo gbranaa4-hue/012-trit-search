@@ -88,13 +88,8 @@ def first_commit_date(path: Path):
 def main():
     global BASE_DIR_CANDIDATES
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from trit_app import SearchEngine
-    from trit_entanglement import INDEX_DIR, MODEL_PATH
-    import time
-    engine = SearchEngine()
-    engine.load(INDEX_DIR, MODEL_PATH, lambda m: None)
-    while not engine.ready:
-        time.sleep(0.2)
+    from observe_pipeline import load_engine
+    engine = load_engine()
     BASE_DIR_CANDIDATES = sorted({p["base_dir"] for p in engine.path_table})
     print(f"{len(BASE_DIR_CANDIDATES)} known base_dirs from the real index\n")
 

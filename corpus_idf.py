@@ -24,7 +24,6 @@ import json
 import math
 import re
 import sys
-import time
 from collections import Counter
 from pathlib import Path
 
@@ -149,12 +148,8 @@ def load_or_build():
         cached = json.loads(CACHE_PATH.read_text(encoding="utf-8"))
         return cached["df"], cached["n_files"]
 
-    from trit_app import SearchEngine
-    from trit_entanglement import INDEX_DIR, MODEL_PATH
-    engine = SearchEngine()
-    engine.load(INDEX_DIR, MODEL_PATH, lambda m: print(f"  {m}"))
-    while not engine.ready:
-        time.sleep(0.2)
+    from observe_pipeline import load_engine
+    engine = load_engine(status_cb=lambda m: print(f"  {m}"))
     base_dirs = sorted({p["base_dir"] for p in engine.path_table})
 
     print(f"Building document-frequency index across {len(engine.path_table)} path entries...")

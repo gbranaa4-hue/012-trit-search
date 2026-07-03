@@ -32,12 +32,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from trit_app import SearchEngine
-from trit_entanglement import (
-    INDEX_DIR, MODEL_PATH, MIN_CHUNKS_PER_PROJECT,
-    group_chunks_by_project, get_chunk_path, get_chunk_preview,
-    _call_ollama, _verify_summary_claims, _verify_summary_claims_v2, NON_PROJECT_HINTS,
-    stable_hash,
-)
+from observe_pipeline import get_chunk_path, get_chunk_preview, stable_hash, load_pipeline_inputs
+from trit_entanglement import _call_ollama, _verify_summary_claims, _verify_summary_claims_v2
 
 sys.stdout.reconfigure(errors="replace")
 
@@ -87,15 +83,10 @@ def main():
     n_projects = int(sys.argv[1]) if len(sys.argv) > 1 else 8
 
     print("Loading OBSERVE index...")
-    engine = SearchEngine()
-    engine.load(INDEX_DIR, MODEL_PATH, lambda msg: print(f"  {msg}"))
-    while not engine.ready:
-        time.sleep(0.2)
-
-    groups = group_chunks_by_project(engine)
-    groups = {k: v for k, v in groups.items() if len(v) >= MIN_CHUNKS_PER_PROJECT}
-    real_projects = [n for n in groups if n.lower() not in NON_PROJECT_HINTS
-                      and n != "(loose scripts, no project folder)"]
+    engine, groups, real_projects, _base_dirs = load_pipeline_inputs(
+        status_cb=lambda msg: print(f"  {msg}")
+    )
+    real_projects = [n for n in real_projects if n != "(loose scripts, no project folder)"]
     real_projects = sorted(real_projects, key=lambda n: -len(groups[n]))[:n_projects]
     print(f"Calibrating against {len(real_projects)} real projects: {real_projects}\n")
 
