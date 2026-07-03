@@ -194,3 +194,58 @@ unaffected -- this ADDS the mechanism behind its scale-generalization.
 
 ---
 *Script: trit_evolve_predict.py   Run: trit_evolve_predict_run.txt*
+
+## Confirmed OUT-OF-SAMPLE + the winners are a distinct rule FAMILY
+
+The velocity->generalization link was calibrated on N=149. Two falsifiable
+follow-ups (trit_evolve_scale.py), reusing the 16 saved rules, no re-evolution:
+
+**(A) Does small-N velocity predict at rings never looked at?** Evaluated all 16
+rules at N=149, 299, 499:
+
+| ring | corr(vel, hard) | winners | others | gap |
+|---|---|---|---|---|
+| 149 (calibrated) | +0.985 | 56.1% | 16.3% | +39.8pp |
+| 299 (unseen) | +0.971 | 48.9% | 10.6% | +38.3pp |
+| 499 (unseen) | +0.986 | 55.9% |  7.2% | +48.7pp |
+
+Velocity (probed at N=49) predicts generalization at 2x-3x the calibration ring
+at corr ~0.97-0.99, and the winner/other gap WIDENS with scale. Out-of-sample:
+the mechanism is not a fit to N=149.
+
+**Surprise (a worry refuted):** I expected the winners (velocity 0.12) to COLLAPSE
+at large N -- 0.12 cells/step seemed too slow to cross a 499-ring in ~2N steps.
+They did NOT. Per-winner hard-solve is essentially SCALE-INVARIANT:
+
+| seed | N149 | N299 | N499 |
+|---|---|---|---|
+| 0 | 55 | 50 | 52 |
+| 4 | 59 | 52 | 62 |
+| 13 | 54 | 45 | 53 |
+
+Flat ~50-60% (within sampling noise) to N=499 while others crater to ~7%. The
+naive "velocity budget" arithmetic was too literal; these rules found a genuinely
+SCALE-FREE majority computation. Stronger than expected, not weaker.
+
+**(B) Are the 3 winners one solution?** The rule is a pure function of a 7-cell
+ternary neighborhood, so its COMPLETE behavior is a 3^7 = 2187-entry table
+(permutation-invariant, exact). Pairwise agreement:
+
+- winner-winner: 0.817   winner-loser: 0.202   loser-loser: 0.716
+
+The winners agree 82% with each other but only 20% with losers (below the ~33%
+equal-density-random baseline -- the two groups give OPPOSITE outputs on many
+neighborhoods). Evolution finds one of (at least) TWO qualitatively different
+rule FAMILIES; only the ~19% "winner" family has propagating signals and
+generalizes. Honest calibration: 0.817 != 1.0, so the winners are a shared
+BASIN/FAMILY, not the identical CA; and the table counts all 2187 neighborhoods
+incl. ones rarely visited in real dynamics (structural fingerprint, not
+behavioral identity). The winner/loser split is stark under any reading.
+
+Net: the crown result's scale-generalization is now (1) mechanistically explained
+by signal velocity, (2) confirmed OUT-OF-SAMPLE at N=299/499, (3) scale-invariant
+for the winner family, (4) traced to a structurally distinct, reproducibly-found
+solution basin. What was "seed luck" is a named, measurable, predictive mechanism.
+
+---
+*Scripts: trit_evolve_predict.py, trit_evolve_scale.py   Runs: *_run.txt*

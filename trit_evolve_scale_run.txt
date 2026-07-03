@@ -1,0 +1,29 @@
+====================================================================
+  OUT-OF-SAMPLE: does small-N velocity predict at larger rings?
+====================================================================
+  N=149: corr(vel,hard)=+0.985   winners 56.1%   others 16.3%   gap +39.8pp
+  N=299: corr(vel,hard)=+0.971   winners 48.9%   others 10.6%   gap +38.3pp
+  N=499: corr(vel,hard)=+0.986   winners 55.9%   others  7.2%   gap +48.7pp
+
+  per-winner hard-solve degradation with scale:
+     seed   vel N149  N299  N499 
+        0  0.12   55    50    52 
+        4  0.12   59    52    62 
+       13  0.12   54    45    53 
+
+====================================================================
+  SAME BASIN? exact 3^7 rule-table agreement (1.0 = identical CA)
+====================================================================
+  winner-winner : 0.817   (are the 3 generalizers one rule?)
+  winner-loser  : 0.202
+  loser-loser   : 0.716
+
+  winner-winner pairwise:
+    seed 0 vs seed 4: 0.821
+    seed 0 vs seed 13: 0.824
+    seed 4 vs seed 13: 0.807
+
+  Honest read: if winner-winner >> winner-loser, the 3 generalizers are
+  the SAME discrete solution (one basin evolution rarely finds). If
+  winner-winner ~ loser-loser, 'velocity 0.12' is a shared property of
+  DIFFERENT rules, not a single basin.
