@@ -142,3 +142,55 @@ The +17pp average gap rides on ~2 lucky seeds; with n=5 and huge variance it is
 SUGGESTIVE, not conclusive. The dramatic single-run gap was largely seed-luck,
 exactly as the original caveat feared. This does NOT affect the main compute-
 frontier result (evolved rule computes global majority), which replicated cleanly.
+
+## RESOLVED: the bimodality is a MECHANISM (signal velocity), not seed-luck
+
+The "seed luck" above was unsatisfying -- WHY do ~1/5 seeds generalize to N=149
+and the rest plateau? CA computational-mechanics theory (Crutchfield/Hanson/Das)
+says good density classifiers compute by propagating signals/particles (domain
+walls) across the ring; a rule can only integrate global info on a big ring if
+those signals travel fast enough to cross it in ~2N steps. So a rule's SIGNAL
+VELOCITY -- measurable at SMALL N without ever seeing N=149 -- should predict its
+N=149 generalization. Tested it (trit_evolve_predict.py).
+
+Probe (independent of the task): seed a MINORITY block in a majority background;
+measure how fast the rule closes it by expanding the CORRECT-majority domain
+(steps to reach 0.9N at the true majority, both polarities averaged). A rule that
+collapses to 0 or to noise never reaches correct consensus -> velocity 0 (the
+measure had to be hardened twice: single-cell damage heals in a convergent rule,
+and "block disappeared" was fooled by collapse-to-zero -- only correct-majority
+takeover counts).
+
+Evolved 16 unconstrained seeds; velocity vs N=149 hard-solved:
+
+| | velocity | N=149 hard |
+|---|---|---|
+| seeds 0, 4, 13 | 0.12 | 59.8, 51.1, 51.7 % |
+| other 13 seeds | 0.00 | 13-21 % |
+
+- **corr(velocity, N149 hard) = +0.981** -- but honestly it is a near-PERFECT
+  BINARY SEPARATOR: all 3 nonzero-velocity seeds are the top-3 generalizers
+  (51-60%), all 13 zero-velocity seeds cluster at 13-21%, no overlap.
+- **Robust to probe scale:** measuring velocity at N=35 or N=49 (a quarter of the
+  test ring) flags the SAME 3 seeds, same +0.981. The predictor is genuinely a
+  small-N measurement predicting large-N behavior it never saw.
+- The 3 generalizers all landed at the SAME velocity (0.12): looks like a
+  discrete solution basin evolution either finds (~3/16 ~ 19%) or misses.
+- **asymmetry corr = -0.142** -- the 5-seed note's guess that "a little asymmetry
+  is load-bearing" is NOT supported. Asymmetry is unrelated; velocity is the
+  variable. **N=21 skill corr = +0.659** -- trained-size accuracy is a WEAK
+  predictor (most rules solve N=21 regardless).
+
+Result: the bimodality is EXPLAINED. Generalization to a big ring is not luck --
+it is whether evolution discovered a rule with propagating domain walls (nonzero
+signal velocity) vs one doing local smoothing that cannot cross the ring. This
+matches the classic particle-based-computation picture, now shown in an evolved
+TERNARY CA and made predictive from a small-N probe.
+
+Honest limits: velocity=0 means "does not resolve the block probe within its
+budget," not literally zero propagation; base rate of the good basin here is
+~19% (3/16), below the earlier small-sample 2/5. The main compute result is
+unaffected -- this ADDS the mechanism behind its scale-generalization.
+
+---
+*Script: trit_evolve_predict.py   Run: trit_evolve_predict_run.txt*

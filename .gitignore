@@ -21,3 +21,4 @@ index/
 data/dna*.txt
 trit_dna.pt
 trit_llm.pt
+predict_theta_*.npy

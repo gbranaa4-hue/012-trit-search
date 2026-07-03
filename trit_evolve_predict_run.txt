@@ -1,0 +1,175 @@
+Evolving 16 unconstrained seeds, correlating propagation velocity (measured at small N) with N=149 hard generalization
+
+gen   0  best_fit(this gen)=0.888  sigma=0.497
+gen  25  best_fit(this gen)=0.912  sigma=0.439
+gen  50  best_fit(this gen)=0.955  sigma=0.387
+gen  75  best_fit(this gen)=0.947  sigma=0.342
+gen 100  best_fit(this gen)=0.957  sigma=0.301
+gen 125  best_fit(this gen)=0.955  sigma=0.266
+gen 150  best_fit(this gen)=0.971  sigma=0.235
+gen 175  best_fit(this gen)=0.961  sigma=0.207
+gen 179  best_fit(this gen)=0.950  sigma=0.203
+seed  0: velocity= 0.12  asym=12.1%  N21 solved=92.5  N149 hard=59.8
+gen   0  best_fit(this gen)=0.872  sigma=0.497
+gen  25  best_fit(this gen)=0.951  sigma=0.439
+gen  50  best_fit(this gen)=0.944  sigma=0.387
+gen  75  best_fit(this gen)=0.948  sigma=0.342
+gen 100  best_fit(this gen)=0.966  sigma=0.301
+gen 125  best_fit(this gen)=0.968  sigma=0.266
+gen 150  best_fit(this gen)=0.968  sigma=0.235
+gen 175  best_fit(this gen)=0.959  sigma=0.207
+gen 179  best_fit(this gen)=0.939  sigma=0.203
+seed  1: velocity= 0.00  asym= 5.0%  N21 solved=90.2  N149 hard=14.3
+gen   0  best_fit(this gen)=0.872  sigma=0.497
+gen  25  best_fit(this gen)=0.961  sigma=0.439
+gen  50  best_fit(this gen)=0.938  sigma=0.387
+gen  75  best_fit(this gen)=0.933  sigma=0.342
+gen 100  best_fit(this gen)=0.967  sigma=0.301
+gen 125  best_fit(this gen)=0.951  sigma=0.266
+gen 150  best_fit(this gen)=0.971  sigma=0.235
+gen 175  best_fit(this gen)=0.948  sigma=0.207
+gen 179  best_fit(this gen)=0.977  sigma=0.203
+seed  2: velocity= 0.00  asym=10.2%  N21 solved=92.7  N149 hard=20.8
+gen   0  best_fit(this gen)=0.862  sigma=0.497
+gen  25  best_fit(this gen)=0.941  sigma=0.439
+gen  50  best_fit(this gen)=0.958  sigma=0.387
+gen  75  best_fit(this gen)=0.953  sigma=0.342
+gen 100  best_fit(this gen)=0.969  sigma=0.301
+gen 125  best_fit(this gen)=0.966  sigma=0.266
+gen 150  best_fit(this gen)=0.965  sigma=0.235
+gen 175  best_fit(this gen)=0.967  sigma=0.207
+gen 179  best_fit(this gen)=0.963  sigma=0.203
+seed  3: velocity= 0.00  asym=10.0%  N21 solved=92.2  N149 hard=18.8
+gen   0  best_fit(this gen)=0.820  sigma=0.497
+gen  25  best_fit(this gen)=0.924  sigma=0.439
+gen  50  best_fit(this gen)=0.949  sigma=0.387
+gen  75  best_fit(this gen)=0.979  sigma=0.342
+gen 100  best_fit(this gen)=0.974  sigma=0.301
+gen 125  best_fit(this gen)=0.962  sigma=0.266
+gen 150  best_fit(this gen)=0.973  sigma=0.235
+gen 175  best_fit(this gen)=0.944  sigma=0.207
+gen 179  best_fit(this gen)=0.935  sigma=0.203
+seed  4: velocity= 0.12  asym= 3.3%  N21 solved=92.5  N149 hard=51.1
+gen   0  best_fit(this gen)=0.857  sigma=0.497
+gen  25  best_fit(this gen)=0.946  sigma=0.439
+gen  50  best_fit(this gen)=0.949  sigma=0.387
+gen  75  best_fit(this gen)=0.948  sigma=0.342
+gen 100  best_fit(this gen)=0.948  sigma=0.301
+gen 125  best_fit(this gen)=0.973  sigma=0.266
+gen 150  best_fit(this gen)=0.961  sigma=0.235
+gen 175  best_fit(this gen)=0.935  sigma=0.207
+gen 179  best_fit(this gen)=0.963  sigma=0.203
+seed  5: velocity= 0.00  asym= 9.2%  N21 solved=91.1  N149 hard=19.9
+gen   0  best_fit(this gen)=0.929  sigma=0.497
+gen  25  best_fit(this gen)=0.933  sigma=0.439
+gen  50  best_fit(this gen)=0.954  sigma=0.387
+gen  75  best_fit(this gen)=0.975  sigma=0.342
+gen 100  best_fit(this gen)=0.955  sigma=0.301
+gen 125  best_fit(this gen)=0.950  sigma=0.266
+gen 150  best_fit(this gen)=0.961  sigma=0.235
+gen 175  best_fit(this gen)=0.943  sigma=0.207
+gen 179  best_fit(this gen)=0.965  sigma=0.203
+seed  6: velocity= 0.00  asym= 6.8%  N21 solved=89.3  N149 hard=15.7
+gen   0  best_fit(this gen)=0.828  sigma=0.497
+gen  25  best_fit(this gen)=0.942  sigma=0.439
+gen  50  best_fit(this gen)=0.922  sigma=0.387
+gen  75  best_fit(this gen)=0.956  sigma=0.342
+gen 100  best_fit(this gen)=0.927  sigma=0.301
+gen 125  best_fit(this gen)=0.963  sigma=0.266
+gen 150  best_fit(this gen)=0.958  sigma=0.235
+gen 175  best_fit(this gen)=0.911  sigma=0.207
+gen 179  best_fit(this gen)=0.957  sigma=0.203
+seed  7: velocity= 0.00  asym= 8.3%  N21 solved=89.5  N149 hard=13.4
+gen   0  best_fit(this gen)=0.933  sigma=0.497
+gen  25  best_fit(this gen)=0.944  sigma=0.439
+gen  50  best_fit(this gen)=0.967  sigma=0.387
+gen  75  best_fit(this gen)=0.967  sigma=0.342
+gen 100  best_fit(this gen)=0.966  sigma=0.301
+gen 125  best_fit(this gen)=0.954  sigma=0.266
+gen 150  best_fit(this gen)=0.961  sigma=0.235
+gen 175  best_fit(this gen)=0.941  sigma=0.207
+gen 179  best_fit(this gen)=0.956  sigma=0.203
+seed  8: velocity= 0.00  asym= 8.4%  N21 solved=92.7  N149 hard=18.9
+gen   0  best_fit(this gen)=0.905  sigma=0.497
+gen  25  best_fit(this gen)=0.961  sigma=0.439
+gen  50  best_fit(this gen)=0.923  sigma=0.387
+gen  75  best_fit(this gen)=0.941  sigma=0.342
+gen 100  best_fit(this gen)=0.955  sigma=0.301
+gen 125  best_fit(this gen)=0.954  sigma=0.266
+gen 150  best_fit(this gen)=0.959  sigma=0.235
+gen 175  best_fit(this gen)=0.942  sigma=0.207
+gen 179  best_fit(this gen)=0.957  sigma=0.203
+seed  9: velocity= 0.00  asym= 5.0%  N21 solved=89.9  N149 hard=15.2
+gen   0  best_fit(this gen)=0.913  sigma=0.497
+gen  25  best_fit(this gen)=0.932  sigma=0.439
+gen  50  best_fit(this gen)=0.955  sigma=0.387
+gen  75  best_fit(this gen)=0.950  sigma=0.342
+gen 100  best_fit(this gen)=0.956  sigma=0.301
+gen 125  best_fit(this gen)=0.961  sigma=0.266
+gen 150  best_fit(this gen)=0.953  sigma=0.235
+gen 175  best_fit(this gen)=0.974  sigma=0.207
+gen 179  best_fit(this gen)=0.953  sigma=0.203
+seed 10: velocity= 0.00  asym= 8.7%  N21 solved=91.9  N149 hard=13.9
+gen   0  best_fit(this gen)=0.879  sigma=0.497
+gen  25  best_fit(this gen)=0.927  sigma=0.439
+gen  50  best_fit(this gen)=0.940  sigma=0.387
+gen  75  best_fit(this gen)=0.971  sigma=0.342
+gen 100  best_fit(this gen)=0.979  sigma=0.301
+gen 125  best_fit(this gen)=0.949  sigma=0.266
+gen 150  best_fit(this gen)=0.962  sigma=0.235
+gen 175  best_fit(this gen)=0.966  sigma=0.207
+gen 179  best_fit(this gen)=0.970  sigma=0.203
+seed 11: velocity= 0.00  asym= 8.9%  N21 solved=90.3  N149 hard=15.5
+gen   0  best_fit(this gen)=0.868  sigma=0.497
+gen  25  best_fit(this gen)=0.907  sigma=0.439
+gen  50  best_fit(this gen)=0.955  sigma=0.387
+gen  75  best_fit(this gen)=0.946  sigma=0.342
+gen 100  best_fit(this gen)=0.952  sigma=0.301
+gen 125  best_fit(this gen)=0.943  sigma=0.266
+gen 150  best_fit(this gen)=0.954  sigma=0.235
+gen 175  best_fit(this gen)=0.948  sigma=0.207
+gen 179  best_fit(this gen)=0.944  sigma=0.203
+seed 12: velocity= 0.00  asym=13.9%  N21 solved=91.3  N149 hard=18.7
+gen   0  best_fit(this gen)=0.874  sigma=0.497
+gen  25  best_fit(this gen)=0.926  sigma=0.439
+gen  50  best_fit(this gen)=0.946  sigma=0.387
+gen  75  best_fit(this gen)=0.949  sigma=0.342
+gen 100  best_fit(this gen)=0.962  sigma=0.301
+gen 125  best_fit(this gen)=0.950  sigma=0.266
+gen 150  best_fit(this gen)=0.945  sigma=0.235
+gen 175  best_fit(this gen)=0.951  sigma=0.207
+gen 179  best_fit(this gen)=0.934  sigma=0.203
+seed 13: velocity= 0.12  asym= 5.7%  N21 solved=94.5  N149 hard=51.7
+gen   0  best_fit(this gen)=0.889  sigma=0.497
+gen  25  best_fit(this gen)=0.944  sigma=0.439
+gen  50  best_fit(this gen)=0.944  sigma=0.387
+gen  75  best_fit(this gen)=0.960  sigma=0.342
+gen 100  best_fit(this gen)=0.963  sigma=0.301
+gen 125  best_fit(this gen)=0.961  sigma=0.266
+gen 150  best_fit(this gen)=0.951  sigma=0.235
+gen 175  best_fit(this gen)=0.943  sigma=0.207
+gen 179  best_fit(this gen)=0.974  sigma=0.203
+seed 14: velocity= 0.00  asym=12.1%  N21 solved=90.1  N149 hard=16.3
+gen   0  best_fit(this gen)=0.797  sigma=0.497
+gen  25  best_fit(this gen)=0.946  sigma=0.439
+gen  50  best_fit(this gen)=0.938  sigma=0.387
+gen  75  best_fit(this gen)=0.964  sigma=0.342
+gen 100  best_fit(this gen)=0.971  sigma=0.301
+gen 125  best_fit(this gen)=0.967  sigma=0.266
+gen 150  best_fit(this gen)=0.926  sigma=0.235
+gen 175  best_fit(this gen)=0.979  sigma=0.207
+gen 179  best_fit(this gen)=0.984  sigma=0.203
+seed 15: velocity= 0.00  asym=14.5%  N21 solved=91.5  N149 hard=20.6
+
+============================================================
+  PREDICTORS OF N=149 HARD GENERALIZATION (across seeds)
+============================================================
+  corr(velocity, N149 hard) : +0.981   <- main hypothesis
+  corr(asymmetry, N149 hard): -0.142
+  corr(N21 solved, N149 hard): +0.659   (does trained-size skill predict?)
+
+  velocity range 0.00-0.12; N149 hard range 13-60%
+
+  Honest read: strong positive corr(velocity, N149) => the bimodality is
+  MECHANISM (fast rules cross the big ring), not luck. Near-zero corr =>
+  velocity is not the explanation; the honest answer stays 'unexplained'.
