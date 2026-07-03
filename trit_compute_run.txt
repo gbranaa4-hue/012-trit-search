@@ -1,0 +1,21 @@
+Density/majority classification -- do the talking ternary cells compute a GLOBAL property?
+
+  step    0  loss=0.9348
+  step  100  loss=0.9432
+  step  200  loss=1.4801
+  step  300  loss=1.2421
+  step  400  loss=1.7016
+  step  500  loss=1.3248
+  step  600  loss=1.0293
+  step  700  loss=1.6514
+  step  799  loss=1.5703
+
+initial consensus (do-nothing baseline): 62.7% of cells at majority
+final   consensus (after local ternary talk): 57.9% of cells at majority
+solved (>90% agree, correct): 0.0%  (0/600)
+  easy (>=60/40)  : final consensus  60.8%,  solved   0.0%  (0/358)
+  hard (<60/40)   : final consensus  53.7%,  solved   0.0%  (0/242)
+
+Honest read: >50% overall = better than chance = real (partial) global
+computation from local ternary talk. Easy>>hard is expected (near-tie is
+the provably-hard case). ~chance everywhere = looks coherent but doesn't compute.
