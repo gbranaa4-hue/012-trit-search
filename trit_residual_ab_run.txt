@@ -1,0 +1,24 @@
+Device: cpu
+Residual-ternary A/B -- 400 epochs/arm on cpu
+(reduced-epoch first-signal run; not the final 2000-epoch verdict)
+
+1423 train pairs, 158 val pairs, vocab 4582
+
+  bare1       retrieval_acc=  5.1%   final_loss=2.8983   429s
+  scale1      retrieval_acc= 15.2%   final_loss=2.1600   363s
+  residual2   retrieval_acc= 15.2%   final_loss=1.9197   312s
+
+============================================================
+  RESULT (higher retrieval accuracy = better embeddings)
+============================================================
+  A bare1     :   5.1%   (current method)
+  B scale1    :  15.2%   (A + optimal scale)
+  C residual2 :  15.2%   (B + shadow trit, 2x storage)
+
+  scale contribution   (B-A): +10.1pp
+  shadow contribution  (C-B): +0.0pp
+
+  Honest read: small val sets are noisy at low epochs. Treat this
+  as signal/no-signal, not a precise number. If C-B is clearly
+  positive here, a full 2000-epoch run is justified; if it's ~0 or
+  negative, the reconstruction win didn't translate -- stop here.
