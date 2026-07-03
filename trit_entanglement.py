@@ -354,6 +354,59 @@ def compute_entanglement(engine: SearchEngine, groups: dict, project_a: str, pro
     return avg_score, evidence
 
 
+def build_entanglement_db(engine: SearchEngine, groups: dict, real_projects: list, base_dirs: list,
+                           on_status=print) -> dict:
+    """Core "combustion stage" logic, extracted from main() so an
+    orchestrator (run_full_pipeline.py) can call this directly against an
+    already-loaded engine/groups/real_projects/base_dirs, instead of this
+    module insisting on doing its own intake. main() below is now a thin
+    CLI wrapper: load inputs once, call this, print, save.
+
+    on_status: called with progress strings -- defaults to print() for
+    standalone CLI use, but an orchestrator can pass something quieter."""
+    db = {"projects": {}, "entanglement": []}
+
+    on_status("=" * 70)
+    on_status("  PER-PROJECT SUMMARIES")
+    on_status("=" * 70)
+    for name in real_projects:
+        on_status(f"\n{name}:")
+        result = summarize_project(engine, name, groups[name])
+        on_status(f"  {result['summary']}")
+        if result["unsupported_claims"]:
+            on_status(f"  >>> FLAGGED — unsupported claim(s) found by consensus verification:")
+            for claim_text in result["unsupported_claims"]:
+                on_status(f"      {claim_text[:200]}")
+        db["projects"][name] = {
+            "chunk_count": len(groups[name]),
+            "summary": result["summary"],
+            "unsupported_claims": result["unsupported_claims"],
+        }
+
+    on_status("\n" + "=" * 70)
+    on_status("  CROSS-PROJECT ENTANGLEMENT")
+    on_status("=" * 70)
+    for i, a in enumerate(real_projects):
+        for b in real_projects[i + 1:]:
+            score, evidence = compute_entanglement(engine, groups, a, b, base_dirs=base_dirs)
+            on_status(f"\n{a} <-> {b}: entanglement score = {score:.3f}")
+            for e in evidence:
+                genuine_tag = "GENUINE" if e.get("likely_genuine") else "coincidental?"
+                on_status(
+                    f"  [content={e['score']:.2f} filename_sim={e.get('filename_similarity', 0):.2f} "
+                    f"combined={e.get('combined_score', e['score']):.2f}] ({genuine_tag}) "
+                    f"{a}:{e['a_path']} <-> {b}:{e['b_path']}"
+                )
+                on_status(f"        A: {e['a_preview'][:100]}")
+                on_status(f"        B: {e['b_preview'][:100]}")
+                shared_ids = e.get("shared_compound_identifiers") or []
+                if shared_ids:
+                    on_status(f"        shared compound identifiers: {shared_ids[:10]}")
+            db["entanglement"].append({"a": a, "b": b, "score": score, "evidence": evidence})
+
+    return db
+
+
 def main():
     # Source snippets can contain arbitrary Unicode (arrows, checkmarks,
     # non-Latin identifiers, etc.). Windows consoles default to a narrow
@@ -382,45 +435,7 @@ def main():
 
     print(f"\n{len(real_projects)} real projects, {len(noise_projects)} flagged as non-project software/config\n")
 
-    db = {"projects": {}, "entanglement": []}
-
-    print("=" * 70)
-    print("  PER-PROJECT SUMMARIES")
-    print("=" * 70)
-    for name in real_projects:
-        print(f"\n{name}:")
-        result = summarize_project(engine, name, groups[name])
-        print(f"  {result['summary']}")
-        if result["unsupported_claims"]:
-            print(f"  >>> FLAGGED — unsupported claim(s) found by consensus verification:")
-            for claim_text in result["unsupported_claims"]:
-                print(f"      {claim_text[:200]}")
-        db["projects"][name] = {
-            "chunk_count": len(groups[name]),
-            "summary": result["summary"],
-            "unsupported_claims": result["unsupported_claims"],
-        }
-
-    print("\n" + "=" * 70)
-    print("  CROSS-PROJECT ENTANGLEMENT")
-    print("=" * 70)
-    for i, a in enumerate(real_projects):
-        for b in real_projects[i + 1:]:
-            score, evidence = compute_entanglement(engine, groups, a, b, base_dirs=base_dirs)
-            print(f"\n{a} <-> {b}: entanglement score = {score:.3f}")
-            for e in evidence:
-                genuine_tag = "GENUINE" if e.get("likely_genuine") else "coincidental?"
-                print(
-                    f"  [content={e['score']:.2f} filename_sim={e.get('filename_similarity', 0):.2f} "
-                    f"combined={e.get('combined_score', e['score']):.2f}] ({genuine_tag}) "
-                    f"{a}:{e['a_path']} <-> {b}:{e['b_path']}"
-                )
-                print(f"        A: {e['a_preview'][:100]}")
-                print(f"        B: {e['b_preview'][:100]}")
-                shared_ids = e.get("shared_compound_identifiers") or []
-                if shared_ids:
-                    print(f"        shared compound identifiers: {shared_ids[:10]}")
-            db["entanglement"].append({"a": a, "b": b, "score": score, "evidence": evidence})
+    db = build_entanglement_db(engine, groups, real_projects, base_dirs, on_status=print)
 
     with open(OUTPUT_DB, "w", encoding="utf-8") as f:
         json.dump(db, f, indent=2)

@@ -86,12 +86,13 @@ def _basename_no_ext(p: str) -> str:
     return Path(p.replace("\\", "/")).stem.lower()
 
 
-def main():
-    print("Loading OBSERVE index...")
-    engine, groups, real_projects, base_dirs = load_pipeline_inputs(
-        status_cb=lambda m: print(f"  {m}")
-    )
-
+def find_all_references(engine, groups: dict, real_projects: list, base_dirs: list,
+                         on_status=print) -> dict:
+    """Core "combustion stage" logic, extracted from main() so an
+    orchestrator (run_full_pipeline.py) can call this directly against an
+    already-loaded engine/groups/real_projects/base_dirs from a single
+    shared intake, instead of this module doing its own. Returns the same
+    dict main() saves to code_references_results.json."""
     # file basename (no ext) -> [(project, full_rel_path), ...] -- used to
     # resolve a bare import/load target ("Spikeling", "Sky3D") to a real
     # indexed file. Ambiguous basenames (many projects have a file called
@@ -125,7 +126,7 @@ def main():
             project_normalized_paths[proj].add(rel.replace("\\", "/").lower())
             project_of_file[(proj, rel)] = proj
 
-    print(f"{len(seen)} unique files across {len(real_projects)} real projects\n")
+    on_status(f"{len(seen)} unique files across {len(real_projects)} real projects\n")
 
     def resolves_within_project(raw_ref: str, proj: str) -> bool:
         """True if raw_ref (a res://... or relative path) matches a real
@@ -260,35 +261,46 @@ def main():
     for r in cross_project_refs:
         r["ambiguous"] = group_sizes[(r["source_project"], r["source_path"], r["raw_reference"])] > 1
 
-    print(f"{within_project_count} within-project references resolved")
-    print(f"{unresolved_count} references didn't resolve to any indexed file (external libs, stdlib, etc.)")
-    print(f"{len(cross_project_refs)} CROSS-PROJECT references found (deduplicated)\n")
+    on_status(f"{within_project_count} within-project references resolved")
+    on_status(f"{unresolved_count} references didn't resolve to any indexed file (external libs, stdlib, etc.)")
+    on_status(f"{len(cross_project_refs)} CROSS-PROJECT references found (deduplicated)\n")
 
-    print("=" * 70)
-    print("  CROSS-PROJECT REFERENCES (code literally importing/loading")
-    print("  a file from a DIFFERENT indexed project)")
-    print("=" * 70)
+    on_status("=" * 70)
+    on_status("  CROSS-PROJECT REFERENCES (code literally importing/loading")
+    on_status("  a file from a DIFFERENT indexed project)")
+    on_status("=" * 70)
     for r in cross_project_refs:
         amb = " [AMBIGUOUS -- multiple files share this name]" if r["ambiguous"] else ""
-        print(f"\n{r['source_project']}:{r['source_path']}")
-        print(f"  -> imports/loads \"{r['raw_reference']}\"")
-        print(f"  -> resolves to {r['target_project']}:{r['target_path']}{amb}")
+        on_status(f"\n{r['source_project']}:{r['source_path']}")
+        on_status(f"  -> imports/loads \"{r['raw_reference']}\"")
+        on_status(f"  -> resolves to {r['target_project']}:{r['target_path']}{amb}")
 
     if namespace_refs:
-        print("\n" + "=" * 70)
-        print("  C# NAMESPACE REFERENCES (weaker signal -- not file-resolved)")
-        print("=" * 70)
+        on_status("\n" + "=" * 70)
+        on_status("  C# NAMESPACE REFERENCES (weaker signal -- not file-resolved)")
+        on_status("=" * 70)
         for proj, namespaces in namespace_refs.items():
             non_system = sorted(n for n in namespaces if not n.startswith(("System", "Unity", "UnityEngine")))
             if non_system:
-                print(f"\n{proj}: {non_system[:15]}")
+                on_status(f"\n{proj}: {non_system[:15]}")
 
-    out_path = Path(__file__).resolve().parent / "code_references_results.json"
-    out_path.write_text(json.dumps({
+    return {
         "cross_project_references": cross_project_refs,
         "within_project_count": within_project_count,
         "unresolved_count": unresolved_count,
-    }, indent=2), encoding="utf-8")
+    }
+
+
+def main():
+    print("Loading OBSERVE index...")
+    engine, groups, real_projects, base_dirs = load_pipeline_inputs(
+        status_cb=lambda m: print(f"  {m}")
+    )
+
+    result = find_all_references(engine, groups, real_projects, base_dirs, on_status=print)
+
+    out_path = Path(__file__).resolve().parent / "code_references_results.json"
+    out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"\nSaved: {out_path}")
 
 

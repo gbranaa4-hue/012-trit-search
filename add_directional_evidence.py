@@ -85,15 +85,16 @@ def first_commit_date(path: Path):
     return result
 
 
-def main():
+def add_directional_evidence(db: dict, base_dirs: list, on_status=print) -> dict:
+    """Core "combustion stage" logic, extracted from main() so an
+    orchestrator (run_full_pipeline.py) can mutate an in-memory
+    entanglement db directly -- using base_dirs from the SAME shared
+    intake every other stage uses -- instead of round-tripping through
+    disk (load JSON, mutate, save JSON) the way main() below still does
+    for standalone use. Mutates db in place and returns it."""
     global BASE_DIR_CANDIDATES
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from observe_pipeline import load_engine
-    engine = load_engine()
-    BASE_DIR_CANDIDATES = sorted({p["base_dir"] for p in engine.path_table})
-    print(f"{len(BASE_DIR_CANDIDATES)} known base_dirs from the real index\n")
+    BASE_DIR_CANDIDATES = base_dirs
 
-    db = json.loads(DB_PATH.read_text(encoding="utf-8"))
     total = 0
     resolved_both = 0
     directional = 0
@@ -128,14 +129,25 @@ def main():
             else:
                 ev["direction"] = None  # same era, not a meaningful claim
 
-    print(f"{total} total evidence entries")
-    print(f"{resolved_both} had git history on both sides")
-    print(f"{directional} got an unambiguous directional claim (gap >= {MIN_GAP_DAYS} days)")
+    on_status(f"{total} total evidence entries")
+    on_status(f"{resolved_both} had git history on both sides")
+    on_status(f"{directional} got an unambiguous directional claim (gap >= {MIN_GAP_DAYS} days)")
+    return db
+
+
+def main():
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from observe_pipeline import load_engine
+    engine = load_engine()
+    base_dirs = sorted({p["base_dir"] for p in engine.path_table})
+    print(f"{len(base_dirs)} known base_dirs from the real index\n")
+
+    db = json.loads(DB_PATH.read_text(encoding="utf-8"))
+    add_directional_evidence(db, base_dirs, on_status=print)
 
     DB_PATH.write_text(json.dumps(db, indent=2), encoding="utf-8")
     print(f"\nUpdated in place: {DB_PATH}")
 
-    # Show a few real examples
     examples = [ev for pair in db["entanglement"] for ev in pair["evidence"] if ev.get("direction")]
     print(f"\nSample directional claims:")
     for ev in examples[:10]:

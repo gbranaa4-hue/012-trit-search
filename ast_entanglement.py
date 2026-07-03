@@ -37,10 +37,7 @@ sys.stdout.reconfigure(errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from trit_app import SearchEngine
-from trit_entanglement import (
-    INDEX_DIR, MODEL_PATH, MIN_CHUNKS_PER_PROJECT,
-    group_chunks_by_project, get_chunk_path, NON_PROJECT_HINTS,
-)
+from observe_pipeline import get_chunk_path, load_pipeline_inputs
 
 
 def _shape_of(node: ast.AST, depth: int = 0, max_depth: int = 6) -> tuple:
@@ -79,22 +76,13 @@ def extract_function_shapes(source: str, path: str) -> list:
     return out
 
 
-def main():
-    min_shape_len = int(sys.argv[1]) if len(sys.argv) > 1 else 6
-
-    print("Loading OBSERVE index...")
-    engine = SearchEngine()
-    engine.load(INDEX_DIR, MODEL_PATH, lambda m: print(f"  {m}"))
-    while not engine.ready:
-        time.sleep(0.2)
-
-    groups = group_chunks_by_project(engine)
-    groups = {k: v for k, v in groups.items() if len(v) >= MIN_CHUNKS_PER_PROJECT}
-    real_projects = [n for n in groups if n.lower() not in NON_PROJECT_HINTS]
-    print(f"{len(real_projects)} real projects\n")
-
-    base_dirs = sorted({p["base_dir"] for p in engine.path_table})
-
+def find_ast_matches(engine, groups: dict, real_projects: list, base_dirs: list,
+                      min_shape_len: int = 6, on_status=print) -> dict:
+    """Core "combustion stage" logic, extracted from main() so an
+    orchestrator (run_full_pipeline.py) can call this directly against an
+    already-loaded engine/groups/real_projects/base_dirs from a single
+    shared intake. Returns the same dict main() saves to
+    ast_entanglement_results.json."""
     # project -> [(func_name, shape, path, lineno), ...]
     project_shapes = defaultdict(list)
     seen_files = set()
@@ -127,7 +115,7 @@ def main():
                     project_shapes[proj].append((fname, shape, rel_path, lineno))
 
     total_funcs = sum(len(v) for v in project_shapes.values())
-    print(f"{total_funcs} functions with shape length >= {min_shape_len}, across {len(project_shapes)} projects with .py files\n")
+    on_status(f"{total_funcs} functions with shape length >= {min_shape_len}, across {len(project_shapes)} projects with .py files\n")
 
     # Cross-project matches: same project pair, exact shape match (or very
     # close -- exact match first, since that's the strong, defensible case)
@@ -148,16 +136,31 @@ def main():
                         })
 
     matches.sort(key=lambda m: -m["shape_len"])
-    print(f"{len(matches)} exact structural-shape matches across project pairs\n")
-    print("=" * 70)
-    print("  TOP STRUCTURAL MATCHES (identical control-flow skeleton)")
-    print("=" * 70)
+    on_status(f"{len(matches)} exact structural-shape matches across project pairs\n")
+    on_status("=" * 70)
+    on_status("  TOP STRUCTURAL MATCHES (identical control-flow skeleton)")
+    on_status("=" * 70)
     for m in matches[:20]:
-        print(f"\n[shape_len={m['shape_len']}] {m['project_a']}:{m['path_a']}:{m['func_a']}() (line {m['line_a']})")
-        print(f"                <-> {m['project_b']}:{m['path_b']}:{m['func_b']}() (line {m['line_b']})")
+        on_status(f"\n[shape_len={m['shape_len']}] {m['project_a']}:{m['path_a']}:{m['func_a']}() (line {m['line_a']})")
+        on_status(f"                <-> {m['project_b']}:{m['path_b']}:{m['func_b']}() (line {m['line_b']})")
+
+    return {"matches": matches, "total_functions": total_funcs}
+
+
+def main():
+    min_shape_len = int(sys.argv[1]) if len(sys.argv) > 1 else 6
+
+    print("Loading OBSERVE index...")
+    engine, groups, real_projects, base_dirs = load_pipeline_inputs(
+        status_cb=lambda m: print(f"  {m}")
+    )
+    print(f"{len(real_projects)} real projects\n")
+
+    result = find_ast_matches(engine, groups, real_projects, base_dirs,
+                               min_shape_len=min_shape_len, on_status=print)
 
     out_path = Path(__file__).resolve().parent / "ast_entanglement_results.json"
-    out_path.write_text(json.dumps({"matches": matches, "total_functions": total_funcs}, indent=2), encoding="utf-8")
+    out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"\nSaved: {out_path}")
 
 

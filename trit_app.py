@@ -872,6 +872,15 @@ class TritSearchApp:
     # pipeline itself, since that takes many minutes and needs Ollama).
 
     def _references_db_path(self):
+        # Prefer the combined database (run_full_pipeline.py's output --
+        # one shared run of every stage) over the standalone
+        # code_references_results.json, since the combined file is always
+        # at least as fresh and also carries the entanglement/AST data the
+        # standalone file doesn't. Falls back if the combined run hasn't
+        # been done yet.
+        combined = Path(__file__).resolve().parent / "observe_full_database.json"
+        if combined.exists():
+            return combined
         return Path(__file__).resolve().parent / "code_references_results.json"
 
     def _open_entanglement_window(self):
@@ -890,8 +899,9 @@ class TritSearchApp:
             messagebox.showinfo(
                 "No references database",
                 f"No database found at:\n{db_path}\n\n"
-                "Run `python code_references.py` from a terminal first "
-                "to build it (fast -- static parsing only, no LLM calls)."
+                "Run `python code_references.py` (references only, fast) or "
+                "`python run_full_pipeline.py` (everything, slower) from a "
+                "terminal first to build it."
             )
             return
         try:
@@ -911,7 +921,11 @@ class TritSearchApp:
         header.pack(pady=(12, 4))
 
         refs = db.get("cross_project_references", [])
-        within = db.get("within_project_count", 0)
+        # run_full_pipeline.py's combined output nests these under
+        # reference_stats; the standalone code_references.py output has
+        # them at the top level. Handle both shapes rather than force one
+        # schema to match the other after the fact.
+        within = db.get("within_project_count", db.get("reference_stats", {}).get("within_project_count", 0))
         info = tk.Label(
             win,
             text=(f"{len(refs)} cross-project references (real imports/loads/includes, "
