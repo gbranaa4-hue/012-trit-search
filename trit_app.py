@@ -805,7 +805,15 @@ class TritSearchApp:
                                bg=t["bg2"], fg=t["fg"], wrap="word",
                                relief="flat", highlightthickness=0,
                                borderwidth=0, padx=0, pady=0,
-                               cursor="xterm")
+                               cursor="xterm",
+                               # Text widgets use a SEPARATE color for
+                               # disabled state (disabledforeground) --
+                               # setting only fg left it falling back to
+                               # Tkinter's own default disabled-gray,
+                               # which is the "different color text"
+                               # bug: only the disabled preview widgets
+                               # looked off, not the rest of the theme.
+                               disabledforeground=t["fg"])
             preview.insert("1.0", preview_text)
             preview.config(state="disabled")
             preview.pack(fill="x", padx=12, pady=(0,6))
@@ -1042,6 +1050,18 @@ class TritSearchApp:
         # lands on something, and show the summary alongside references.
         projects_info = db.get("projects", {})
         all_names = set(by_source.keys()) | set(projects_info.keys())
+        # Real bug found via actual use: when only the standalone
+        # code_references_results.json exists (no "projects" section at
+        # all), only the handful of projects that happen to have a
+        # cross-project reference show up here -- most real projects
+        # (Spikeling-Project, 012-ternary, etc.) have zero references and
+        # were silently missing from this list entirely. Clicking through
+        # from a search result on one of those landed on nothing, with no
+        # visible error -- looked exactly like the feature was broken.
+        # Always include initial_project even with zero known data, so a
+        # click-through confirms it worked instead of silently vanishing.
+        if initial_project:
+            all_names.add(initial_project)
         proj_names = sorted(all_names, key=lambda n: -len(by_source.get(n, [])))
         for name in proj_names:
             n_refs = len(by_source.get(name, []))
