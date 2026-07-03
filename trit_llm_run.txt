@@ -1,0 +1,70 @@
+Device: cuda
+TritGPT: vocab=65, params=1,367,680, ternary weights {-1,0,+1}
+
+?? Training TritGPT ??
+  step     0/2500  train=4.3559  val=4.1971  [warmup]  0s
+  step   250/2500  train=2.4952  val=2.5073  [warmup]  93s
+  step   500/2500  train=4.8343  val=3.8429  [TERNARY]  175s
+  step   750/2500  train=3.9633  val=3.3799  [TERNARY]  274s
+  step  1000/2500  train=3.9648  val=3.4121  [TERNARY]  374s
+  step  1250/2500  train=4.2891  val=3.5724  [TERNARY]  532s
+  step  1500/2500  train=3.7781  val=3.2473  [TERNARY]  708s
+  step  1750/2500  train=3.9162  val=2.8933  [TERNARY]  860s
+  step  2000/2500  train=3.5988  val=3.2093  [TERNARY]  976s
+  step  2250/2500  train=3.4505  val=3.0638  [TERNARY]  1118s
+  step  2499/2500  train=3.2308  val=2.7230  [TERNARY]  1242s
+
+============================================================
+  GENERATED SAMPLES (char-level ternary LM)
+============================================================
+
+--- temperature 0.5 ---
+ROMEO:
+D:
+
+ANUKININNG ING t t t t t pe t t be t be be thinand t s the be ange ing bou thisour wis thingour t t the,
+
+
+
+
+
+ARIN t t te ger thang thing thangous comoungis angourd t this s thin this t t t be ther ge ges s t t t the theringou the allis the mar thout melang ather s t thithend thang athis thicous be that thee the t ng t thind the gice this the the ther the thiss thangis t t,
+
+
+
+
+
+The t the ge 
+
+--- temperature 0.8 ---
+ROMEO:
+LANRININRINGI s t t be, than gharis I bat thenco bengomene turingour st s couthakngriceronsto pitome ind th t ce thithis t ted thy thisig, you t ather ango ane g my tharisince cingl an ndorer'ss.
+Thing wounde ing t presthe thend t ay'd's
+Wo then gor ar t
+
+
+Tout tor me ato'led go par ara tou s t gore by pur ory at csooupithistir thatherers pr tir ten.
+
+Theangtre thidor tl ther thinongigus angounou
+
+--- temperature 1.0 ---
+ROMEO: t d n mmand cot m, bou,
+An mo blee t ptes s d laty wisiowcks, biry asitis g totoul yome tco t t aipd y tour oupand wisourncougithlacet thengst t,  th atigrderdpa nd thes s lingugr thilithosth lllll's, athin indicacea caces
+
+Youlan,
+
+I ar be
+
+
+
+TARYorlt ng,
+WAbestincoro t t ce bosorderert mound nge bl inan toucethepllllar llingous.
+Tedeeacp sut ashispyor cerbh icoyomind, cr th blore pick
+
+Fou d-l 
+
+Saved trit_llm.pt (model + tokenizer + config bundled -- reloadable)
+
+Honest read: recognizable Shakespeare-ish STRUCTURE, semantic nonsense.
+A real working ternary LM, not a useful one -- exactly what a ~1M-param
+char model on CPU produces.

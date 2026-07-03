@@ -17,3 +17,7 @@ index/
 *.index
 *.tar.gz
 *.csv
+
+data/dna*.txt
+trit_dna.pt
+trit_llm.pt

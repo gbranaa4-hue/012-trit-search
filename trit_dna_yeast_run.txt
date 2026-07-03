@@ -1,0 +1,33 @@
+Device: cuda
+DNA length 800,000 nt, GC content 37.7% (uniform-random would be 50%)
+TritDNA GPT: vocab=4 (nucleotides), params=1,351,360, ternary weights
+
+
+?? Training TritDNA ??
+  step     0/2500  train=1.4926  val=1.4336  [warmup]  1s
+  step   250/2500  train=1.3571  val=1.3488  [warmup]  98s
+  step   500/2500  train=1.7294  val=1.7225  [TERNARY]  190s
+  step   750/2500  train=1.4372  val=1.3692  [TERNARY]  278s
+  step  1000/2500  train=1.3951  val=1.4097  [TERNARY]  357s
+  step  1250/2500  train=1.3955  val=1.3601  [TERNARY]  438s
+  step  1500/2500  train=1.3878  val=1.3688  [TERNARY]  517s
+  step  1750/2500  train=1.3788  val=1.3610  [TERNARY]  595s
+  step  2000/2500  train=1.3798  val=1.3630  [TERNARY]  677s
+  step  2250/2500  train=1.3739  val=1.3530  [TERNARY]  768s
+  step  2499/2500  train=1.3570  val=1.3540  [TERNARY]  852s
+
+============================================================
+  DID IT LEARN THE DNA 'LANGUAGE'? (k-mer statistics, yeast)
+============================================================
+  GC content   real 37.7%   generated 38.2%   (random 50%)
+    k   corr(gen)   corr(rand)   TV(gen)   TV(rand)
+    2       0.882       -0.376     0.095      0.174
+    3       0.851       -0.227     0.117      0.239
+    4       0.778       -0.108     0.163      0.285
+
+  sample generated DNA:
+  ATGAGATGACGTAGCCAAGGTGAATAGATTCGAGATTGAAAATGAGCGCGATTGGACTTGCCTTGAGACGCTTCCAAAAAAAATTTTATTTTAGAAAACAATGAAGCGGTAAAGTAAATC
+
+Saved trit_dna.pt (model + tokenizer + config).
+Honest read: generated corr >> random corr = the ternary model learned
+real local DNA structure (codon/k-mer statistics), not just uniform letters.
