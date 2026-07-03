@@ -1,0 +1,26 @@
+Evolving a ternary CA rule for density classification (N=21, radius=3, 80 params, 42 steps) -- EQUIVARIANT (bias-free, exactly f(-x)=-f(x))
+
+do-nothing baseline fitness ~= majority density ~0.65; chance accuracy 0.5;
+GKL (best hand rule) ~0.816; ~1.0 impossible (provably).
+
+gen   0  best_fit(this gen)=0.890  sigma=0.497
+gen  25  best_fit(this gen)=0.958  sigma=0.439
+gen  50  best_fit(this gen)=0.960  sigma=0.387
+gen  75  best_fit(this gen)=0.955  sigma=0.342
+gen 100  best_fit(this gen)=0.935  sigma=0.301
+gen 125  best_fit(this gen)=0.969  sigma=0.266
+gen 150  best_fit(this gen)=0.954  sigma=0.235
+gen 175  best_fit(this gen)=0.956  sigma=0.207
+gen 200  best_fit(this gen)=0.943  sigma=0.183
+gen 225  best_fit(this gen)=0.946  sigma=0.161
+gen 250  best_fit(this gen)=0.951  sigma=0.142
+gen 275  best_fit(this gen)=0.976  sigma=0.125
+gen 299  best_fit(this gen)=0.946  sigma=0.111
+
+=== held-out evaluation of best evolved rule ===
+  init consensus (do-nothing): 67.1%   final consensus: 94.2%
+  solved (>90% agree, correct): 92.1%   easy: 100.0%   hard: 82.0%
+
+Honest read: final consensus >> 65% and solved >> chance = the evolved
+ternary cells genuinely compute a global property from local talk.
+~65% / near-chance = evolution found only local smoothing, not real computation.

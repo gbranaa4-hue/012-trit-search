@@ -88,3 +88,32 @@ BECAUSE the task is symmetric. This is the symmetry-selection-rule PRINCIPLE
 (symmetry structure of the problem selects the structure of the solution) shown
 in a ternary CA -- a different substrate than the phononic reservoir it came
 from. The principle transfers; the specific even-order phononic rule does not.
+
+## Causal test: does FORCING exact symmetry change the result? (surprising -- yes)
+
+Evolution found a ~93% sign-equivariant rule on its own. Forced EXACT
+equivariance by dropping the MLP biases (tanh and ternary are both odd, so a
+bias-free rule is exactly f(-x)=-f(x); 80 params vs 91) and re-evolved.
+
+| | params | equiv | N=21 solved | N=21 hard | N=149 solved | N=149 hard |
+|---|---|---|---|---|---|---|
+| unconstrained | 91 | ~93% learned | 92.8% | 83.6% | 75.5% | 54% |
+| exact-equivariant | 80 | 100% built-in | 92.1% | 82.0% | 58.7% | 15% |
+
+Two findings:
+1. At the trained size N=21: a TIE -- forcing exact symmetry costs nothing (same
+   accuracy, 11 fewer params). Symmetry is a free/useful constraint at that scale.
+2. Generalization to larger N: forcing exact symmetry HURTS badly. At N=149 the
+   unconstrained rule holds 75.5%/54% (solved/hard) but the exact-equivariant one
+   collapses to 58.7%/15% (near-chance on hard). Hard-case accuracy craters with
+   scale (80->46->19->15) vs the unconstrained rule's graceful 79->74->59->54.
+
+Interpretation: the small ~7% asymmetry the unconstrained rule kept is
+LOAD-BEARING -- it's what sustains information propagation around a larger ring.
+This refines the symmetry principle: symmetry GOVERNS the computation (evolution
+reliably finds near-symmetric solutions), but ENFORCING exact symmetry is
+over-constraint -- the robust, generalizing optimum is MOSTLY symmetric with a
+little slack, not perfectly symmetric.
+
+Caveat: single evolution run each. The N=21 tie is solid; the generalization gap
+(large: 54% vs 15%) should be confirmed across multiple seeds to be ironclad.

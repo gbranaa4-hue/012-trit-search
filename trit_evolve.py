@@ -25,6 +25,7 @@ uniform CA; GKL (the best hand rule) ~0.816. Beating do-nothing (~0.65) and
 chance-accuracy (0.5) with an EVOLVED ternary rule is already a real "the cells
 compute a global property" result. ~1.0 is impossible; do not expect it.
 """
+import sys
 import numpy as np
 
 N = 21          # ring size (odd -> no ties)
@@ -33,17 +34,26 @@ HID = 10
 T = 2 * N       # CA steps (info must cross the ring)
 rng = np.random.default_rng(0)
 
+# "equiv" mode: drop the MLP bias terms. tanh and ternary are both ODD, so a
+# bias-free tanh-MLP is EXACTLY sign-equivariant f(-x)=-f(x) by construction --
+# forcing the task's +/-1 symmetry into the architecture (11 fewer params).
+EQUIVARIANT = "equiv" in sys.argv
+
 IN = 2 * R + 1
-# weight layout: W1 (IN,HID), b1 (HID), W2 (HID,1), b2 (1)
-DIM = IN * HID + HID + HID * 1 + 1
+DIM = (IN * HID + HID) if EQUIVARIANT else (IN * HID + HID + HID + 1)
 
 
 def unpack(theta):
     i = 0
     W1 = theta[i:i + IN * HID].reshape(IN, HID); i += IN * HID
-    b1 = theta[i:i + HID]; i += HID
-    W2 = theta[i:i + HID].reshape(HID, 1); i += HID
-    b2 = theta[i:i + 1]; i += 1
+    if EQUIVARIANT:
+        b1 = 0.0
+        W2 = theta[i:i + HID].reshape(HID, 1); i += HID
+        b2 = 0.0
+    else:
+        b1 = theta[i:i + HID]; i += HID
+        W2 = theta[i:i + HID].reshape(HID, 1); i += HID
+        b2 = theta[i:i + 1]; i += 1
     return W1, b1, W2, b2
 
 
@@ -113,14 +123,16 @@ def evolve(gens=300, lam=48, mu=12, sigma=0.5, batch=160):
 
 
 def main():
+    mode = "EQUIVARIANT (bias-free, exactly f(-x)=-f(x))" if EQUIVARIANT else "unconstrained"
     print(f"Evolving a ternary CA rule for density classification "
-          f"(N={N}, radius={R}, {DIM} params, {T} steps)\n")
+          f"(N={N}, radius={R}, {DIM} params, {T} steps) -- {mode}\n")
     print("do-nothing baseline fitness ~= majority density ~0.65; chance accuracy 0.5;")
     print("GKL (best hand rule) ~0.816; ~1.0 impossible (provably).\n")
     theta = evolve()
     print("\n=== held-out evaluation of best evolved rule ===")
     evaluate(theta)
-    np.save("trit_evolve_best.npy", theta)
+    out = "trit_evolve_equiv_best.npy" if EQUIVARIANT else "trit_evolve_best.npy"
+    np.save(out, theta)
     print("\nHonest read: final consensus >> 65% and solved >> chance = the evolved")
     print("ternary cells genuinely compute a global property from local talk.")
     print("~65% / near-chance = evolution found only local smoothing, not real computation.")
