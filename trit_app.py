@@ -15,7 +15,7 @@ Usage:
 
 import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext, messagebox
-import threading, subprocess, sys, os, json, time, random, webbrowser
+import threading, subprocess, sys, os, json, time, random, webbrowser, queue
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -553,6 +553,10 @@ class TritSearchApp:
                                        width=18)
         self.entangle_btn.pack(pady=4, padx=8, fill="x")
 
+        self.run_pipeline_btn = self._btn(self.sidebar, "▶ RUN FULL ANALYSIS", self._open_run_pipeline_window,
+                                           width=18)
+        self.run_pipeline_btn.pack(pady=4, padx=8, fill="x")
+
         tk.Frame(self.sidebar, bg=t["border"], height=1).pack(fill="x", pady=8, padx=8)
 
         # Stats
@@ -782,6 +786,11 @@ class TritSearchApp:
             copy_btn.pack(side="left", padx=4)
             copy_btn.bind("<Button-1>", lambda e, p=r["path"]: self._copy(p))
 
+            entangle_lbl = tk.Label(header, text="⊞ ENTANGLEMENT", font=t["font_small"],
+                                     bg=t["bg2"], fg=t["fg_dim"], cursor="hand2")
+            entangle_lbl.pack(side="left", padx=4)
+            entangle_lbl.bind("<Button-1>", lambda e, p=r["path"]: self._open_entanglement_for_path(p))
+
             preview = tk.Label(card, text=r["preview"][:200].replace("\n", "  "),
                                 font=t["font_small"], bg=t["bg2"], fg=t["fg"],
                                 anchor="w", justify="left", wraplength=700)
@@ -825,6 +834,36 @@ class TritSearchApp:
                 else:
                     subprocess.run(["xdg-open", full])
                 return
+
+    def _open_entanglement_for_path(self, rel_path):
+        # Click-through from a search result straight to that file's
+        # project entanglement view, instead of making the user open the
+        # Entanglement window separately and hunt for the right project.
+        # observe_pipeline is imported lazily (not at module level) because
+        # it itself imports SearchEngine from this file -- a top-level
+        # import here would be circular.
+        from observe_pipeline import _infer_project_name
+
+        base_dir = None
+        for b in self.scan_dirs:
+            if os.path.exists(os.path.join(b, rel_path)):
+                base_dir = b
+                break
+        if base_dir is None and self.engine.path_table:
+            # scan_dirs might not include every base_dir actually indexed
+            # (e.g. re-opened without re-adding dirs) -- fall back to
+            # whatever base_dirs the loaded index itself knows about.
+            for p in self.engine.path_table:
+                if os.path.exists(os.path.join(p["base_dir"], rel_path)):
+                    base_dir = p["base_dir"]
+                    break
+        if base_dir is None:
+            messagebox.showinfo("Can't locate project",
+                                 f"Couldn't resolve {rel_path} to a base directory.")
+            return
+
+        project = _infer_project_name(base_dir.replace("\\", "/"), rel_path)
+        self._open_entanglement_window(initial_project=project)
 
     # ── INDEX ─────────────────────────────────────────────────────────────────
 
@@ -883,7 +922,7 @@ class TritSearchApp:
             return combined
         return Path(__file__).resolve().parent / "code_references_results.json"
 
-    def _open_entanglement_window(self):
+    def _open_entanglement_window(self, initial_project=None):
         # NOTE: this window shows real code REFERENCES (imports, preload/
         # load() calls, require(), #include), not embedding-similarity
         # "entanglement" scores. By explicit request: this should show
@@ -952,9 +991,17 @@ class TritSearchApp:
         by_source = {}
         for r in refs:
             by_source.setdefault(r["source_project"], []).append(r)
-        proj_names = sorted(by_source.keys(), key=lambda n: -len(by_source[n]))
+
+        # If this is the combined database, it also has per-project
+        # summaries -- list EVERY real project (not just ones with a
+        # reference), so clicking through from a search result always
+        # lands on something, and show the summary alongside references.
+        projects_info = db.get("projects", {})
+        all_names = set(by_source.keys()) | set(projects_info.keys())
+        proj_names = sorted(all_names, key=lambda n: -len(by_source.get(n, [])))
         for name in proj_names:
-            proj_list.insert("end", f"{name}  ({len(by_source[name])} references)")
+            n_refs = len(by_source.get(name, []))
+            proj_list.insert("end", f"{name}  ({n_refs} references)")
 
         # Right: detail pane
         right = tk.Frame(body, bg=t["bg"])
@@ -977,15 +1024,32 @@ class TritSearchApp:
 
         def show_project(name):
             related = by_source.get(name, [])
+            info = projects_info.get(name, {})
 
             detail.config(state="normal")
             detail.delete("1.0", "end")
             detail.insert("end", f"{name}\n", "h1")
-            detail.insert("end", f"{len(related)} cross-project reference(s) found\n\n")
+
+            if info:
+                detail.insert("end", f"{info.get('chunk_count', 0)} chunks indexed\n\n")
+                detail.insert("end", f"{info.get('summary', '(no summary)')}\n\n")
+                claims = info.get("unsupported_claims") or []
+                if claims:
+                    detail.insert("end", "FLAGGED — possibly unsupported claim(s):\n")
+                    for c in claims:
+                        detail.insert("end", f"  - {c[:200]}\n")
+                    detail.insert("end", "\n")
+            else:
+                detail.insert("end", "(no summary available -- run run_full_pipeline.py or "
+                                      "trit_entanglement.py to generate one)\n\n")
+
             detail.insert("end", "─" * 60 + "\n")
-            detail.insert("end", "REAL REFERENCES (imports / loads / includes)\n")
+            detail.insert("end", f"REAL REFERENCES (imports / loads / includes) -- {len(related)} found\n")
             detail.insert("end", "─" * 60 + "\n\n")
 
+            if not related:
+                detail.insert("end", "(none found -- this project doesn't literally import/load/include\n"
+                                      "anything from another project)\n\n")
             for r in related:
                 tag = "AMBIGUOUS" if r.get("ambiguous") else "confirmed"
                 detail.insert("end", f"[{tag}] {r['source_path']}\n")
@@ -1001,7 +1065,112 @@ class TritSearchApp:
             idx = sel[0]
             show_project(proj_names[idx])
 
+        if initial_project and initial_project in proj_names:
+            idx = proj_names.index(initial_project)
+            proj_list.selection_set(idx)
+            proj_list.see(idx)
+            show_project(initial_project)
+
         proj_list.bind("<<ListboxSelect>>", on_select)
+
+    # ── RUN FULL ANALYSIS (with visible progress/elapsed time) ───────────────
+    # Real problem this fixes: the analysis pipeline previously only ran
+    # from a bare terminal with no timestamps on most output lines, and
+    # once already hung silently for 40+ minutes tonight due to a real bug
+    # (a Windows console encoding crash swallowed by a broken except path)
+    # -- from outside, "hung" and "just slow" looked identical. This window
+    # streams the subprocess's real output AND keeps a live elapsed-time
+    # counter and a "time since last output line" indicator, so a genuine
+    # stall is visibly distinguishable from normal slow progress instead of
+    # requiring someone to go measure CPU time by hand to tell the
+    # difference (which is literally what happened here earlier tonight).
+
+    def _open_run_pipeline_window(self):
+        if getattr(self, "_pipeline_proc", None) is not None and self._pipeline_proc.poll() is None:
+            messagebox.showinfo("Already running", "A pipeline run is already in progress.")
+            return
+
+        t = self.t
+        win = tk.Toplevel(self.root)
+        win.title("OBSERVE — Run Full Analysis")
+        win.geometry("900x600")
+        win.configure(bg=t["bg"])
+
+        header = tk.Label(win, text="▶ RUNNING FULL ANALYSIS", font=t["font_title"],
+                           bg=t["bg"], fg=t["accent"])
+        header.pack(pady=(12, 4))
+
+        status_lbl = tk.Label(win, text="Starting...", font=t["font_small"],
+                               bg=t["bg"], fg=t["fg_dim"])
+        status_lbl.pack(pady=(0, 8))
+
+        output = scrolledtext.ScrolledText(
+            win, bg=t["bg2"], fg=t["fg"], font=("Courier New", 9),
+            wrap="word", relief="flat", highlightthickness=0, insertbackground=t["fg"]
+        )
+        output.pack(fill="both", expand=True, padx=12, pady=(0, 12))
+        output.config(state="disabled")
+
+        q = queue.Queue()
+        state = {"start": time.time(), "last_line": time.time(), "done": False, "returncode": None}
+
+        script_path = Path(__file__).resolve().parent / "run_full_pipeline.py"
+        proc = subprocess.Popen(
+            [sys.executable, "-u", str(script_path)],
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, encoding="utf-8", errors="replace",
+            cwd=str(script_path.parent),
+        )
+        self._pipeline_proc = proc
+
+        def reader_thread():
+            for line in proc.stdout:
+                q.put(line)
+            proc.wait()
+            q.put(None)  # sentinel: process exited
+
+        threading.Thread(target=reader_thread, daemon=True).start()
+
+        def poll_queue():
+            try:
+                while True:
+                    line = q.get_nowait()
+                    if line is None:
+                        state["done"] = True
+                        state["returncode"] = proc.returncode
+                        break
+                    state["last_line"] = time.time()
+                    output.config(state="normal")
+                    output.insert("end", line)
+                    output.see("end")
+                    output.config(state="disabled")
+            except queue.Empty:
+                pass
+
+            elapsed = time.time() - state["start"]
+            since_last = time.time() - state["last_line"]
+            mins, secs = divmod(int(elapsed), 60)
+
+            if state["done"]:
+                ok = state["returncode"] == 0
+                status_lbl.config(
+                    text=(f"{'✓ Finished' if ok else '✗ Failed'} in {mins}m {secs}s "
+                          f"(exit code {state['returncode']})"),
+                    fg=(t["accent"] if ok else "#ff6666"),
+                )
+                self._pipeline_proc = None
+                return  # stop polling -- process is done
+
+            warn = since_last > 90
+            status_lbl.config(
+                text=(f"Running... {mins}m {secs}s elapsed"
+                      + (f"   ⚠ no new output in {int(since_last)}s -- may be stuck"
+                         if warn else f"   (output {int(since_last)}s ago)")),
+                fg=("#ffaa33" if warn else t["fg_dim"]),
+            )
+            win.after(500, poll_queue)
+
+        poll_queue()
 
     # ── ENGINE ────────────────────────────────────────────────────────────────
 
