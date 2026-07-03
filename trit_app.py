@@ -1041,9 +1041,20 @@ class TritSearchApp:
                                 relief="flat", highlightthickness=0)
         proj_list.pack(fill="both", expand=True, padx=8, pady=(0, 8))
 
+        # Real confusion found via actual use: the list showed "(0
+        # references)" for projects like Spikeling-Project, which the user
+        # correctly pointed out is misleading -- Spikeling-Project IS
+        # referenced by other projects (3 times, from loose scripts), it
+        # just never imports/loads anything FROM another project itself.
+        # by_source only ever counted OUTGOING references, with no label
+        # distinguishing that from incoming -- "0" read as wrong even
+        # though it was accurate for the specific (unstated) direction
+        # being measured. Track both directions and show both explicitly.
         by_source = {}
+        by_target = {}
         for r in refs:
             by_source.setdefault(r["source_project"], []).append(r)
+            by_target.setdefault(r["target_project"], []).append(r)
 
         # If this is the combined database, it also has per-project
         # summaries -- list EVERY real project (not just ones with a
@@ -1085,10 +1096,11 @@ class TritSearchApp:
         # click-through confirms it worked instead of silently vanishing.
         if initial_project:
             all_names.add(initial_project)
-        proj_names = sorted(all_names, key=lambda n: -len(by_source.get(n, [])))
+        proj_names = sorted(all_names, key=lambda n: -(len(by_source.get(n, [])) + len(by_target.get(n, []))))
         for name in proj_names:
-            n_refs = len(by_source.get(name, []))
-            proj_list.insert("end", f"{name}  ({n_refs} references)")
+            n_out = len(by_source.get(name, []))
+            n_in = len(by_target.get(name, []))
+            proj_list.insert("end", f"{name}  ({n_out} out, {n_in} in)")
 
         # Right: detail pane
         right = tk.Frame(body, bg=t["bg"])
@@ -1110,7 +1122,8 @@ class TritSearchApp:
         detail.config(state="disabled")
 
         def show_project(name):
-            related = by_source.get(name, [])
+            outgoing = by_source.get(name, [])
+            incoming = by_target.get(name, [])
             info = projects_info.get(name, {})
 
             detail.config(state="normal")
@@ -1131,17 +1144,30 @@ class TritSearchApp:
                                       "trit_entanglement.py to generate one)\n\n")
 
             detail.insert("end", "─" * 60 + "\n")
-            detail.insert("end", f"REAL REFERENCES (imports / loads / includes) -- {len(related)} found\n")
+            detail.insert("end", f"OUTGOING -- this project imports/loads/includes -- {len(outgoing)} found\n")
             detail.insert("end", "─" * 60 + "\n\n")
 
-            if not related:
-                detail.insert("end", "(none found -- this project doesn't literally import/load/include\n"
+            if not outgoing:
+                detail.insert("end", "(none -- this project doesn't literally import/load/include\n"
                                       "anything from another project)\n\n")
-            for r in related:
+            for r in outgoing:
                 tag = "AMBIGUOUS" if r.get("ambiguous") else "confirmed"
                 detail.insert("end", f"[{tag}] {r['source_path']}\n")
                 detail.insert("end", f"    -> \"{r['raw_reference']}\"\n")
                 detail.insert("end", f"    -> {r['target_project']}:{r['target_path']}\n\n")
+
+            detail.insert("end", "─" * 60 + "\n")
+            detail.insert("end", f"INCOMING -- other projects import/load/include FROM this one -- {len(incoming)} found\n")
+            detail.insert("end", "─" * 60 + "\n\n")
+
+            if not incoming:
+                detail.insert("end", "(none -- no other project literally imports/loads/includes\n"
+                                      "anything from this one)\n\n")
+            for r in incoming:
+                tag = "AMBIGUOUS" if r.get("ambiguous") else "confirmed"
+                detail.insert("end", f"[{tag}] {r['source_project']}:{r['source_path']}\n")
+                detail.insert("end", f"    -> \"{r['raw_reference']}\"\n")
+                detail.insert("end", f"    -> {r['target_path']}\n\n")
 
             detail.config(state="disabled")
 
