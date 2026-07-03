@@ -131,32 +131,39 @@ def train_arm(mode, train, val, vocab, epochs, device):
 
 def main():
     epochs = int(sys.argv[1]) if len(sys.argv) > 1 else 400
+    # optional 2nd arg: comma-separated arms to run (default all three).
+    # e.g. "scale1,residual2" to isolate the shadow trit with the scale held on.
+    arms = sys.argv[2].split(",") if len(sys.argv) > 2 else ["bare1", "scale1", "residual2"]
     device = torch.device("cpu")   # be explicit; this machine has no guaranteed CUDA
-    print(f"Residual-ternary A/B -- {epochs} epochs/arm on {device}")
+    print(f"Residual-ternary A/B -- {epochs} epochs/arm on {device}, arms={arms}")
     print("(reduced-epoch first-signal run; not the final 2000-epoch verdict)\n")
 
     train, val, vocab = build_data()
     print(f"{len(train)} train pairs, {len(val)} val pairs, vocab {len(vocab)}\n")
 
     results = {}
-    for mode in ("bare1", "scale1", "residual2"):
+    for mode in arms:
         acc, final_loss, dt = train_arm(mode, train, val, vocab, epochs, device)
         results[mode] = acc
         print(f"  {mode:10s}  retrieval_acc={acc*100:5.1f}%   final_loss={final_loss:.4f}   {dt:.0f}s")
 
+    labels = {"bare1": "bare1     (no scale)",
+              "scale1": "scale1    (+ optimal scale)",
+              "residual2": "residual2 (+ shadow trit, 2x storage)"}
     print("\n" + "=" * 60)
     print("  RESULT (higher retrieval accuracy = better embeddings)")
     print("=" * 60)
-    print(f"  A bare1     : {results['bare1']*100:5.1f}%   (current method)")
-    print(f"  B scale1    : {results['scale1']*100:5.1f}%   (A + optimal scale)")
-    print(f"  C residual2 : {results['residual2']*100:5.1f}%   (B + shadow trit, 2x storage)")
+    for mode in arms:
+        print(f"  {labels[mode]:38s}: {results[mode]*100:5.1f}%")
     print()
-    print(f"  scale contribution   (B-A): {(results['scale1']-results['bare1'])*100:+.1f}pp")
-    print(f"  shadow contribution  (C-B): {(results['residual2']-results['scale1'])*100:+.1f}pp")
-    print("\n  Honest read: small val sets are noisy at low epochs. Treat this")
-    print("  as signal/no-signal, not a precise number. If C-B is clearly")
-    print("  positive here, a full 2000-epoch run is justified; if it's ~0 or")
-    print("  negative, the reconstruction win didn't translate -- stop here.")
+    if "bare1" in results and "scale1" in results:
+        print(f"  scale contribution   (scale1 - bare1)   : {(results['scale1']-results['bare1'])*100:+.1f}pp")
+    if "scale1" in results and "residual2" in results:
+        print(f"  shadow contribution  (residual2 - scale1): {(results['residual2']-results['scale1'])*100:+.1f}pp")
+    print("\n  Honest read: small val sets are noisy. Treat this as")
+    print("  signal/no-signal. This run tests whether MORE DATA lets the")
+    print("  shadow trit generalize (C>B) or whether it's a genuine tie --")
+    print("  the earlier 400-epoch run overfit on ~1400 pairs.")
 
 
 if __name__ == "__main__":

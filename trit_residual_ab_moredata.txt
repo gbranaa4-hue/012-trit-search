@@ -1,0 +1,21 @@
+Device: cpu
+Residual-ternary A/B -- 800 epochs/arm on cpu, arms=['scale1', 'residual2']
+(reduced-epoch first-signal run; not the final 2000-epoch verdict)
+
+8005 train pairs, 889 val pairs, vocab 14273
+
+  scale1      retrieval_acc= 12.8%   final_loss=2.1171   684s
+  residual2   retrieval_acc= 13.5%   final_loss=1.9575   681s
+
+============================================================
+  RESULT (higher retrieval accuracy = better embeddings)
+============================================================
+  scale1    (+ optimal scale)           :  12.8%
+  residual2 (+ shadow trit, 2x storage) :  13.5%
+
+  shadow contribution  (residual2 - scale1): +0.7pp
+
+  Honest read: small val sets are noisy. Treat this as
+  signal/no-signal. This run tests whether MORE DATA lets the
+  shadow trit generalize (C>B) or whether it's a genuine tie --
+  the earlier 400-epoch run overfit on ~1400 pairs.

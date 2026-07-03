@@ -61,6 +61,32 @@ Trusting the cheap reconstruction proxy alone would have bet on exactly the
 wrong component. This is why the reconstruction test was framed as
 necessary-not-sufficient and gated behind a training A/B, not shipped on its own.
 
+## Follow-up: shadow re-tested on 5.6x more data (B vs C only)
+
+The first A/B's undertraining caveat was addressed directly: re-ran scale1 vs
+residual2 on 8,005 train pairs (six real codebases via TRIT_SCAN_DIRS, up from
+1,423) with an 889-pair val set (up from 158), 800 epochs.
+
+| | retrieval acc | final train loss |
+|---|---|---|
+| scale1 (B) | 12.8% | 2.117 |
+| residual2 (C) | 13.5% | 1.958 |
+
+shadow contribution C−B = **+0.7pp**. But the standard error on a ~13%
+proportion at n=889 is ~1.1pp, so +0.7pp (≈6 of 889 pairs) is *within one
+standard error of zero* — not a demonstrated win. (Absolute accuracy is lower
+than the first run's 15% only because 889-way retrieval has more distractors
+than 158-way; absolute numbers aren't comparable across runs, only the
+within-run C−B gap is.)
+
+One real update: the earlier overfit signal (C fit train better at a val cost)
+**softened** — with more data, C's lower train loss came with a slight val
+nudge *up*, not down. So with enough data the shadow stops actively hurting;
+it just doesn't clearly help. Verdict unchanged per the pre-registered rule
+(stop unless clearly positive): shadow stays parked, not worth 2x storage.
+Fully settling +0.7pp vs 0 would need multiple seeds for error bars — not
+worth the CPU for an effect this small.
+
 ## Caveats (stated, not buried)
 
 - 400 epochs is undertrained (15% absolute is low); the C−B tie could be partly
