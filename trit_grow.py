@@ -95,6 +95,55 @@ def seed_batch(h, w, channels, batch=1):
     return x
 
 
+def seed_signal(h, w, channels, signal, batch=1):
+    """Seed carrying an input signal in channel 1 (+1 or -1). The signal
+    must propagate outward as the structure grows so distant cells know
+    which shape to form -- 'the output depends on the input'."""
+    x = torch.zeros(batch, channels, h, w)
+    x[:, 0, h // 2, w // 2] = 1.0        # alive seed
+    x[:, 1, h // 2, w // 2] = signal     # input signal
+    return x
+
+
+def train_conditional(mode="ternary", shapeA="square", shapeB="heart",
+                      steps=1200, h=28, w=28, unroll=(48, 72)):
+    """One shared rule that grows shapeA when the seed signal is +1 and shapeB
+    when it is -1. A real 'input changes output' test: conditional morphogenesis."""
+    torch.manual_seed(0)
+    ca = GrowCA(mode=mode)
+    tA = target_shape(shapeA, h, w)
+    tB = target_shape(shapeB, h, w)
+    opt = torch.optim.Adam(ca.parameters(), lr=2e-3)
+    for step in range(steps):
+        signal = 1.0 if torch.rand(1).item() < 0.5 else -1.0
+        x = seed_signal(h, w, ca.channels, signal)
+        n = torch.randint(unroll[0], unroll[1], (1,)).item()
+        for _ in range(n):
+            x = ca.step(x)
+        target = tA if signal > 0 else tB
+        loss = F.mse_loss(x[:, :1].clamp(0, 1), target)
+        opt.zero_grad(); loss.backward(); _grad_normalize(ca); opt.step()
+        if step % 100 == 0 or step == steps - 1:
+            print(f"  [cond {shapeA}/{shapeB}] step {step:4d}  sig={signal:+.0f}  loss={loss.item():.4f}")
+    return ca, tA, tB
+
+
+def demo_conditional(mode="ternary", shapeA="square", shapeB="heart"):
+    print(f"=== conditional: signal +1 -> {shapeA}, signal -1 -> {shapeB} ===\n")
+    ca, tA, tB = train_conditional(mode, shapeA, shapeB)
+    h = w = 28
+    for signal, want, other, wname, oname in [(1.0, tA, tB, shapeA, shapeB), (-1.0, tB, tA, shapeB, shapeA)]:
+        x = seed_signal(h, w, ca.channels, signal)
+        for _ in range(64):
+            x = ca.step(x)
+        mse_want = F.mse_loss(x[:, :1].clamp(0, 1), want).item()
+        mse_other = F.mse_loss(x[:, :1].clamp(0, 1), other).item()
+        print(f"\nsignal {signal:+.0f} (should grow {wname}):")
+        print(ascii_grid(x))
+        print(f"  MSE to {wname} (target): {mse_want:.4f}   MSE to {oname} (wrong): {mse_other:.4f}")
+        print(f"  -> {'CORRECT shape' if mse_want < mse_other else 'WRONG/blended'}")
+
+
 def target_square(h, w, size=10):
     t = torch.zeros(1, 1, h, w)
     a, b = (h - size) // 2, (h + size) // 2
@@ -118,6 +167,12 @@ def target_shape(name, h, w):
                     t[0, 0, i, j] = 1.0
             elif name == "cross":
                 if (abs(i - cy) < 2 and abs(j - cx) < 9) or (abs(j - cx) < 2 and abs(i - cy) < 9):
+                    t[0, 0, i, j] = 1.0
+            elif name == "hbar":      # horizontal bar -- simple, equal difficulty to vbar
+                if abs(i - cy) < 3 and abs(j - cx) < 10:
+                    t[0, 0, i, j] = 1.0
+            elif name == "vbar":      # vertical bar -- maximally distinct from hbar, same size
+                if abs(j - cx) < 3 and abs(i - cy) < 10:
                     t[0, 0, i, j] = 1.0
             elif name == "heart":
                 x = (j - cx) / (w * 0.30)

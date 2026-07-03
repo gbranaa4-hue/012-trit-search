@@ -40,6 +40,23 @@ coherent but do not perform the global computation.
    and hand-design (GKL rule), not backprop. Two failing attempts are
    consistent with that known difficulty, not "one tweak away."
 
+## Also tested: conditional output ("input changes output") -- also FAILED
+
+A more modest bridge than global computation: one shared rule that grows a
+DIFFERENT shape depending on a +/-1 signal placed in the seed. The signal must
+route outward as the structure grows -- "the output depends on the input,"
+simpler than a global aggregate.
+
+| shape pair | result |
+|---|---|
+| square vs heart | FAILED -- both signals grew similar large blobs, input mostly ignored (sig +1 grew closer to the WRONG target); loss ~0.41 |
+| hbar vs vbar (equal difficulty, isolated) | FAILED -- loss diverged (0.12->0.79), both signals grew IDENTICAL runaway fill-all, input completely ignored (MSE to right and wrong target both 0.865) |
+
+Removing the shape-difficulty confound (equal-size orthogonal bars) did not
+reveal a working mechanism -- the conditional setup collapses into the fill-all
+attractor and the seed signal never routes. Input-conditional output does not
+work in this architecture with gradient training.
+
 ## The line this draws (the actual value of the result)
 
 - Morphogenesis -- growing coherent structure, even non-trivial (heart) -- WORKS.
