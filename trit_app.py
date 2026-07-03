@@ -795,27 +795,28 @@ class TritSearchApp:
             # A Label can't be selected/copied with the mouse at all --
             # the only way to interact with a result used to be clicking
             # the path, which immediately launches an external editor.
-            # A disabled Text widget still allows mouse selection + copy
-            # in Tkinter (editing is blocked, selection isn't), so the
-            # code snippet itself is now directly selectable in-app
-            # without forcing VS Code open just to grab a few lines.
+            # A Text widget allows mouse selection + copy. Real bug found
+            # twice in a row here: first attempt disabled it (state=
+            # "disabled") to make it read-only, but Tk renders disabled
+            # Text in its own default gray regardless of fg -- that WAS
+            # the "different color text" bug. Second attempt tried to fix
+            # that with disabledforeground, but Text (unlike Entry/Label)
+            # doesn't support that option at all -- crashed the app on
+            # the very first search (verified directly: constructing a
+            # Text widget with disabledforeground raises TclError). Left
+            # as a normal (not disabled) widget instead: nothing is ever
+            # saved from this preview, so a technically-editable-in-place
+            # display is a fine tradeoff for correct color + real
+            # selection, and it's the simplest fix that doesn't reintroduce
+            # either previous bug.
             preview_text = r["preview"][:200].replace("\n", "  ")
             n_lines = max(1, -(-len(preview_text) // 90))  # matches wraplength roughly
             preview = tk.Text(card, height=min(n_lines, 4), font=t["font_small"],
                                bg=t["bg2"], fg=t["fg"], wrap="word",
                                relief="flat", highlightthickness=0,
                                borderwidth=0, padx=0, pady=0,
-                               cursor="xterm",
-                               # Text widgets use a SEPARATE color for
-                               # disabled state (disabledforeground) --
-                               # setting only fg left it falling back to
-                               # Tkinter's own default disabled-gray,
-                               # which is the "different color text"
-                               # bug: only the disabled preview widgets
-                               # looked off, not the rest of the theme.
-                               disabledforeground=t["fg"])
+                               cursor="xterm")
             preview.insert("1.0", preview_text)
-            preview.config(state="disabled")
             preview.pack(fill="x", padx=12, pady=(0,6))
 
             # Hover
