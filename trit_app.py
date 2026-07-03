@@ -1051,6 +1051,28 @@ class TritSearchApp:
         # lands on something, and show the summary alongside references.
         projects_info = db.get("projects", {})
         all_names = set(by_source.keys()) | set(projects_info.keys())
+
+        # Real bug found via direct testing: opening this window from the
+        # SIDEBAR button (no specific file) only ever showed
+        # "(loose scripts, no project folder)", because that's the only
+        # project with any reference data in the standalone
+        # code_references_results.json -- confirmed directly, the sidebar
+        # path produced a listbox with exactly one item. Every other real
+        # project (Spikeling-Project, 012-ternary, etc.) was invisible
+        # even though the loaded index knows about all of them. Compute
+        # the REAL full project list from the already-loaded engine (no
+        # reload -- group_chunks_by_project is cheap, pure in-memory) so
+        # the sidebar button is useful on its own, not just as a landing
+        # spot for click-through.
+        if self.engine.ready:
+            try:
+                from observe_pipeline import group_chunks_by_project, MIN_CHUNKS_PER_PROJECT, NON_PROJECT_HINTS
+                groups = group_chunks_by_project(self.engine)
+                for name, idxs in groups.items():
+                    if len(idxs) >= MIN_CHUNKS_PER_PROJECT and name.lower() not in NON_PROJECT_HINTS:
+                        all_names.add(name)
+            except Exception:
+                pass  # fall back to whatever the JSON file alone provides
         # Real bug found via actual use: when only the standalone
         # code_references_results.json exists (no "projects" section at
         # all), only the handful of projects that happen to have a
