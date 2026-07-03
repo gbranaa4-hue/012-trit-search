@@ -58,5 +58,59 @@ The script's auto-printed "learned real structure" conclusion is only valid when
 the numbers support it (yeast), NOT automatically (human run 1, where it was
 overstated and corrected here). Always read the k-mer numbers, not the auto-line.
 
+## Run 3 -- cross-species: does yeast knowledge "generalize," or is DNA just universal?
+
+Tested whether the yeast-trained model transfers to species it never saw
+(human, fly, worm), fetched as clean mid-chromosome regions via Ensembl.
+
+FIRST, the honest prerequisite -- are species even distinguishable at the
+k-mer level? Real cross-species 3-mer correlations:
+
+| pair | 3-mer | 4-mer |
+|---|---|---|
+| yeast-worm | 0.954 | 0.932 |
+| yeast-fly | 0.909 | 0.884 |
+| yeast-human | 0.891 | 0.874 |
+| human-fly | 0.835 | 0.820 |
+
+Local DNA structure is LARGELY UNIVERSAL across these eukaryotes (0.82-0.95
+shared). That reframes "cross-species generalization" before any model runs.
+
+Yeast-trained model's generated DNA vs each real species (random baseline is
+negative at every k):
+
+| species | model match (3-mer / 4-mer) | real yeast-similarity (3-mer / 4-mer) |
+|---|---|---|
+| yeast (own) | 0.927 / 0.887 | -- |
+| worm | 0.915 / 0.871 | 0.954 / 0.932 |
+| fly | 0.843 / 0.801 | 0.909 / 0.884 |
+| human | 0.838 / 0.799 | 0.891 / 0.874 |
+
+Findings:
+1. The model "transfers" to unseen species at 0.80-0.92 -- but this is NOT
+   cross-species generalization. It is explained entirely by the universality
+   of local DNA structure (species are 0.84-0.95 alike to begin with).
+2. Transfer strength TRACKS real species similarity: model matches worm >
+   fly ~= human, the exact order of how similar those genomes really are to
+   yeast. The model applies "what yeast looks like"; each species benefits to
+   the degree it resembles yeast.
+3. It DID capture yeast-SPECIFIC structure, not just the shared floor:
+   model-vs-yeast (0.927) exceeds model-vs-human (0.838) by more than the real
+   yeast-human gap -- the generated DNA is more yeast-like than the actual human
+   genome is. So it memorized yeast's distribution (incl. yeast-specific bias),
+   not merely the universal eukaryote skeleton.
+
+Answer to memorize-vs-generalize: it learned yeast's local structure (including
+yeast-specific features); that knowledge appears to "generalize" only because
+local DNA k-mer structure is mostly universal.
+
+Multi-genome training NOT pursued (deliberate): with species only 5-18% apart at
+the k-mer level, training on several genomes averages toward the same shared
+distribution -- a held-out species lands near ~0.85 either way, and you can't
+separate real multi-genome generalization from single-genome transfer. The
+signal isn't there at this level. Where species truly differ (gene organization,
+long-range structure) is invisible to a 1M-param local model.
+
 ---
 *Script: trit_dna.py   Runs: trit_dna_run.txt (human), trit_dna_yeast_run.txt (yeast)*
+*Cross-species measured live; regions cached in data/dna_{yeast,human,fly,worm}.txt*
