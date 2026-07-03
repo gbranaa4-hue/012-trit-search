@@ -15,7 +15,7 @@ Usage:
 
 import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext, messagebox
-import threading, subprocess, sys, os, json, time, random, webbrowser, queue
+import threading, subprocess, sys, os, json, time, random, webbrowser, queue, shutil
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -297,13 +297,14 @@ class SearchEngine:
                         preview = text[offset:offset+120].replace("\n", " ")
                     except Exception:
                         pass
-                    results.append({"score": float(score), "path": rel_path, "preview": preview})
+                    results.append({"score": float(score), "path": rel_path, "preview": preview, "offset": offset})
                 else:
                     # Legacy format fallback
                     results.append({
                         "score":   float(score),
                         "path":    m.get("rel_path", m.get("path", "?")),
                         "preview": m.get("preview", ""),
+                        "offset":  m.get("offset"),
                     })
         return results
 
@@ -779,7 +780,7 @@ class TritSearchApp:
                                  bg=t["bg2"], fg=t["fg_bright"],
                                  cursor="hand2")
             path_lbl.pack(side="left", padx=8)
-            path_lbl.bind("<Button-1>", lambda e, p=r["path"]: self._open_file(p))
+            path_lbl.bind("<Button-1>", lambda e, p=r["path"], o=r.get("offset"): self._open_file(p, o))
 
             copy_btn = tk.Label(header, text="⎘ COPY", font=t["font_small"],
                                 bg=t["bg2"], fg=t["fg_dim"], cursor="hand2")
@@ -791,9 +792,22 @@ class TritSearchApp:
             entangle_lbl.pack(side="left", padx=4)
             entangle_lbl.bind("<Button-1>", lambda e, p=r["path"]: self._open_entanglement_for_path(p))
 
-            preview = tk.Label(card, text=r["preview"][:200].replace("\n", "  "),
-                                font=t["font_small"], bg=t["bg2"], fg=t["fg"],
-                                anchor="w", justify="left", wraplength=700)
+            # A Label can't be selected/copied with the mouse at all --
+            # the only way to interact with a result used to be clicking
+            # the path, which immediately launches an external editor.
+            # A disabled Text widget still allows mouse selection + copy
+            # in Tkinter (editing is blocked, selection isn't), so the
+            # code snippet itself is now directly selectable in-app
+            # without forcing VS Code open just to grab a few lines.
+            preview_text = r["preview"][:200].replace("\n", "  ")
+            n_lines = max(1, -(-len(preview_text) // 90))  # matches wraplength roughly
+            preview = tk.Text(card, height=min(n_lines, 4), font=t["font_small"],
+                               bg=t["bg2"], fg=t["fg"], wrap="word",
+                               relief="flat", highlightthickness=0,
+                               borderwidth=0, padx=0, pady=0,
+                               cursor="xterm")
+            preview.insert("1.0", preview_text)
+            preview.config(state="disabled")
             preview.pack(fill="x", padx=12, pady=(0,6))
 
             # Hover
@@ -823,10 +837,40 @@ class TritSearchApp:
         self.root.clipboard_append(text)
         self._set_status(f"Copied {len(results)} results to clipboard.")
 
-    def _open_file(self, rel_path):
+    def _open_file(self, rel_path, offset=None):
         for base in self.scan_dirs:
             full = os.path.join(base, rel_path)
             if os.path.exists(full):
+                # Jump straight to the matched line, not just the top of
+                # the file -- previously clicking a result opened the file
+                # generically, leaving the user to manually re-find the
+                # actual match. VS Code's CLI supports --goto file:line
+                # for this; fall back to a plain open if `code` isn't on
+                # PATH or the line can't be computed.
+                line = None
+                if offset is not None:
+                    try:
+                        text = open(full, encoding="utf-8", errors="ignore").read()
+                        line = text.count("\n", 0, offset) + 1
+                    except Exception:
+                        line = None
+
+                if line is not None:
+                    # subprocess.run(["code", ...]) fails with
+                    # FileNotFoundError on Windows even when `code` is on
+                    # PATH -- CreateProcess doesn't resolve an extensionless
+                    # name to code.CMD the way a real shell does. shutil.which
+                    # resolves through PATHEXT correctly; verified directly
+                    # (bare "code" failed, the shutil.which-resolved path
+                    # succeeded, returncode 0).
+                    code_exe = shutil.which("code")
+                    if code_exe:
+                        try:
+                            subprocess.run([code_exe, "--goto", f"{full}:{line}"], check=True)
+                            return
+                        except Exception:
+                            pass  # launch failed -- fall through to a plain open
+
                 if sys.platform == "darwin":
                     subprocess.run(["open", full])
                 elif sys.platform == "win32":
