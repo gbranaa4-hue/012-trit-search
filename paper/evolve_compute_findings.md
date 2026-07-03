@@ -68,3 +68,23 @@ was the whole story -- mapped, then crossed.
 
 ---
 *Script: trit_evolve.py   Run: trit_evolve_run.txt   Weights: trit_evolve_best.npy*
+
+## Does symmetry govern the computation? (measured -- yes)
+
+Density classification has an exact +/-1 sign symmetry: flip every input sign
+and the majority (and correct answer) flip too. A rule that truly computes
+majority should be sign-equivariant, f(-x) = -f(x). Tested the evolved rule
+(trit_symmetry_test.py):
+
+- single-step equivariance f(-x)==-f(x): 94.0% of cells
+- full-run   equivariance f_T(-x)==-f_T(x): 93.1% of cells
+- accuracy on x 91.5% vs on -x 91.0% (near-identical)
+- polarity accuracy gap (+1-maj vs -1-maj): 1.6pp
+
+Evolution DISCOVERED a near-sign-equivariant rule without being told to -- the
+MLP's bias terms could have broken the symmetry (and account for the ~7%
+deviation and 1.6pp residual bias), but evolution converged near-symmetric
+BECAUSE the task is symmetric. This is the symmetry-selection-rule PRINCIPLE
+(symmetry structure of the problem selects the structure of the solution) shown
+in a ternary CA -- a different substrate than the phononic reservoir it came
+from. The principle transfers; the specific even-order phononic rule does not.
