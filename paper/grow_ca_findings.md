@@ -52,6 +52,37 @@ unstoppably. A working consensus firing rule would need a brake (suppression whe
 consensus is not sustained), or would gate the growth DIRECTION rather than just
 adding life. Not required for the core concept, which already works without it.
 
+## Follow-up fixes
+
+### Consensus gate redesigned -- runaway fixed (SUCCESS)
+
+The add-only consensus gate (life += consensus) was pure positive feedback ->
+runaway fill-all (MSE 0.79). Redesigned: the standard alive-mask stays the
+growth BRAKE, and the signed neighbor-consensus is fed as an INPUT to the
+update rule instead of touching the life mask. Tested with the same working
+from-seed trainer as bare/ternary (so the result is attributable to the gate,
+not the trainer):
+
+| consensus version | grown MSE | loss |
+|---|---|---|
+| old (add-only life) | 0.79 (runaway) | never converged |
+| redesigned (input + alive brake) | 0.027 | converged 0.126 -> 0.017 |
+
+Clean bounded growth, actually slightly better than plain ternary (0.036).
+The gate redesign works.
+
+### Persistent-pool training for clean self-heal -- FAILED (first attempt)
+
+Attempted to make self-heal robust via pool training with damage. It
+regressed: the model never learned the dense square (grown MSE 0.11, worse
+than the 0.08 do-nothing baseline) and settled into faint diffuse mush. The
+"healed ~= grown" numbers were both equally bad, not clean repair. Likely
+cause: resetting the worst sample to seed every step + damaging an untrained
+model made optimization unstable from the start. From-seed training remains
+the better model; self-heal across working modes stays partial (~0.095). A
+warm-start recipe (grow from seed first, then introduce pool+damage) is the
+next thing to try.
+
 ## Honest scope
 
 This is morphogenesis — growing coherent STRUCTURE — which is real and now

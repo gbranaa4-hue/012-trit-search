@@ -1,0 +1,75 @@
+=== mode=consensus, trainer=seed ===
+
+  [consensus/seed] step    0  loss=0.1263
+  [consensus/seed] step   50  loss=0.0455
+  [consensus/seed] step  100  loss=0.0378
+  [consensus/seed] step  150  loss=0.0349
+  [consensus/seed] step  200  loss=0.0240
+  [consensus/seed] step  250  loss=0.0244
+  [consensus/seed] step  300  loss=0.0279
+  [consensus/seed] step  350  loss=0.0240
+  [consensus/seed] step  400  loss=0.0197
+  [consensus/seed] step  450  loss=0.0470
+  [consensus/seed] step  499  loss=0.0170
+
+grown from seed:
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+            ..::.           
+          .:-++=-.          
+         :-=@@@%*+:.        
+        --%@@@@@@*=:        
+       :+*@@@@@@@@@=.       
+       *@@@@@@@@@@@*:       
+      .+@@@@@@@@@@@*:       
+      .*@@@@@@@@@@@+.       
+       -@@@@@@@@@@@-        
+        =@@@@@@@@@%:        
+       ..+@@@@@@@@-         
+         .-@@@@@@=.         
+         . -+@@@@:          
+            .--=-.          
+             .              
+                            
+                            
+                            
+                            
+                            
+                            
+  grown MSE: 0.0271  (0.08 = did nothing)
+
+after erasing left half + 48 steps (self-heal):
+                            
+                            
+                            
+                            
+                            
+              .:.           
+              =*=.          
+             .+@@*=:        
+             :@@@@%+:.      
+             =@@@@@@+.      
+             *@@@@@@*:      
+             *@@@@@@%.      
+            .#@@@@@@@-      
+             @@@@@@@@=      
+            .#@@@@@@@-      
+            .#@@@@@@%..     
+             #@@@@@@+       
+             *@@@@@#-       
+             #@@@@@+        
+             +@@@@+         
+             .@@@@:         
+             .-+=-:         
+             . .   .        
+                            
+                            
+                            
+                            
+                            
+  healed MSE: 0.0957  (compare to grown; close = clean repair)

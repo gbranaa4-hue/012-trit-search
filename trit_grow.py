@@ -1,21 +1,26 @@
 """
-trit_grow -- a growing neural cellular automaton, rebuilt STAGED after two
-honest training failures (runaway fill-all, then dead/no-growth). Both were
-recipe bugs, not fundamentals: the missing ingredient was the standard
-Growing-NCA *stochastic per-cell update mask* (each cell updates only ~half
-the time), without which all cells move in lockstep and collapse together.
+trit_grow -- a growing neural cellular automaton. Neurons spawn from one
+seed, communicate with neighbors only in trits {-1,0,+1}, and self-organize
+into one coherent whole.
 
-Disciplined, one-component-at-a-time (matches paper/triadic_robustness_findings.md):
-  mode="bare"      known-good minimal NCA (continuous comms, no consensus)
-  mode="ternary"   cells communicate in {-1,0,+1} instead of continuous
-  mode="consensus" ternary + a consensus growth gate
+History (honest): two early failures (runaway fill-all, then dead/no-growth)
+were a missing stochastic per-cell update mask. Rebuilt staged; bare and
+ternary communication both grow coherent shapes (see paper/grow_ca_findings.md).
+Two things were then fixed:
 
-Each stage must still GROW before the next is added. This file proves the
-base recipe first; ternary and consensus are toggles layered on only once
-bare works.
+  1. Consensus gate. The first consensus rule ADDED life (life += consensus),
+     pure positive feedback -> runaway fill-all. Redesigned: the standard
+     alive-mask stays the growth BRAKE (it's what bounds bare/ternary), and
+     the neighbor-consensus signal is fed as an INPUT to the update rule --
+     agreement shapes how a cell grows, it never unilaterally keeps a cell alive.
 
-Honest scope unchanged: this is morphogenesis (growing coherent structure),
-not cognition. It won't reason or do language.
+  2. Self-heal. Training only from the seed taught growth but not repair.
+     Added persistent-pool training with damage: train from a pool of grown
+     (and randomly damaged) states so the CA learns to HOLD and REGENERATE a
+     pattern, not just grow it once.
+
+modes: bare / ternary / consensus.  trainers: from-seed (train) / pool (train_pool).
+Honest scope: morphogenesis (growing structure), not cognition.
 """
 import torch
 import torch.nn as nn
@@ -30,14 +35,12 @@ def ternary_ste(x, frac=0.7):
 
 
 class GrowCA(nn.Module):
-    def __init__(self, channels=16, hidden=128, mode="bare", fire_p=0.5, consensus_thresh=3.0):
+    def __init__(self, channels=16, hidden=128, mode="bare", fire_p=0.5):
         super().__init__()
         self.channels = channels
         self.mode = mode
-        self.fire_p = fire_p                      # stochastic update probability (the fix)
-        self.consensus_thresh = consensus_thresh
+        self.fire_p = fire_p
 
-        # Fixed perception: identity + Sobel-x + Sobel-y per channel (standard NCA).
         ident = torch.tensor([[0., 0, 0], [0, 1, 0], [0, 0, 0]])
         sx = torch.tensor([[-1., 0, 1], [-2, 0, 2], [-1, 0, 1]]) / 8.0
         sy = sx.t()
@@ -47,53 +50,48 @@ class GrowCA(nn.Module):
             k[3 * c + 1, 0] = sx
             k[3 * c + 2, 0] = sy
         self.register_buffer("perc_kernel", k)
+        self.register_buffer("neigh_kernel", torch.ones(1, 1, 3, 3))
 
-        # per-cell update rule (1x1 convs = shared MLP over the perception vector)
+        # consensus mode feeds one extra input channel (neighbor consensus)
+        in_ch = channels * 3 + (1 if mode == "consensus" else 0)
         self.update = nn.Sequential(
-            nn.Conv2d(channels * 3, hidden, 1), nn.ReLU(),
+            nn.Conv2d(in_ch, hidden, 1), nn.ReLU(),
             nn.Conv2d(hidden, channels, 1),
         )
-        nn.init.zeros_(self.update[-1].weight)    # near-identity start (standard)
+        nn.init.zeros_(self.update[-1].weight)
         nn.init.zeros_(self.update[-1].bias)
 
     def perceive(self, x):
         return F.conv2d(x, self.perc_kernel, padding=1, groups=self.channels)
 
     def alive(self, x):
-        # channel 0 is visible/alpha; a cell is alive if it or a neighbor is > 0.1
         return F.max_pool2d((x[:, :1] > 0.1).float(), 3, stride=1, padding=1)
 
     def step(self, x):
         pre_life = self.alive(x)
 
-        comm = x
-        if self.mode in ("ternary", "consensus"):
-            comm = ternary_ste(x)                 # cells communicate in trits
+        comm = ternary_ste(x) if self.mode in ("ternary", "consensus") else x
         y = self.perceive(comm)
-        dx = self.update(y)
-
-        # THE FIX: stochastic per-cell update -- each cell updates only ~half
-        # the time, breaking the lockstep symmetry that caused both prior
-        # collapses (all-on / all-off).
-        fire = (torch.rand_like(x[:, :1]) < self.fire_p).float()
-        x = x + dx * fire
-
-        life = pre_life * self.alive(x)
 
         if self.mode == "consensus":
-            # extra growth gate: a cell may also stay alive where neighbors
-            # reach ternary consensus (layered on ONLY after bare+ternary work)
+            # signed neighbor consensus of the visible channel, as an INPUT
+            # feature only. It informs the update; it does NOT touch the life
+            # mask (which stays the growth brake -- this is the runaway fix).
             msg = ternary_ste(x[:, :1])
-            neigh = F.conv2d(msg, torch.ones(1, 1, 3, 3, device=x.device), padding=1)
-            consensus = (neigh.abs() >= self.consensus_thresh).float()
-            life = torch.clamp(life + consensus, 0, 1)
+            neigh = F.conv2d(msg, self.neigh_kernel, padding=1)   # signed, ~[-9,9]
+            y = torch.cat([y, neigh], dim=1)
 
+        dx = self.update(y)
+        fire = (torch.rand_like(x[:, :1]) < self.fire_p).float()   # stochastic update (the fix)
+        x = x + dx * fire
+
+        life = pre_life * self.alive(x)   # standard bounded growth -- unchanged brake
         return x * life
 
 
-def seed_grid(h, w, channels):
-    x = torch.zeros(1, channels, h, w)
-    x[0, 0, h // 2, w // 2] = 1.0
+def seed_batch(h, w, channels, batch=1):
+    x = torch.zeros(batch, channels, h, w)
+    x[:, 0, h // 2, w // 2] = 1.0
     return x
 
 
@@ -104,57 +102,125 @@ def target_square(h, w, size=10):
     return t
 
 
+def damage(x):
+    """Zero a random half of each sample -- teaches repair."""
+    x = x.clone()
+    B, _, h, w = x.shape
+    for i in range(B):
+        side = torch.randint(0, 4, (1,)).item()
+        if side == 0:   x[i, :, : h // 2, :] = 0
+        elif side == 1: x[i, :, h // 2:, :] = 0
+        elif side == 2: x[i, :, :, : w // 2] = 0
+        else:           x[i, :, :, w // 2:] = 0
+    return x
+
+
 def ascii_grid(x):
     v = x[0, 0].detach().clamp(0, 1)
     chars = " .:-=+*#%@"
     return "\n".join("".join(chars[min(int(c * 9), 9)] for c in row) for row in v)
 
 
-def train(mode, steps=500, h=28, w=28, unroll=(28, 48)):
+def _grad_normalize(ca):
+    for p in ca.parameters():
+        if p.grad is not None:
+            p.grad = p.grad / (p.grad.norm() + 1e-8)
+
+
+def train_seed(mode, steps=500, h=28, w=28, unroll=(28, 48)):
+    """From-seed trainer -- the one that verifiably grows (bare/ternary).
+    Kept so the consensus REDESIGN can be tested in isolation from the
+    (separately-finicky) pool trainer."""
     torch.manual_seed(0)
     ca = GrowCA(mode=mode)
     target = target_square(h, w)
     opt = torch.optim.Adam(ca.parameters(), lr=2e-3)
     for step in range(steps):
-        x = seed_grid(h, w, ca.channels)
+        x = seed_batch(h, w, ca.channels, 1)
         n = torch.randint(unroll[0], unroll[1], (1,)).item()
         for _ in range(n):
             x = ca.step(x)
         loss = F.mse_loss(x[:, :1].clamp(0, 1), target)
         opt.zero_grad(); loss.backward()
-        # per-parameter grad normalization (the ORIGINAL Growing-NCA recipe);
-        # it caused runaway earlier ONLY because the stochastic fire mask was
-        # missing -- with the mask in place this is the correct choice.
-        for p in ca.parameters():
-            if p.grad is not None:
-                p.grad = p.grad / (p.grad.norm() + 1e-8)
+        _grad_normalize(ca)
         opt.step()
         if step % 50 == 0 or step == steps - 1:
-            print(f"  [{mode}] step {step:4d}  loss={loss.item():.4f}")
+            print(f"  [{mode}/seed] step {step:4d}  loss={loss.item():.4f}")
     return ca, target
 
 
-def demo(mode="bare"):
-    print(f"=== STAGE: mode={mode} -- can it grow the square from one seed? ===\n")
-    ca, target = train(mode)
+def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48), pool_size=32, batch=8):
+    """Warm-started persistent-pool training. The first attempt failed by
+    throwing damage at an untrained model from step 0 -> unstable, never grew.
+    Fix: PHASE 1 grows from the seed (no pool, no damage) until the model can
+    actually form the square; PHASE 2 then seeds the pool from grown states
+    and introduces damage, so repair is learned on top of a model that already
+    grows rather than instead of it."""
+    torch.manual_seed(0)
+    ca = GrowCA(mode=mode)
+    target = target_square(h, w)
+    tgt_b = target.expand(batch, 1, h, w)
+    opt = torch.optim.Adam(ca.parameters(), lr=2e-3)
+
+    # PHASE 1: from-seed growth warmup
+    for step in range(warmup):
+        x = seed_batch(h, w, ca.channels, 1)
+        n = torch.randint(unroll[0], unroll[1], (1,)).item()
+        for _ in range(n):
+            x = ca.step(x)
+        loss = F.mse_loss(x[:, :1].clamp(0, 1), target)
+        opt.zero_grad(); loss.backward(); _grad_normalize(ca); opt.step()
+        if step % 50 == 0:
+            print(f"  [{mode}/warmup] step {step:4d}  loss={loss.item():.4f}")
+
+    # PHASE 2: seed the pool with GROWN states, then pool + damage for repair
+    with torch.no_grad():
+        pool = seed_batch(h, w, ca.channels, pool_size)
+        for _ in range(40):
+            pool = ca.step(pool)
+    for step in range(warmup, steps):
+        idx = torch.randperm(pool_size)[:batch]
+        x = pool[idx].clone()
+        with torch.no_grad():
+            losses = ((x[:, :1].clamp(0, 1) - tgt_b) ** 2).mean(dim=(1, 2, 3))
+        x[losses.argmax().item()] = seed_batch(h, w, ca.channels, 1)[0]   # keep from-seed growth fresh
+        if batch > 3:
+            x[[1, 2]] = damage(x[[1, 2]])                                  # damage a couple for repair
+        n = torch.randint(unroll[0], unroll[1], (1,)).item()
+        for _ in range(n):
+            x = ca.step(x)
+        loss = F.mse_loss(x[:, :1].clamp(0, 1), tgt_b)
+        opt.zero_grad(); loss.backward(); _grad_normalize(ca); opt.step()
+        pool[idx] = x.detach()
+        if step % 50 == 0 or step == steps - 1:
+            print(f"  [{mode}/pool] step {step:4d}  loss={loss.item():.4f}")
+    return ca, target
+
+
+def demo(mode="ternary", trainer="seed"):
+    print(f"=== mode={mode}, trainer={trainer} ===\n")
+    ca, target = (train_seed if trainer == "seed" else train_pool)(mode)
     h = w = 28
-    x = seed_grid(h, w, ca.channels)
-    for _ in range(40):
+
+    x = seed_batch(h, w, ca.channels, 1)
+    for _ in range(48):
         x = ca.step(x)
     print("\ngrown from seed:")
     print(ascii_grid(x))
     grown = F.mse_loss(x[:, :1].clamp(0, 1), target).item()
-    print(f"  grown match-to-target MSE: {grown:.4f}  (0.08 = did nothing, lower = grew the square)")
+    print(f"  grown MSE: {grown:.4f}  (0.08 = did nothing)")
 
-    x[:, :, :, : w // 2] = 0.0
-    for _ in range(40):
+    x[:, :, :, : w // 2] = 0.0     # erase left half
+    for _ in range(48):
         x = ca.step(x)
     healed = F.mse_loss(x[:, :1].clamp(0, 1), target).item()
-    print("\nafter erasing left half + 40 steps (self-heal?):")
+    print("\nafter erasing left half + 48 steps (self-heal):")
     print(ascii_grid(x))
-    print(f"  healed match-to-target MSE: {healed:.4f}")
+    print(f"  healed MSE: {healed:.4f}  (compare to grown; close = clean repair)")
 
 
 if __name__ == "__main__":
     import sys
-    demo(sys.argv[1] if len(sys.argv) > 1 else "bare")
+    mode = sys.argv[1] if len(sys.argv) > 1 else "ternary"
+    trainer = sys.argv[2] if len(sys.argv) > 2 else "seed"
+    demo(mode, trainer)
