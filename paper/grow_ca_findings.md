@@ -79,9 +79,19 @@ than the 0.08 do-nothing baseline) and settled into faint diffuse mush. The
 "healed ~= grown" numbers were both equally bad, not clean repair. Likely
 cause: resetting the worst sample to seed every step + damaging an untrained
 model made optimization unstable from the start. From-seed training remains
-the better model; self-heal across working modes stays partial (~0.095). A
-warm-start recipe (grow from seed first, then introduce pool+damage) is the
-next thing to try.
+the better model; self-heal across working modes stays partial (~0.095).
+
+**Second attempt -- warm-start pool training -- also FAILED.** Phase 1
+(from-seed warmup) grew the square fine (loss 0.126 -> 0.042). But phase 2
+(pool + damage) immediately regressed it: loss jumped back to ~0.12 and
+stayed, final grown MSE 0.119 (mush). Pool training actively UNLEARNED the
+growth phase 1 established. Conclusion after two attempts: pool training as
+implemented destabilizes the model regardless of warm-start; clean self-heal
+is NOT achieved. Real Growing-NCA pool training is genuinely finicky and
+would need faithful replication of the original recipe (specific damage rate,
+sample selection, gradient handling) -- real effort, uncertain, not cracked
+here. From-seed training with partial (~0.095) self-heal stands as the
+working result.
 
 ## Honest scope
 
