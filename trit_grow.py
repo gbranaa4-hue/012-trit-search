@@ -102,6 +102,31 @@ def target_square(h, w, size=10):
     return t
 
 
+def target_shape(name, h, w):
+    """Non-trivial targets -- the point is to show the ternary CA
+    self-organizes real STRUCTURE, not just a filled square."""
+    t = torch.zeros(1, 1, h, w)
+    cy, cx = h / 2, w / 2
+    for i in range(h):
+        for j in range(w):
+            if name == "square":
+                if abs(i - cy) < 5 and abs(j - cx) < 5:
+                    t[0, 0, i, j] = 1.0
+            elif name == "ring":          # hollow square -- must NOT fill center
+                dy, dx = abs(i - cy), abs(j - cx)
+                if 5 <= max(dy, dx) <= 8:
+                    t[0, 0, i, j] = 1.0
+            elif name == "cross":
+                if (abs(i - cy) < 2 and abs(j - cx) < 9) or (abs(j - cx) < 2 and abs(i - cy) < 9):
+                    t[0, 0, i, j] = 1.0
+            elif name == "heart":
+                x = (j - cx) / (w * 0.30)
+                y = -(i - cy) / (h * 0.30) + 0.35
+                if (x * x + y * y - 1) ** 3 - x * x * y * y * y <= 0:
+                    t[0, 0, i, j] = 1.0
+    return t
+
+
 def damage(x):
     """Zero a random half of each sample -- teaches repair."""
     x = x.clone()
@@ -127,13 +152,13 @@ def _grad_normalize(ca):
             p.grad = p.grad / (p.grad.norm() + 1e-8)
 
 
-def train_seed(mode, steps=500, h=28, w=28, unroll=(28, 48)):
+def train_seed(mode, steps=500, h=28, w=28, unroll=(28, 48), shape="square"):
     """From-seed trainer -- the one that verifiably grows (bare/ternary).
     Kept so the consensus REDESIGN can be tested in isolation from the
     (separately-finicky) pool trainer."""
     torch.manual_seed(0)
     ca = GrowCA(mode=mode)
-    target = target_square(h, w)
+    target = target_shape(shape, h, w)
     opt = torch.optim.Adam(ca.parameters(), lr=2e-3)
     for step in range(steps):
         x = seed_batch(h, w, ca.channels, 1)
@@ -149,7 +174,7 @@ def train_seed(mode, steps=500, h=28, w=28, unroll=(28, 48)):
     return ca, target
 
 
-def train_seed_repair(mode, steps=600, h=28, w=28, unroll=(36, 56), dmg_prob=0.5):
+def train_seed_repair(mode, steps=600, h=28, w=28, unroll=(36, 56), dmg_prob=0.5, shape="square"):
     """Diagnosis-driven self-heal: the pool trainer failed because persisted
     states accumulate into long horizons my model can't hold (degrade-loop,
     isolated via the no-damage diagnostic). This sidesteps the pool entirely:
@@ -159,7 +184,7 @@ def train_seed_repair(mode, steps=600, h=28, w=28, unroll=(36, 56), dmg_prob=0.5
     across training steps -- so no long-horizon feedback loop to destabilize."""
     torch.manual_seed(0)
     ca = GrowCA(mode=mode)
-    target = target_square(h, w)
+    target = target_shape(shape, h, w)
     opt = torch.optim.Adam(ca.parameters(), lr=2e-3)
     for step in range(steps):
         x = seed_batch(h, w, ca.channels, 1)
@@ -177,7 +202,7 @@ def train_seed_repair(mode, steps=600, h=28, w=28, unroll=(36, 56), dmg_prob=0.5
 
 
 def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48),
-               pool_size=32, batch=8, use_damage=True):
+               pool_size=32, batch=8, use_damage=True, shape="square"):
     """Warm-started persistent-pool training. The first attempt failed by
     throwing damage at an untrained model from step 0 -> unstable, never grew.
     Fix: PHASE 1 grows from the seed (no pool, no damage) until the model can
@@ -186,7 +211,7 @@ def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48),
     grows rather than instead of it."""
     torch.manual_seed(0)
     ca = GrowCA(mode=mode)
-    target = target_square(h, w)
+    target = target_shape(shape, h, w)
     tgt_b = target.expand(batch, 1, h, w)
     opt = torch.optim.Adam(ca.parameters(), lr=2e-3)
 
@@ -225,10 +250,10 @@ def train_pool(mode, steps=600, warmup=250, h=28, w=28, unroll=(28, 48),
     return ca, target
 
 
-def demo(mode="ternary", trainer="seed"):
-    print(f"=== mode={mode}, trainer={trainer} ===\n")
+def demo(mode="ternary", trainer="seed", shape="square"):
+    print(f"=== mode={mode}, trainer={trainer}, shape={shape} ===\n")
     trainers = {"seed": train_seed, "pool": train_pool, "seed-repair": train_seed_repair}
-    ca, target = trainers[trainer](mode)
+    ca, target = trainers[trainer](mode, shape=shape)
     h = w = 28
 
     x = seed_batch(h, w, ca.channels, 1)
@@ -252,4 +277,5 @@ if __name__ == "__main__":
     import sys
     mode = sys.argv[1] if len(sys.argv) > 1 else "ternary"
     trainer = sys.argv[2] if len(sys.argv) > 2 else "seed"
-    demo(mode, trainer)
+    shape = sys.argv[3] if len(sys.argv) > 3 else "square"
+    demo(mode, trainer, shape)

@@ -1,0 +1,49 @@
+  [ternary/seed] step    0  loss=0.3291
+  [ternary/seed] step   50  loss=0.0929
+  [ternary/seed] step  100  loss=0.0610
+  [ternary/seed] step  150  loss=0.1694
+  [ternary/seed] step  200  loss=0.0599
+  [ternary/seed] step  250  loss=0.0766
+  [ternary/seed] step  300  loss=0.0624
+  [ternary/seed] step  350  loss=0.0473
+  [ternary/seed] step  400  loss=0.0576
+  [ternary/seed] step  450  loss=0.0481
+  [ternary/seed] step  500  loss=0.0458
+  [ternary/seed] step  550  loss=0.0546
+  [ternary/seed] step  600  loss=0.0724
+  [ternary/seed] step  650  loss=0.1018
+  [ternary/seed] step  700  loss=0.0716
+  [ternary/seed] step  750  loss=0.0700
+  [ternary/seed] step  800  loss=0.0354
+  [ternary/seed] step  850  loss=0.0424
+  [ternary/seed] step  899  loss=0.0494
+
+grown MSE: 0.0835
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+   ...:..:.                 
+  .::::=--==.               
+  ::==+**++*==:::-=-::.     
+   .%@%#@@@@*****++*=+=.    
+  :=*@%@@@@@@#@@@@@@@**-    
+  :=%@@@@@@@@@@@@@@@%@#+:   
+  -+*@@@@@@@@@@@@@@@@@*-:   
+  :+*%@@@@@@@@@@@@@@@@@=.   
+  :+%@%@@@@@@@@@@@@@@*#+.   
+  .-*@@@@@@@@@@@@@@@@@+:.   
+   .+@@@@@@@@@@@@@@@@*@.    
+   .++@@@@@@@@@@@@@@@#-.    
+    .=@@@@@@@@@@@@@@@-.     
+     -+@@@@@@@@@@@@@-.      
+      -*@@@@@@@@@@@+:.      
+      .-*@@@@@@@@%%-.       
+       :#=@@@%@@@@#.        
+       .:#@@@@%@%*..        
+        :-*%+@@@#-.         
+          =:==@*+.          
+           ..::#.           

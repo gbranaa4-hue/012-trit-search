@@ -118,6 +118,29 @@ solution likely needs faithful replication of the original Growing-NCA recipe
 (long-horizon stability training + careful pool management), which is real
 research effort, not a tweak.
 
+## Non-trivial structure: grows a HEART, not just a square (SUCCESS)
+
+To test whether the ternary CA self-organizes real structure vs only a filled
+convex blob, targeted a heart (259 cells, non-convex, curved boundary, top notch).
+
+- First attempt (square's budget: 500 steps, 28-48 growth steps): FAILED --
+  runaway fill-all (grown MSE 0.59, loss never converged). The harder/larger
+  target let the optimizer settle into "fill everything" as a shortcut.
+- Retry with adequate resources (900 steps, 52-76 growth steps): SUCCESS. Loss
+  converged (0.33 -> ~0.05), grew a recognizable heart, grown MSE 0.084.
+
+Baselines for the heart specifically (259/784 cells): empty ("did nothing")
+MSE approx 0.33; fill-everything MSE approx 0.67. So 0.084 is far below both --
+genuinely forming the heart, soft edges accounting for the residual. (The
+hardcoded "0.08 = did nothing" note in the script output is for the square;
+the heart's baselines are different.)
+
+Finding: the ternary CA self-organizes non-trivial, non-convex structure from
+one seed -- it just needs more training + a longer growth horizon than a simple
+square, since a bigger curved target takes more steps to form and the optimizer
+otherwise collapses to fill-all. Concept demonstration strengthened: not just a
+filled blob, a real shape.
+
 ## Honest scope
 
 This is morphogenesis — growing coherent STRUCTURE — which is real and now
