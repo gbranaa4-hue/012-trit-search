@@ -321,3 +321,38 @@ name the coin-flip price in the same breath, or it is the "it's just luck" docto
 
 ---
 *Script: trit_evolve_causal.py   Run: trit_evolve_causal_run.txt*
+
+## VELOCITY SPECTRUM: the scalar was blind, and the bias is directional
+
+The single-scalar velocity probe collapses a rule to one number; CA computation
+(Crutchfield/Hanson/Das) actually runs on a CAST of moving fronts ("particles"),
+each with its own velocity. Extracted the full VELOCITY SPECTRUM instead of one
+number: run the rule, 2D-FFT the space-time field, bin power by implied velocity
+(v = temporal_freq / spatial_freq); peaks = particles. (trit_evolve_spectrum.py)
+
+Findings:
+- Winners run CLEAN PARTICLES the scalar missed. Winner s0 (scalar-min called it
+  ~0) shows two sharp peaks at v = -0.5 and -1.0 carrying ~75% of its dynamics.
+  Winner s13 shares the SAME speeds (-0.5, -1.0) plus a static (converged)
+  component. So "scalar ~0" was BLINDNESS, not low velocity.
+- The bias is DIRECTIONAL, and that unifies three anomalies. Both winners' peaks
+  are all at NEGATIVE velocity (leftward). One-directional transport IS the
+  polarity bias: the +100%/-15% split, the min-velocity=0, and this one-sided
+  spectrum are the SAME fact drawn three ways.
+- Shared characteristic speeds across winners cross-confirm the "one rule family"
+  result (the exact 3^7 table finding), independently.
+
+Honest fences:
+- The instrument was BROKEN on the first try (recorded the frozen post-
+  convergence aftermath, not the transient where particles move); the known-case
+  sanity check caught it (a generalizer read empty), fixed by recording the
+  transient. Sanity after fix: random -> broad/no peak, do-nothing -> frozen.
+- Richer DIAGNOSTIC, NOT a validated PREDICTOR. Loser s2 also shows a peak
+  (v=+0.5); winners vs losers differ in concentration + directional consistency,
+  not simply "peak vs none." Whether the spectrum predicts generalization better
+  than the scalar is UNSHOWN.
+- Period-2 flicker (Nyquist) modes were excluded as non-transport; that choice is
+  a judgement, not forced.
+
+---
+*Script: trit_evolve_spectrum.py*
