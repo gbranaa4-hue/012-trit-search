@@ -64,6 +64,37 @@ follow-up runs -- so the exact rules are not apples-to-apples. The reusable
 finding is the PATTERN (biased in-range, unstable across runs), not any single
 number.
 
+## Attempt to close the loop with a velocity reward -- HONEST NULL + diagnosis
+
+The main investigation's working lever was REWARDING SIGNAL VELOCITY. Tried to
+reproduce that here (`ca_velocity.py`): fitness = consensus + lambda * velocity,
+train at N=21 only, measure balanced hard@149. It did NOT reproduce -- and why
+is instructive:
+
+1. Sparse-reward failure. With a gaming-proof min-over-polarities velocity, the
+   treatment run came out BYTE-IDENTICAL to baseline. Diagnosis: min-velocity is
+   nonzero for only ~5% of random rules (2/40), and even ca_build_best -- which
+   SOLVES N=21 at 92% -- scores min-velocity 0.0 (it fails the block probe on its
+   weak polarity). The reward is a flat field of zeros; evolution has nothing to
+   climb. This is exactly why the main run needed ~150 generations (runway to
+   stumble on the rare nonzero signal) and 12 seeds.
+
+2. Dense reward steers but doesn't win. Replaced with a DENSE reward (normalized
+   both-polarity block-progress, min over polarities). Sanity check caught that
+   the all-zero rule scores -2.18 (it ZEROS the ring, destroying correct cells) --
+   the reward correctly punishes destruction and has real spread (std 0.31), so
+   it steers (treatment now diverges from baseline). But at lean 40-gen settings
+   it does NOT produce balanced generalizers: treatment min-hard@149 is no higher
+   than baseline and the +1/-1 gap is no smaller (one seed is a +1-flooder, 64/8).
+
+Honest conclusion: the from-scratch loop did NOT close at lean settings. This
+does NOT overturn the causal result (which stands from the fuller 150-gen/12-seed
+run in evolve_compute_findings.md) -- it shows the reproduction is EXPENSIVE and
+FRAGILE: rewarding velocity is a sparse, delicate signal that needs long runway
+and careful reward shaping to bite. A valuable negative: it explains WHY the
+main result required the settings it did. Not pursued to the full run (poor value
+to re-establish a known result at high compute cost).
+
 ---
 *Scripts: ca_build.py (Socratic build), ca_scratch.py, ca_levers.py,
-ca_levers_followup.py, ca_levers_quick.py   Runs: ca_levers*_run.txt*
+ca_levers_followup.py, ca_levers_quick.py, ca_velocity.py   Runs: ca_levers*_run.txt*
