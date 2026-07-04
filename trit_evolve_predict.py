@@ -28,12 +28,14 @@ te.EQUIVARIANT = False
 te.DIM = te.IN * te.HID + te.HID + te.HID + 1
 
 
-def signal_velocity(theta, N=99, trials=80, seed=0):
+def signal_velocity(theta, N=99, trials=80, seed=0, reduce="mean"):
     """Domain-boundary closing speed -- the signal that carries the computation.
     Seed a MINORITY block; a good rule shrinks it, its boundaries moving inward.
     Speed = (half the block) / (steps to halve the minority) / 2 boundaries.
-    Measured on BOTH polarities and averaged, so a merely sign-biased rule (that
-    resolves one polarity fast and the other never) scores only moderate."""
+    Measured on BOTH polarities. reduce='mean' averages them (a sign-biased rule
+    scores moderate); reduce='min' takes the worse polarity, so a rule that only
+    resolves one sign scores ~0 -- use 'min' when velocity is an OPTIMIZATION
+    target, or a biased flooder games the mean-averaged version."""
     te.N = N                                          # ca_run reshapes using global te.N
     rng = np.random.default_rng(seed)
     c, W = N // 2, N // 3                             # W < N/2 -> the block is the minority
@@ -58,7 +60,7 @@ def signal_velocity(theta, N=99, trials=80, seed=0):
         conv = (target - init_maj) / 2.0
         sp = np.where(np.isnan(reached), 0.0, conv / np.maximum(reached, 1))
         speeds.append(sp.mean())
-    return float(np.mean(speeds)), None
+    return (float(np.min(speeds)) if reduce == "min" else float(np.mean(speeds))), None
 
 
 def asymmetry(theta, N=21, trials=1000, seed=1):

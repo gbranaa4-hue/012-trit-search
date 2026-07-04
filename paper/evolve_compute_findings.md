@@ -247,5 +247,77 @@ by signal velocity, (2) confirmed OUT-OF-SAMPLE at N=299/499, (3) scale-invarian
 for the winner family, (4) traced to a structurally distinct, reproducibly-found
 solution basin. What was "seed luck" is a named, measurable, predictive mechanism.
 
+[!] Points (2) and (3) are PARTLY RETRACTED below -- a stricter per-polarity
+metric shows the "winners" were sign-biased, so their scale-invariance was on
+the FAVORED polarity only. Read the correction.
+
 ---
 *Scripts: trit_evolve_predict.py, trit_evolve_scale.py   Runs: *_run.txt*
+
+## CORRECTION (polarity) + CAUSAL TEST: what velocity actually bought
+
+A stricter, gaming-proof metric did two things: it PARTLY RETRACTED the
+out-of-sample section above, and it delivered a genuine causal result -- with an
+honest price tag. (trit_evolve_causal.py)
+
+### Correction: the "winners" were POLARITY-BIASED, not balanced
+
+Density classification is sign-symmetric: +1-majority and -1-majority inputs are
+mirror problems, and a rule that truly computes majority should be equally good
+on both. The out-of-sample section reported winners at "~55% N=149 hard" -- but
+that was the MEAN over both polarities, and a mean HIDES imbalance. Per-polarity:
+
+- prior "winner" rules at N=149: ~100% on +1-majority near-ties, ~9-18% on
+  -1-majority near-ties. The celebrated ~55% = (100 + ~15) / 2.
+
+So on genuinely hard (near-tie) large-ring cases they do NOT compute the
+majority -- they DEFAULT to a preferred sign and get credit whenever that sign
+happens to win. They ARE sign-equivariant at the trained size N=21 (measured
+correctly earlier); the small ~7% asymmetry DOMINATES at N=149. "Scale-invariant
+majority computation / out-of-sample confirmed" was OVERSTATED: scale-invariant
+on the FAVORED polarity only. Honest metric = min(hard+, hard-), the worse side.
+
+### Causal test: does SELECTING for velocity PRODUCE balanced generalizers?
+
+Correlation (+0.98) and out-of-sample prediction showed velocity PREDICTS
+generalization. Causal question: does OPTIMIZING it PRODUCE generalization?
+Paired ("twins") design: for each of 12 seeds, two rules from IDENTICAL
+initialization seeing IDENTICAL configs; the ONLY difference is the fitness --
+baseline = consensus; treatment = consensus + 2.0 * signal_velocity(reduce=min).
+The 'min' over polarities is gaming-proof (a sign-biased flooder scores 0; a
+smoke test caught exactly that flooder under mean-reduction and rejected it).
+The OUTCOME scored is the real N=149 per-polarity hard (min), not the probe, so
+a rule cannot win by gaming the probe.
+
+| | balanced generalizers (min-hard>30%) | mean min-hard | N=21 solved |
+|---|---|---|---|
+| baseline  | 0/12  | 13.7% | 89-93% |
+| treatment | 11/12 | 40.7% | 50-91% (several ~50%) |
+
+Hit rate 0% -> 91.7% (+91.7pp). Under the twins design nothing else differs, so
+the velocity reward CAUSED the balanced generalizers. Real causal effect.
+
+### Honest fences -- real, but NOT a clean win
+
+1. TRADE, not upgrade. Treatment bought balanced large-ring behavior by SELLING
+   trained-size accuracy: several treatment rules are near coin-flip (~50%) at
+   N=21, the size they were bred on. Goodhart -- optimize a proxy hard and you
+   get it by robbing what you did not protect.
+2. The reward had to DOMINATE. Treatment fitness reached 1.6-2.0 (consensus max
+   ~0.97), so velocity was the PRIMARY objective, not a nudge. What is shown is
+   "making velocity the main goal reshapes the rules," NOT "a gentle bonus helps."
+3. Probe/outcome mismatch. The post-hoc velocity probe (min, N=49) reads ~0.01
+   for the treatment rules even though they generalize balanced at N=149. So
+   SOMETHING velocity-adjacent was steered, but 'velocity' is not cleanly
+   confirmed as the exact causal quantity. Loose thread, stated not hidden.
+4. Not perfect: 1/12 treatment rule stayed biased (gen=False); some generalizers
+   still lean (e.g. +33/-93).
+
+Defensible claim: rewarding signal velocity CAUSALLY shifts evolved ternary rules
+toward BALANCED both-polarity large-ring behavior that plain consensus never
+finds (0/12 -> 11/12, controlled) -- the mechanism can be STEERED, not just
+observed -- at a measured cost to trained-size accuracy. Celebrate the 11/12 and
+name the coin-flip price in the same breath, or it is the "it's just luck" doctor.
+
+---
+*Script: trit_evolve_causal.py   Run: trit_evolve_causal_run.txt*
