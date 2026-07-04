@@ -1,0 +1,10 @@
+scouting -- hard near-ties solved at N=149 (unseen), split by polarity
+
+lever                   hard@149      +1      -1
+1 neuron  @ 21             15.1%   20.1%   10.5%
+2 layers  @ 21             54.9%    5.6%  100.0%
+1 neuron  @ 21,49,99       16.0%   15.9%   16.2%
+2 layers  @ 21,49,99       54.7%    5.0%  100.0%
+
+baseline (1 neuron @21) was ~21% hard@149. Which lever moves it, and
+does the +1/-1 gap shrink (less polarity bias)?
