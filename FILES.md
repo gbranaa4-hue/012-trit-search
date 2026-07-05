@@ -248,6 +248,12 @@ Fourth check of the consensus-gate scoping rule, against real scikit-learn class
 python trit_ensemble_test.py
 ```
 
+**`trit_rank_reorder_test.py`**
+Fifth check of the consensus-gate scoping rule — the follow-up `trit_ensemble_test.py` identified but didn't run. Same five classifiers and weighting; adds a shift *engineered* (on validation data only, from a fixed mechanical candidate family) to flip the previously-best classifier to worst at test time, plus two damage-matched rank-preserving controls, including one drawn from the same candidate family with the exact mirror selection rule. Result: confirmed — the rank-reordering shift reverses the weighted decoder's advantage (majority wins, t=-2.70, 30 seeds; the flipped classifier lands bottom-2 in 30/30 seeds) while the matched-damage rank-preserving control leaves weighted winning (contrast t=+2.55; pooled dose-response rho=+0.44, p=3.9e-07). Predictions stated in the script header before the first run. See [paper/rank_reorder_findings.md](paper/rank_reorder_findings.md).
+```
+python trit_rank_reorder_test.py
+```
+
 **`trit_mcp_server.py`**
 Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Three tools exposed: `search_code(query, k)`, `query_codebase(query, k)` (token-tight variant — dedup + relevance cutoff + compact format, measured 66.3% fewer tokens than `search_code` on the same queries, see [paper/token_reduction_findings.md](paper/token_reduction_findings.md)), and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
 ```

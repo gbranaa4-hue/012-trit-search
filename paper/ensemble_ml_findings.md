@@ -75,6 +75,13 @@ features generically) — would directly test the refined hypothesis
 degradation does not"). Not run here, to avoid retuning until a
 preferred result appears; left as an identified follow-up.
 
+**Update (2026-07-05): the follow-up has now been run** — see
+`rank_reorder_findings.md` / `trit_rank_reorder_test.py`. The refined
+hypothesis held: an engineered rank-reordering shift flips the gap
+(majority vote wins, t=-2.70, 30 seeds) while a damage-matched,
+rank-preserving shift from the same candidate family does not
+(weighted still wins; paired contrast t=+2.55).
+
 ## Verdict
 
 Combined with `tmr_findings.md`'s softer-than-population-coding result,
