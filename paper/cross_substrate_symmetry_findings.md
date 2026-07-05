@@ -183,6 +183,7 @@ baseline before testing symmetry-breaking on top) is identified in
 | 012 resonance series | Temporal (instant vs. integrated) | **Win only if signal is genuinely time-varying**; harmful otherwise |
 | Spikeling resonator bank (uncoupled) | Per-unit quadratic self-term (dead-fraction matched) | **Negative** — no even-order capability to unlock at all; broken-symmetry config actively hurt odd-order memory |
 | Spikeling resonator bank (coupled, gated — 2026-07-05 follow-up) | Same mechanism, bank given inter-unit coupling + engaged nonlinearity, capability gate passed first | **Clean replication** — even gap +0.254 (paired t up to +9.5), odd gap −0.003; the acoustic dichotomy at full strength |
+| Lattice ring (2026-07-05, `acoustic-vortex-sim/reservoir_computing/reservoir_rung8_lattice.py`) | Dihedral ring symmetry; modal c2 **emergent** from eigenvectors (21/24 silenced to machine precision), not hand-set | **Clean replication** — even gap +0.196 (paired t 16–26), odd gap −0.002; third substrate, second point group |
 
 The honest synthesis, consistent with every substrate measured so far:
 **symmetry-breaking is not a general computational free lunch, and it is
