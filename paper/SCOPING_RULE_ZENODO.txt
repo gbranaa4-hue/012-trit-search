@@ -1,0 +1,76 @@
+================================================================
+ZENODO UPLOAD — scoping-rule paper — copy/paste fields
+(zenodo.org → New upload → fill these in)
+================================================================
+
+UPLOAD TYPE:  Publication → Preprint
+
+TITLE:
+When does weighted combination beat majority voting? A six-study scoping
+rule, ending in a designed-to-kill test
+
+AUTHORS:
+Branaa, Gavin   —   Affiliation: Independent Researcher
+
+LICENSE:
+Creative Commons Attribution 4.0 International (CC-BY-4.0)
+
+KEYWORDS (comma-separated):
+majority voting, weighted combination, sensor fusion, ensemble learning,
+triple modular redundancy, population coding, robust statistics,
+distribution shift, calibration, log-odds, decision fusion
+
+----------------------------------------------------------------
+DESCRIPTION  (paste this whole block)
+----------------------------------------------------------------
+Combining several unreliable binary judgments admits two classical
+answers: unweighted majority voting, and reliability-weighted (log-odds)
+combination. Weighted combination is provably optimal when reliabilities
+are known; voting is the folk-robust default when they are not. This
+preprint reports a six-study empirical program that sharpens the folklore
+into a falsifiable scoping rule.
+
+Two studies against a real game's live decision logic first located both
+sides of the boundary: a vote-of-three beats an information-poor OR-gate
+(+1.8pp, 30/30 seeds), and the same vote loses decisively to an
+information-rich linear threshold (-4.6pp, 30/30 seeds), because
+discretizing continuous evidence discards margin information. Three
+independent-field checks then tested the rule where each field's own
+theory makes a prediction: spiking-neuron population decoding (weighted
+wins clean; voting wins by +37pp under per-trial outlier contamination),
+classical triple-modular redundancy (weighted wins under stable
+calibration; the gap collapses under reliability drift), and scikit-learn
+ensembles under covariate shift (weak and ambiguous — the shift degraded
+accuracy without reordering classifier reliability). That weak result
+refined the rule into its final form: weighted combination beats voting
+exactly as long as the relative reliability RANKING learned at
+calibration time still holds at decision time; it degrades in proportion
+to rank reordering, not absolute miscalibration.
+
+A final experiment was designed to kill this refinement and failed to: a
+covariate shift engineered (on validation data only) to flip the
+previously-best classifier to worst reverses the weighted decoder's
+advantage (majority wins, paired t=-2.7), while a damage-matched,
+rank-preserving shift from the same shift family leaves weighted
+combination winning (contrast t=+2.6), with a pooled dose-response
+between rank preservation and the weighted advantage of rho=+0.44
+(p=3.9e-7).
+
+All experiments pre-registered their predictions in the code before
+running; negative and weak results are reported alongside positive ones.
+Complete reproducible code is public (github.com/gbranaa4-hue/012-trit-search
+and github.com/gbranaa4-hue/Spikeling).
+
+RELATED IDENTIFIERS (add if the symmetry preprint is published first):
+  "is supplemented by" → the 012-trit-search GitHub repository URL
+  (optional) "references" → the symmetry selection-rule preprint DOI
+
+----------------------------------------------------------------
+FILES TO UPLOAD
+----------------------------------------------------------------
+  scoping_rule_paper.pdf   (compile paper/scoping_rule_paper.tex on
+                            Overleaf — single file, no figures needed —
+                            and download the PDF)
+  (optional) a .zip of the six test scripts + findings markdown files,
+             so the evidence travels with the paper
+================================================================

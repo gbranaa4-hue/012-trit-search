@@ -1,0 +1,320 @@
+\documentclass[aps,prapplied,preprint,amsmath,amssymb,floatfix]{revtex4-2}
+% If revtex4-2 is unavailable, switch the first line to:
+%   \documentclass{article}
+% and delete the \affiliation lines below.
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{When does weighted combination beat majority voting?\\
+A six-study scoping rule, ending in a designed-to-kill test}
+
+\author{Gavin Branaa}
+\affiliation{Independent Researcher}
+
+\date{July 5, 2026}
+
+\begin{abstract}
+Combining several unreliable binary judgments is a problem that recurs
+across fault-tolerant engineering, neuroscience, machine-learning
+ensembles, and everyday decision logic, and it admits two classical
+answers: unweighted majority voting, and reliability-weighted (log-odds)
+combination. Weighted combination is provably optimal when each source's
+reliability is known; voting is the folk-robust default when it is not.
+We report a six-study empirical program that sharpens this folklore into
+a falsifiable scoping rule. Two studies against a real game's decision
+logic first located both sides of the boundary: a vote-of-three beats an
+information-poor OR-gate ($+1.8$\,pp, 30/30 seeds), and the same
+vote-of-three loses decisively to an information-rich linear threshold
+($-4.6$\,pp, 30/30 seeds) --- discretizing continuous evidence discards
+margin information. Three independent-field checks then tested the rule
+where each field's own theory makes a prediction: spiking-neuron
+population decoding (weighted wins clean, voting wins by $+37$\,pp under
+unmodeled per-trial outlier contamination), classical triple-modular
+redundancy (weighted wins under stable calibration, the gap collapses to
+noise under reliability drift), and scikit-learn ensembles under covariate
+shift (weak, ambiguous --- the shift degraded accuracy without reordering
+classifier reliability). The failure of the third check refined the rule
+into its final form: \emph{weighted combination beats voting exactly as
+long as the relative reliability ranking learned at calibration time
+still holds at decision time; it degrades in proportion to rank
+reordering, not to absolute miscalibration}. A final experiment was
+designed to kill this refinement and failed to: a covariate shift
+engineered (on validation data only) to flip the previously-best
+classifier to worst reverses the weighted decoder's advantage (majority
+wins, paired $t=-2.7$), while a damage-matched, rank-preserving shift
+from the same shift family leaves weighted combination winning (contrast
+$t=+2.6$), with a pooled dose--response between rank preservation and the
+weighted advantage of $\rho=+0.44$ ($p=3.9\times10^{-7}$). All
+experiments pre-registered their predictions in the code before running;
+negative and weak results are reported alongside positive ones.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Given $n$ unreliable binary judgments $v_i\in\{-1,+1\}$ of the same
+latent truth, the two classical combiners are the unweighted majority
+vote,
+\begin{equation}
+\hat y_{\mathrm{vote}}=\operatorname{sign}\Big(\sum_i v_i\Big),
+\end{equation}
+and the reliability-weighted (log-odds) combination,
+\begin{equation}
+\hat y_{\mathrm{wtd}}=\operatorname{sign}\Big(\sum_i w_i v_i\Big),\qquad
+w_i=\log\frac{r_i}{1-r_i},
+\label{eq:weighted}
+\end{equation}
+where $r_i$ is source $i$'s estimated reliability. When the $r_i$ are
+known exactly and sources are independent, Eq.~\eqref{eq:weighted} is the
+maximum-a-posteriori decoder and strictly dominates voting for
+heterogeneous sources; this is textbook sensor fusion, and its ancestors
+run from Condorcet's jury theorem~\cite{condorcet1785} through von
+Neumann's multiplexed logic~\cite{vonneumann1956} to weighted-majority
+online learning~\cite{littlestone1994} and classifier
+combination~\cite{kittler1998,dietterich2000}. The folklore countervailing
+principle, from robust statistics~\cite{huber1964}, is that when the
+noise model is wrong, egalitarian estimators (votes, medians) resist
+contamination that destroys weighted means.
+
+Between ``weights are exactly right'' and ``weights are worthless'' lies
+the entire practical regime: weights estimated from finite calibration
+data and then deployed under drift, contamination, or distribution shift.
+This paper reports an empirical program --- six pre-registered studies
+across four unrelated substrates --- that locates the boundary and
+compresses it into one falsifiable sentence:
+
+\begin{quote}
+\textbf{The scoping rule.} Weighted combination beats voting exactly as
+long as the relative reliability \emph{ranking} learned at calibration
+time still holds at decision time. It degrades in proportion to how much
+the deployment regime \emph{reorders} relative reliability --- acute
+per-trial reordering is worst, static reordering is measurable but
+bounded by source diversity, and magnitude-only degradation, however
+large, does not break it. Symmetrically: voting beats weighted
+combination only where evidence is discretized or rankings are unstable;
+where continuous margins are available and rankings hold, voting's
+discretization is a pure loss.
+\end{quote}
+
+The program's origin is unglamorous and worth stating: the vote-of-three
+primitive was first a hardware gate (a balanced-ternary CONSENSUS
+instruction) and was tested against the live decision logic of a
+tribe-simulation game. The point of this paper is not the game; it is
+that the same rule then survived contact with three independent fields'
+own established results, failed to be confirmed once in an instructive
+way, and finally survived an experiment specifically constructed to
+falsify its sharpest form.
+
+\section{Studies 1--2: locating both sides of the boundary}
+
+\paragraph{Study 1 (voting wins).} A game NPC's fight-or-flee decision
+was implemented in the live code as \texttt{flee if (low\_hp OR
+outnumbered)} --- logically a 2-input OR over discretized signals, with
+no estimate of relative combat strength. Against a hidden ground-truth
+combat model, adding a third noisy boolean (a rough strength estimate)
+and taking a 2-of-3 vote beat the OR-gate by $+1.81$\,pp (0.7385 vs.\
+0.7204; paired $t=71.7$; 30/30 seeds; 20\,000 trials/seed). Voting won
+because the baseline was \emph{information-poor}: the vote added an
+evidence channel and averaged discretization noise.
+
+\paragraph{Study 2 (voting loses, predicted in advance).} The same
+game's order-acceptance decision is already a weighted sum over
+continuous evidence (\texttt{loyalty + courage} vs.\ a risk threshold).
+Discretizing those same ingredients into three booleans and voting 2-of-3
+lost by $-4.62$\,pp (0.8270 vs.\ 0.8732; $t=-107$; 30/30 seeds). The
+loss was predicted in the test's docstring before running: votes discard
+margin information a linear threshold already uses. Together, studies
+1--2 fix the rule's first clause: the vote's value depends on what the
+baseline already knows, not on any intrinsic virtue of consensus.
+
+\section{Studies 3--5: three independent fields}
+
+Each check pits decoder~\eqref{eq:weighted}, calibrated once on clean
+data, against the unweighted vote, in a regime pair (calibration-valid
+vs.\ calibration-violated), with the prediction stated before running:
+weighted wins the first regime; voting wins or closes the gap in the
+second.
+
+\paragraph{Study 3: population coding (confirmed, dramatically).}
+Fifteen leaky integrate-and-fire neurons encode a binary stimulus in
+spike counts; an inverse-variance-weighted decoder and a per-neuron-vote
+decoder are calibrated on clean trials. Clean regime: weighted wins,
+0.9995 vs.\ 0.9958 ($t=6.4$, 25 seeds) --- real but near ceiling. Under
+10\% per-trial unmodeled outlier contamination (an erratic spike burst on
+a random subset of neurons each trial), the weighted decoder collapses to
+0.610 while the vote holds 0.984 --- a $+37.4$\,pp voting win
+($t=224$)~\footnote{One disclosed methodological step: the first clean-regime
+run was at ceiling for both decoders; task difficulty was retuned before
+final numbers. The contamination result was clear before and after.}.
+This is the textbook robust-statistics mechanism made concrete: a single
+large outlier swamps an inverse-variance-weighted sum, while the vote
+needs only a majority of still-reliable neurons. Crucially, per-trial
+contamination \emph{reorders} which neurons are trustworthy on each
+individual trial --- no static weight can be right about that.
+
+\paragraph{Study 4: triple-modular redundancy (confirmed, softly).} Five
+independent binary units with heterogeneous reliabilities; weights
+estimated from finite calibration observations. Stable regime: weighted
+log-odds fusion wins, 0.9187 vs.\ 0.8912 ($+2.76$\,pp, $t=7.0$, 25
+seeds). Under silent reliability drift ($\sigma=0.25$): the gap collapses
+to statistical noise ($-0.35$\,pp, $t=-0.3$) --- it closes rather than
+reverses. Drift only partially reorders the units' reliability ranking,
+and the weighted decoder degrades proportionally --- a first hint that
+reordering, not miscalibration per se, is the operative variable.
+
+\paragraph{Study 5: ML ensembles under covariate shift (weak --- and the
+refinement).} Five diverse scikit-learn classifiers (logistic regression,
+decision tree, $k$NN, naive Bayes, small random forest), validation-set
+log-odds weights, and a generic offset-and-rescale covariate shift on
+40\% of features. The prediction \emph{did not clearly hold}: weighted
+voting won the stable regime only marginally ($+0.72$\,pp, $t=2.1$, 20
+seeds) and its edge did not collapse under shift ($+0.55$\,pp, $t=1.7$).
+The honest diagnosis: the generic shift degraded all five classifiers'
+absolute accuracy together without strongly reordering their relative
+reliability, and a log-odds combiner mainly cares about ranking. This
+weak result forced the rule into its final, sharper form (the ranking
+clause above) --- and, read jointly with studies 3--4, predicted a
+hierarchy: per-trial rank flips (population coding) $\gg$ partial drift
+(TMR) $>$ rank-preserving shift (ensembles, no effect).
+
+\section{Study 6: the designed-to-kill test}
+
+The refined rule makes a specific counterfactual claim: it is the
+\emph{reordering}, not the damage, that breaks the weighted decoder. Study
+6 tests exactly that, on the study-5 substrate, with five regimes scored
+on test labels that no selection step ever touches:
+
+\begin{itemize}
+\item[A.] no shift (replication control);
+\item[B.] the original generic shift (replication of study 5);
+\item[C.] a \emph{rank-reordering} shift: selected, from a fixed
+mechanical candidate family (offset/rescale, sign-flip, column-permute on
+random feature subsets), to make the previously-best validation
+classifier maximally worse than its peers --- \emph{selection uses
+validation data only};
+\item[D.] a damage-matched generic control (intensity grid-searched on
+validation to match C's mean accuracy damage);
+\item[E.] the mirror control: drawn from the \emph{same} candidate family
+as C, selected for maximum rank \emph{preservation} subject to damage
+within tolerance of C's --- the exact mirror image of C's selection
+rule~\footnote{Regime E was added in a disclosed second run after regime
+D's manipulation check fell short (the generic family saturated at
+13.4\,pp mean validation damage vs.\ C's 19.0\,pp). Regimes A--D and all
+outcome measures were untouched and reproduce the first run exactly under
+the same seeds.}.
+\end{itemize}
+
+\begin{table}[t]
+\caption{Study 6: weighted-minus-majority accuracy gap across 30 seeds.
+The manipulation check confirmed regime C flipped the previously-best
+classifier into the bottom two at test time in 30/30 seeds; regimes C and
+E have essentially identical absolute damage (19.3 vs.\ 18.9\,pp mean
+accuracy drop) from the same shift family.}
+\label{tab:study6}
+\begin{ruledtabular}
+\begin{tabular}{llrr}
+Regime & Ranking & Gap (wtd$-$maj) & paired $t$ \\
+\hline
+A no shift          & preserved ($\rho=+0.92$) & $+0.85$\,pp & $+3.2$ \\
+B generic shift     & preserved ($\rho=+0.74$) & $+0.59$\,pp & $+2.6$ \\
+C rank-reordering   & \textbf{inverted} ($\rho=-0.39$) & $\mathbf{-0.30}$\,pp & $\mathbf{-2.7}$ \\
+D damage-matched    & preserved ($\rho=+0.83$) & $+0.46$\,pp & $+2.8$ \\
+E mirror control    & preserved ($\rho=+0.53$) & $+0.50$\,pp & $+2.0$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+Table~\ref{tab:study6} shows the result. The weighted decoder's advantage
+survives $\sim$19\,pp of absolute damage when the ranking is preserved
+(regime E) and reverses at the same damage when the ranking is inverted
+(regime C); the paired C-vs-E contrast is $+0.80$\,pp ($t=+2.6$). Pooled
+across all shifted regimes (120 seed$\times$regime points), the
+weighted-minus-majority gap tracks the validation-to-test rank
+correlation dose-responsively: Spearman $\rho=+0.44$,
+$p=3.9\times10^{-7}$. All six pre-stated predictions held, including the
+two replications.
+
+The sign flip in regime C is statistically solid but small
+($-0.3$\,pp), and this too is consistent with the rule: a static rank
+flip mis-weights one voice among five diverse, clipped-weight voters ---
+a bounded error --- whereas population coding's per-trial flips (study 3)
+are unboundable by any static weight, which is why that collapse was
+37\,pp. The effect-size hierarchy predicted by the refinement is exactly
+the one observed across the program.
+
+\section{Scope and limitations}
+
+All six studies are simulations or synthetic-data experiments; no claim
+is made about any particular production system. The decisions are binary
+and sources conditionally independent by construction; correlated sources
+favor neither combiner uniformly and are untested here. Study 6's regime
+C is adversarial \emph{by design} --- the hypothesis under test is a
+conditional (``if ranking reorders, then weighted breaks''), and how often
+natural distribution shift is rank-reordering rather than magnitude-only
+is an open empirical question this program does not answer. Weighted
+combiners here use clipped log-odds of estimated accuracy; richer
+combiners (stacking, temperature-scaled calibration) are out of scope.
+Finally, the rule's symmetric clause (studies 1--2) concerns
+\emph{discretization}: where continuous margins exist and rankings hold,
+voting's loss is structural, not statistical.
+
+\section{Practical reading}
+
+For a designer, the rule reduces to two questions. (1)~\emph{Does my
+baseline already use continuous margins?} If yes, do not replace it with
+a vote (study 2); if it is a thresholded OR/AND over few signals, a
+cheap vote over one more channel likely helps (study 1). (2)~\emph{Will
+the reliability ranking I calibrated survive deployment?} If sources can
+individually go rogue per decision (sensor glitches, per-trial outliers),
+vote --- the weighted decoder's failure there is catastrophic (study 3).
+If degradation is gradual and roughly shared (drift, generic shift),
+calibrated weights keep a modest edge far longer than calibration
+accuracy itself would suggest (studies 4--6), because ranking outlives
+magnitude.
+
+\section*{Methods and code}
+
+Every study pre-registered its prediction in the experiment script's
+docstring before the first run; first-run results are reported regardless
+of outcome; the two disclosed deviations (study 3's difficulty retune,
+study 6's added mirror control) are footnoted where they occur, and
+neither touched an outcome measure after it was generated. Statistics are
+paired $t$-tests across seeds (or Welch where unpaired), with seed counts
+stated per study. All code, per-study findings documents, and raw outputs
+are in the public repositories: studies 1--2 and 4--6 in
+\texttt{github.com/gbranaa4-hue/012-trit-search} (\texttt{trit\_npc\_consensus\_test.py},
+\texttt{trit\_order\_acceptance\_test.py}, \texttt{trit\_tmr\_test.py},
+\texttt{trit\_ensemble\_test.py}, \texttt{trit\_rank\_reorder\_test.py});
+study 3 in \texttt{github.com/gbranaa4-hue/Spikeling}
+(\texttt{research/population\_coding\_test.py}).
+
+% NOTE: verify bibliographic details before submission.
+\begin{thebibliography}{9}
+\bibitem{condorcet1785} M.~de Condorcet, \emph{Essai sur l'application de
+l'analyse \`a la probabilit\'e des d\'ecisions rendues \`a la pluralit\'e
+des voix} (Imprimerie Royale, Paris, 1785).
+\bibitem{vonneumann1956} J.~von Neumann, ``Probabilistic logics and the
+synthesis of reliable organisms from unreliable components,'' in
+\emph{Automata Studies} (Princeton Univ.\ Press, 1956), pp.~43--98.
+\bibitem{littlestone1994} N.~Littlestone and M.~K.~Warmuth, ``The
+weighted majority algorithm,'' \emph{Inf.\ Comput.} \textbf{108}, 212
+(1994).
+\bibitem{kittler1998} J.~Kittler, M.~Hatef, R.~P.~W.~Duin, and J.~Matas,
+``On combining classifiers,'' \emph{IEEE Trans.\ Pattern Anal.\ Mach.\
+Intell.} \textbf{20}, 226 (1998).
+\bibitem{dietterich2000} T.~G.~Dietterich, ``Ensemble methods in machine
+learning,'' in \emph{Multiple Classifier Systems}, LNCS \textbf{1857}
+(Springer, 2000), pp.~1--15.
+\bibitem{huber1964} P.~J.~Huber, ``Robust estimation of a location
+parameter,'' \emph{Ann.\ Math.\ Stat.} \textbf{35}, 73 (1964).
+\bibitem{averbeck2006} B.~B.~Averbeck, P.~E.~Latham, and A.~Pouget,
+``Neural correlations, population coding and computation,'' \emph{Nat.\
+Rev.\ Neurosci.} \textbf{7}, 358 (2006).
+\end{thebibliography}
+
+\end{document}
