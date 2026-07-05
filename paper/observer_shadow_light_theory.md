@@ -213,9 +213,14 @@ confirming an interaction effect. The gate's main contribution may be to
 non-geometric perturbations (noise, brightness) where scale doesn't help.
 
 **Prediction 3: Zero-trit fraction increases under rotation**
-Not yet tested via activation hooks — weight sparsity is fixed at inference
-(42.6–42.8%, no change with rotation as expected). Activation sparsity
-measurement requires forward-pass hooks; left for follow-up.
+**Refuted (2026-07-05)** — see `zero_trit_findings.md` /
+`trit_zero_uncertainty_test.py`. Measured with forward hooks over the full
+test set: activation sparsity is flat at 90° (0.4098 → 0.4096) and the
+Observer gate's near-0.5 fraction doesn't move (0.3721 → 0.3720), even as
+accuracy collapses to 25.6%. Sparsity and gate uncertainty rise only at
+45°/135° — the interpolated (lossy) angles — while the lossless 90°/180°
+pixel permutations register nothing. The gate responds to low-level
+resampling statistics, not to task uncertainty.
 
 **Revised claim:** The Observer-Shadow-Light motif provides rotation robustness
 primarily through the multi-scale receptive field (Shadow 3×3 vs Light 5×5),
@@ -223,3 +228,11 @@ not through the multiplicative gating logic. The gate's epistemic role —
 arbitrating between streams based on which is reliable — likely manifests on
 perturbations that corrupt one stream differentially (brightness, noise) rather
 than rotating both simultaneously. See perturbation_findings.md.
+
+**Standing after all three predictions (2026-07-05):** 1 confirmed (the 5×5
+receptive field), 2 weak (gating, interaction-only), 3 refuted (zero trit as
+epistemic uncertainty). The architecture works, but for the mundane reason,
+not the epistemic one. The downstream proposals that depended on prediction 3
+— sparsity as a readable uncertainty map, uncertainty-calibrated per-layer
+thresholds — lose their empirical motivation and are withdrawn rather than
+pursued.

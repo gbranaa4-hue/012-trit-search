@@ -254,6 +254,12 @@ Fifth check of the consensus-gate scoping rule — the follow-up `trit_ensemble_
 python trit_rank_reorder_test.py
 ```
 
+**`trit_zero_uncertainty_test.py`**
+Tests prediction 3 of the Observer-Shadow-Light theory — the zero trit as epistemic uncertainty. Trains TritFull and TernaryStdCNN (exact classes/recipe from `trit_stream_ablation_test.py`), then measures zero-trit activation fraction and Observer-gate near-0.5 fraction over the full test set at rotation angles 0–180°, with paired per-batch stats at the pre-registered 0°-vs-90° contrast. Result: all three pre-registered predictions refuted — sparsity and gate uncertainty are flat at 90° (a lossless pixel permutation) even as accuracy collapses to 25.6%, and rise only at the interpolated 45°/135° angles. The gate tracks resampling artifacts, not task uncertainty. See [paper/zero_trit_findings.md](paper/zero_trit_findings.md).
+```
+python trit_zero_uncertainty_test.py
+```
+
 **`trit_mcp_server.py`**
 Exposes OBSERVE's compressed semantic search as an MCP (Model Context Protocol) server, so AI coding assistants (Claude Code, Claude Desktop, etc.) can call it as a tool directly from a conversation. Wraps the same `SearchEngine` as `trit_app.py` — same model, same compressed index — running headless over stdio (no GUI). Three tools exposed: `search_code(query, k)`, `query_codebase(query, k)` (token-tight variant — dedup + relevance cutoff + compact format, measured 66.3% fewer tokens than `search_code` on the same queries, see [paper/token_reduction_findings.md](paper/token_reduction_findings.md)), and `index_status()`. Verified working through the real MCP protocol layer (`list_tools()`/`call_tool()`), not just direct function calls — returns identical results/scores to the GUI search. Requires an index to already exist (build one first via `trit_app.py` or `trit_search.py --index`); this server only reads, doesn't build.
 ```
