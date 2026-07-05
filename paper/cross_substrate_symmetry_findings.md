@@ -181,7 +181,8 @@ baseline before testing symmetry-breaking on top) is identified in
 | Acoustic plate | Point-group (D4 → low-sym/quasicrystal) | **Clean win**, narrow regime (weak coupling, shallow even-order) |
 | 012 triadic mixing | Mixing-formula symmetry | **Tradeoff** (stability up, accuracy down); more flexibility (adaptive) made it worse |
 | 012 resonance series | Temporal (instant vs. integrated) | **Win only if signal is genuinely time-varying**; harmful otherwise |
-| Spikeling resonator bank | Per-unit quadratic self-term (dead-fraction matched) | **Negative** — no even-order capability to unlock at all; broken-symmetry config actively hurt odd-order memory |
+| Spikeling resonator bank (uncoupled) | Per-unit quadratic self-term (dead-fraction matched) | **Negative** — no even-order capability to unlock at all; broken-symmetry config actively hurt odd-order memory |
+| Spikeling resonator bank (coupled, gated — 2026-07-05 follow-up) | Same mechanism, bank given inter-unit coupling + engaged nonlinearity, capability gate passed first | **Clean replication** — even gap +0.254 (paired t up to +9.5), odd gap −0.003; the acoustic dichotomy at full strength |
 
 The honest synthesis, consistent with every substrate measured so far:
 **symmetry-breaking is not a general computational free lunch, and it is
@@ -205,6 +206,23 @@ top of a substrate that already clears a basic capability bar, and
 testing it without first confirming that bar is met (as the acoustic
 study's own rung-1 control did, and this Spikeling follow-up did not)
 risks measuring noise instead of the effect.**
+
+**Update (2026-07-05): the capability-bar lesson has now been tested
+prospectively, and it held.** The fairer follow-up the Spikeling negative
+identified (`Spikeling-Project/resonator-prototype/coupled_symmetry_test.py`
+and `COUPLED_SYMMETRY_FINDINGS.md`) gave the same bank the richness the
+acoustic reservoir had — genuine inter-unit coupling, sign-diverse
+injection, sub-stepped integration — and ran a pre-registered capability
+gate *first* (all-alive bank R²=0.53 on the product task, quadratic-free
+control at floor) before any symmetry comparison was generated. On top of
+that cleared bar, the acoustic even/odd dichotomy replicated at full
+strength: mean even-order gap **+0.254** (every even task, paired t
++6.5 to +9.5), mean odd-order gap **−0.003** (the acoustic "odd ties"
+signature, not the uncoupled test's −0.09 damage). The selection-rule
+effect is therefore now a **two-substrate result**, and the capability-bar
+rule graduates from post-hoc diagnosis to a confirmed, predictive
+precondition: the *only* changes between the negative and the replication
+were richness fixes chosen before any symmetry data existed.
 
 ## Honesty notes
 
