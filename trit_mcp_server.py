@@ -48,6 +48,19 @@ if not Path(MODEL_PATH).exists():
 mcp = FastMCP("observe")
 engine = SearchEngine()
 
+# ── Stable vs experimental tool surface ───────────────────────────────────────
+# The stable, benchmarked surface is search_code / query_codebase /
+# index_status (see paper/token_reduction_findings.md and
+# paper/quality_benchmark_findings.md for the measurements behind them).
+# Everything else (propose_change, apply_and_verify, and the entanglement
+# family) is experimental and known-unstable; it only registers when the
+# environment sets OBSERVE_EXPERIMENTAL=1.
+import os
+EXPERIMENTAL = os.environ.get("OBSERVE_EXPERIMENTAL", "") == "1"
+
+def experimental_tool(fn):
+    return mcp.tool()(fn) if EXPERIMENTAL else fn
+
 import time
 
 _loaded = {"done": False, "error": None, "loading_started": False}
@@ -229,7 +242,7 @@ def _call_ollama(prompt: str, model: str = OLLAMA_MODEL) -> str:
 
 LOW_CONFIDENCE_THRESHOLD = 4.0   # below this top-score, treat search context as weak (see trit_cutoff_sweep_test.py for real score ranges)
 
-@mcp.tool()
+@experimental_tool
 def propose_change(request: str, project_dir: str = "", model: str = OLLAMA_MODEL) -> str:
     """
     For a vague, ambiguous code-change request (e.g. "make turrets shoot
@@ -672,7 +685,7 @@ def _git_revert_file(repo_root: Path, path: Path) -> bool:
     except Exception:
         return False
 
-@mcp.tool()
+@experimental_tool
 def apply_and_verify(file_path: str, old_text: str, new_text: str) -> str:
     """
     Closes the loop that search_code/query_codebase/propose_change stop
@@ -823,7 +836,7 @@ def _load_entanglement_db():
     except Exception:
         return None
 
-@mcp.tool()
+@experimental_tool
 def list_indexed_projects() -> str:
     """
     List every distinct project OBSERVE's index has been mapped to, with
@@ -848,7 +861,7 @@ def list_indexed_projects() -> str:
         lines.append(f"{name} ({info['chunk_count']} chunks): {one_line}{flag}")
     return "\n".join(lines)
 
-@mcp.tool()
+@experimental_tool
 def get_project_summary(project_name: str) -> str:
     """
     Get the full summary and any flagged unsupported claims for one
@@ -886,7 +899,7 @@ def get_project_summary(project_name: str) -> str:
             out.append(f"  - {c[:300]}")
     return "\n".join(out)
 
-@mcp.tool()
+@experimental_tool
 def get_entanglement(project_a: str, project_b: str) -> str:
     """
     Get the measured cross-project relationship between two projects from
