@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tritkit"
+version = "0.2.0"
+description = "A focused, honest ternary-QAT toolkit for tiny edge models."
+authors = [{ name = "Gavin Branaa" }]
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["ternary", "quantization", "QAT", "edge", "tinyml", "neural-network"]
+dependencies = ["torch>=2.0", "numpy>=1.23"]
+
+[project.urls]
+Homepage = "https://github.com/gbranaa4-hue"
+
+# flat layout: the package files live directly in this directory (tritkit/),
+# so map the `tritkit` package to "." and its subpackage to "bench".
+[tool.setuptools]
+packages = ["tritkit", "tritkit.bench"]
+
+[tool.setuptools.package-dir]
+tritkit = "."
+"tritkit.bench" = "bench"
