@@ -23,3 +23,20 @@ trit_dna.pt
 trit_llm.pt
 predict_theta_*.npy
 ca_*_best.npy
+
+# --- PRIVATE / scratch: keep OUT of this public repo ---
+# unpublished preprint -- do NOT publish
+PREPRINT.md
+# run logs and scratch stdout dumps
+app_launch*.log
+*.log
+*_out.txt
+*_run.txt
+*stdout*.txt
+*_result*.txt
+entanglement_run_*.txt
+*_results.json
+code_entanglement_db*.json
+*.bak
+*.egg-info/
+code_references_output.txt

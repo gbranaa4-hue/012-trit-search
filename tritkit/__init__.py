@@ -23,8 +23,9 @@ from .qat import qat_fit
 from .profile import profile, size_kb, flops, latency_ms
 from .export import save_packed, load_packed, pack_trits, unpack_trits
 from .kernel import run_tiny_cnn
+from .twotimescale import TwoTimescaleLinear, golden_period, commensurate_period
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __all__ = [
     "quantize", "ternary_codes", "THRESH",
     "TernaryConv2d", "TernaryLinear",
@@ -33,4 +34,5 @@ __all__ = [
     "profile", "size_kb", "flops", "latency_ms",
     "save_packed", "load_packed", "pack_trits", "unpack_trits",
     "run_tiny_cnn",
+    "TwoTimescaleLinear", "golden_period", "commensurate_period",
 ]

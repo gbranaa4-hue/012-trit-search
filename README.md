@@ -21,7 +21,32 @@ This repo contains real, measured, reproducible results — both positive and ne
 
 ---
 
-## Quick start
+## Install OBSERVE (one line)
+
+**macOS / Linux:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/gbranaa4-hue/012-trit-search/master/install.sh | bash
+```
+**Windows (PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/gbranaa4-hue/012-trit-search/master/install.ps1 | iex
+```
+
+Installs into an isolated venv (`~/.observe`) — never touches your system Python — and
+puts three commands on your PATH:
+
+```bash
+observe            # desktop GUI search
+observe-search     # command-line search
+observe-mcp        # MCP server for editors / coding agents
+```
+
+First run downloads ~300–500 MB one time (CPU PyTorch + the embedding model). Everything
+after that is fully local — nothing leaves your machine. Requires Python 3.10+.
+
+> Prefer pip? `pipx install "git+https://github.com/gbranaa4-hue/012-trit-search.git"`
+
+## Develop / run the full research project
 
 ```bash
 pip install -r requirements.txt          # full project

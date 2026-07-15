@@ -23,9 +23,10 @@ class TernaryConv2d(nn.Conv2d):
         m = cls(c.in_channels, c.out_channels, c.kernel_size, stride=c.stride,
                 padding=c.padding, dilation=c.dilation, groups=c.groups,
                 bias=c.bias is not None, binary=binary)
-        m.weight.data.copy_(c.weight.data)
+        # replace params (not copy_) to preserve source dtype/device (bf16/fp16 models)
+        m.weight = nn.Parameter(c.weight.detach().clone())
         if c.bias is not None:
-            m.bias.data.copy_(c.bias.data)
+            m.bias = nn.Parameter(c.bias.detach().clone())
         return m
 
     def forward(self, x):
@@ -43,9 +44,10 @@ class TernaryLinear(nn.Linear):
     @classmethod
     def from_linear(cls, lin, binary=False):
         m = cls(lin.in_features, lin.out_features, bias=lin.bias is not None, binary=binary)
-        m.weight.data.copy_(lin.weight.data)
+        # replace params (not copy_) to preserve source dtype/device (bf16/fp16 models)
+        m.weight = nn.Parameter(lin.weight.detach().clone())
         if lin.bias is not None:
-            m.bias.data.copy_(lin.bias.data)
+            m.bias = nn.Parameter(lin.bias.detach().clone())
         return m
 
     def forward(self, x):

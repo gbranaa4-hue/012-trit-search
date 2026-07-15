@@ -950,5 +950,8 @@ def get_entanglement(project_a: str, project_b: str) -> str:
         lines.append(f"  B: {e['b_preview'][:120]}\n")
     return "\n".join(lines)
 
-if __name__ == "__main__":
+def main():
     mcp.run(transport="stdio")
+
+if __name__ == "__main__":
+    main()

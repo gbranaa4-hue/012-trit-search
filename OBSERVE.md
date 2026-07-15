@@ -28,14 +28,31 @@ it; if you can only *describe* it, OBSERVE finds it.** The MCP tool
 descriptions say exactly this to the AI assistant, so it routes queries
 correctly on its own.
 
-## Install
+## Install + demo, one line
+
+```bash
+pip install "git+https://github.com/gbranaa4-hue/012-trit-search.git" && observe-demo
+```
+
+That installs OBSERVE, indexes the directory you ran it from into a
+throwaway demo index (your real index is never touched), runs three
+natural-language searches against it, and prints the setup commands for
+the GUI and the Claude Code MCP integration. Point it somewhere specific
+with `observe-demo /path/to/repo`.
+
+(Most of the install time is `torch` + `sentence-transformers`; the first
+demo run also downloads the embedding model if the fine-tuned one isn't
+present. GPU is optional — if your torch build sees CUDA, embedding and
+search use it automatically.)
+
+Installed commands: `observe` (GUI) · `observe-search` (CLI) ·
+`observe-mcp` (MCP server) · `observe-demo`.
+
+Working from a clone instead:
 
 ```bash
 pip install -r requirements_app.txt     # sentence-transformers, faiss-cpu, flask, torch, mcp, tiktoken
 ```
-
-GPU is optional; if your torch build sees CUDA, embedding and search use
-it automatically.
 
 ## Use
 
