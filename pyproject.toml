@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "observe-search"
+version = "0.1.0"
+description = "OBSERVE - local semantic code search: desktop app, CLI, and MCP server. Nothing leaves your machine."
+readme = "OBSERVE.md"
+license = { text = "MIT" }
+authors = [{ name = "Gavin Branaa" }]
+requires-python = ">=3.10"
+dependencies = [
+    "sentence-transformers",
+    "faiss-cpu",
+    "flask",
+    "torch",
+    "mcp",
+    "tiktoken",
+    "numpy",
+]
+
+[project.urls]
+Homepage = "https://github.com/gbranaa4-hue/012-trit-search"
+Documentation = "https://github.com/gbranaa4-hue/012-trit-search/blob/master/OBSERVE.md"
+
+[project.scripts]
+observe = "trit_app:main"
+observe-search = "trit_search:main"
+observe-mcp = "trit_mcp_server:main"
+observe-demo = "observe_demo:main"
+
+[tool.setuptools]
+# The repo is a research monorepo; the product is exactly these modules.
+# observe_pipeline is a runtime dependency of trit_app (lazy-imported for
+# project grouping) -- it MUST ship or the app crashes on that code path.
+py-modules = ["trit_app", "trit_search", "trit_mcp_server", "observe_demo", "observe_pipeline"]

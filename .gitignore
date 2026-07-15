@@ -40,3 +40,14 @@ code_entanglement_db*.json
 *.bak
 *.egg-info/
 code_references_output.txt
+test_compile.py
+myhandmadesemanticsearch.py
+learn_debugger.py
+# OBSERVE's local index -- contains code/summaries indexed from THIS machine.
+# Publishing it would contradict OBSERVE's own promise that nothing leaves your machine.
+observe_full_database.json
+# long run logs / stdout captures
+qwen_qat_long.txt
+qwen_qat_push.txt
+run_full_pipeline_output.txt
+trit_grow_run2.txt
